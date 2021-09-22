@@ -1,1 +1,1 @@
-# Proyecto de software grupo 5
+# Grupo 5

@@ -2,11 +2,18 @@
 <html lang="en">
   <head>
     {% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
     <title>{% block title %}{% endblock %}</title>
     {% endblock %}
   </head>
   <body>
+
+    <header class="header">    
+      
+      <img id="logo" src="{{ url_for('static', filename='images/Logo.jpeg') }}" height="100px" width="100px"/>
+      <p>Bienvenidos a La Plata Floodn't</p>
+    
+    </header>
     <div id="navbar">
       {% block navbar %}
       {% endblock %}

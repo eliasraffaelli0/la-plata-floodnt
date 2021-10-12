@@ -1,11 +1,23 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700');
 @import url('https://fonts.googleapis.com/css?family=Catamaran:400,800');
 body {
-  background-color: #4B7399;
+  background-color: #67B7F2;
   font-family: 'Montserrat', Helvetica, sans-serif;
   font-size: 14px;
 }
 
+.header{
+  background-color: #204784;
+  width: 95%;
+  margin: 0 auto;
+
+}
+#logo{
+  height:100px;
+  width:100px;
+  margin: 5px;
+  display: inline-block;
+}
 .clear {
   clear: both;
   height: 0;

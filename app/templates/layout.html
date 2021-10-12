@@ -10,14 +10,19 @@
 
     <header class="header">    
       
-      <img id="logo" src="{{ url_for('static', filename='images/Logo.jpeg') }}" height="100px" width="100px"/>
+      <img id="logo" src="{{ url_for('static', filename='images/Logo.jpeg') }}" />
       <p>Bienvenidos a La Plata Floodn't</p>
-    
+      {% block header %}
+      {% endblock %}
     </header>
+
+    
     <div id="navbar">
       {% block navbar %}
       {% endblock %}
     </div>
+    
+    
     <div id="content">
       {% with messages = get_flashed_messages() %}
         {% if messages %}

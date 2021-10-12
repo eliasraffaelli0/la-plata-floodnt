@@ -3,8 +3,15 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
-{% block content %}
 
+{% block header %}
+<form action="{{ url_for('auth_authenticate') }}" method="POST">
+  <input name="email" placeholder="Correo" required/>
+  <input type="password" name="password" placeholder="Clave" required/>
+  <input type="submit" value="Login">
+</form> 
+{% endblock %}
+{% block content %}
   <h1>Inicio</h1>
   <p>Página de inicio de la aplicación</p>
   <a href="{{ url_for('issue_index') }}" class="link">Consultas</a>

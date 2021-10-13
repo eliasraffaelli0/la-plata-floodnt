@@ -8,7 +8,7 @@ body {
 
 .header{
   background-color: #204784;
-  width: 95%;
+  width: 100%;
   margin: 0 auto;
 
 }
@@ -55,3 +55,43 @@ a.link {
   margin-top: 50px;
   letter-spacing: 1px;
 }
+
+.left{
+  float: left;
+}
+
+.right{
+  float: right;
+  width: 200px;
+  background-color: red;
+}
+
+
+
+#navbar ul { 
+	margin: 0; 
+	padding: 5px; 
+	list-style-type: none; 
+	text-align: center; 
+	background-color: #204784; 
+	} 
+ 
+#navbar ul li {  
+	display: inline; 
+	} 
+ 
+#navbar ul li a { 
+	text-decoration: none; 
+	padding: .2em 1em; 
+	color: #fff; 
+	background-color: #204784; 
+	} 
+ 
+#navbar ul li a:hover { 
+	color: #000; 
+	background-color: #fff; 
+	} 
+
+
+
+

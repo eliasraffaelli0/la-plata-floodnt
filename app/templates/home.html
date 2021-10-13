@@ -5,12 +5,25 @@
 {% endblock %}
 
 {% block header %}
-<form action="{{ url_for('auth_authenticate') }}" method="POST">
-  <input name="email" placeholder="Correo" required/>
-  <input type="password" name="password" placeholder="Clave" required/>
-  <input type="submit" value="Login">
-</form> 
+  {% if not is_authenticated(session) %}
+    <form action="{{ url_for('auth_authenticate') }}" method="POST">
+      <input name="email" placeholder="Correo" required/>
+      <input type="password" name="password" placeholder="Clave" required/>
+      <input type="submit" value="Login">
+    </form> 
+  {% endif %}
 {% endblock %}
+
+{% block navbar %}
+  {% if is_authenticated(session) %}
+    <li><a href="http://github.com">Administrar zonas inundables</a></li> 
+    <li><a href="http://github.com">Administrar puntos de encuentro</a></li> 
+    <li><a href="http://github.com">Administrar recorridos de evacuación</a></li> 
+    <li><a href="http://github.com">Administrar eventos</a></li> 
+    <li><a href="http://github.com">Reportar evento</a></li> 
+  {% endif %}
+{% endblock %}
+
 {% block content %}
   <h1>Inicio</h1>
   <p>Página de inicio de la aplicación</p>

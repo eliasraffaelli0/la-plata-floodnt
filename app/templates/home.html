@@ -16,11 +16,8 @@
 
 {% block navbar %}
   {% if is_authenticated(session) %}
-    <li><a href="http://github.com">Administrar zonas inundables</a></li> 
-    <li><a href="http://github.com">Administrar puntos de encuentro</a></li> 
-    <li><a href="http://github.com">Administrar recorridos de evacuación</a></li> 
-    <li><a href="http://github.com">Administrar eventos</a></li> 
-    <li><a href="http://github.com">Reportar evento</a></li> 
+  {% else %}
+    
   {% endif %}
 {% endblock %}
 

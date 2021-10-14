@@ -17,7 +17,7 @@
       {% endblock %}
     </header>
     <!-- NAVBAR -->
-    <div id="navbar"> 
+    <nav id="navbar"> 
       <ul>
         {% if is_authenticated(session) %} 
         <li><a href="{{ url_for('zonas_index') }}" >Administrar zonas inundables</a></li> 
@@ -33,7 +33,7 @@
       {% block navbar%}
       {% endblock %}
     </ul> 
-    </div> 
+    </nav> 
 
     <div id="content ">
       {% with messages = get_flashed_messages() %}
@@ -44,14 +44,16 @@
           {% endfor %}
           </ul>
         {% endif %}
+        
       {% endwith %}
-
       {% block content %}
       {% endblock %}
+      <div style="height: 500px;"></div>
     </div>
-    <div id="footer">
+    <footer class="footer">
+      <p>Proyecto de software</p>
       {% block footer %}
       {% endblock %}
-    </div>
+    </footer>
   </body>
 </html>

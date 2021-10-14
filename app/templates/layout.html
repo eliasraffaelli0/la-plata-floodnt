@@ -22,7 +22,7 @@
         {% if is_authenticated(session) %} 
         <li><a href="http://github.com" >Administrar zonas inundables</a></li> 
         <li><a href="{{ url_for('puntos_index') }}">Administrar puntos de encuentro</a></li> 
-        <li><a href="http://github.com">Administrar recorridos de evacuación</a></li> 
+        <li><a href="{{ url_for('recorridos_index') }}">Administrar recorridos de evacuación</a></li> 
         <li><a href="http://github.com">Administrar eventos</a></li> 
         <li><a href="{{ url_for('user_index') }}">Reportar evento</a></li>       
         {% endif %}

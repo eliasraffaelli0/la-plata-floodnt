@@ -8,6 +8,7 @@ from app.resources import user
 from app.resources import auth
 from app.resources import puntos
 from app.resources import recorridos
+from app.resources import zonas
 from app.resources.api.issue import issue_api
 from app.helpers import handler
 from app.helpers import auth as helper_auth
@@ -61,6 +62,11 @@ def create_app(environment="development"):
     @app.route("/")
     def home():
         return render_template("home.html")
+
+    # Rutas de Zonas inundables
+    app.add_url_rule("/zonas_inundables", "zonas_index", zonas.index)
+    app.add_url_rule("/usuarios", "user_create", user.create, methods=["POST"])
+    app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
 
     # Rutas de Puntos de encuentro
     app.add_url_rule("/puntos_de_encuentro", "puntos_index", puntos.index)

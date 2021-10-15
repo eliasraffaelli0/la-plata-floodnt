@@ -15,10 +15,10 @@ class User(db.Model):
     last_name = Column(String (30))
 
 
-def __init__(self, email=None, username=None, activo=None, password=None, first_name=None, last_name=None):
-    self.email = email
-    self.username = username
-    self.password = password
-    self.activo = activo
-    self.first_name = first_name
-    self.last_name = last_name
+    def __init__(self, email=None, username=None, activo=None, password=None, first_name=None, last_name=None):
+        self.email = email
+        self.username = username
+        self.password = password
+        self.activo = activo
+        self.first_name = first_name
+        self.last_name = last_name

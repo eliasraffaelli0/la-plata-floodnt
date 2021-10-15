@@ -14,8 +14,8 @@ class Issue(db.Model):
     status_id = Column(Integer, ForeignKey("statuses.id"))
     status = relationship(Status)
 
-def __init__(self, email=None, description=None, status_id=None, category=None):
-    self.email = email
-    self.description = description
-    self.status_id = status_id
-    self.category_id = category_id
+    def __init__(self, email=None, description=None, status_id=None, category=None):
+        self.email = email
+        self.description = description
+        self.status_id = status_id
+        self.category_id = category_id

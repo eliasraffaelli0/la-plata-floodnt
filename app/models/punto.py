@@ -4,8 +4,9 @@ from app.db import db
 
 class Punto(db.Model):
     __tablename__= "puntos_de_encuentro"
+    id = Column(Integer, primary_key=True)
     name = Column(String (50), unique=True)
-    direccion = Column(String (50), primary_key=True)
+    direccion = Column(String (50))
     coordenadas = Column(String (50), unique=True)
     estado = Column(Integer)
     telefono = Column(String (50))

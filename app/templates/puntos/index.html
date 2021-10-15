@@ -5,15 +5,30 @@
 {% endblock %}
 {% block content %}
   <h1>Acá van a estar los puntos de encuentro</h1>
+  <table>
+    <tr>
+      <th>Nombre</th>
+      <th>Direccion</th>
+      <th>Coordenadas</th>
+      <th>Estado</th>
+      <th>Tefelono</th>
+      <th>Email</th>
+    </tr>
   {% for punto in puntos %}
-  <li>{{ punto.name }} - {{ punto.direccion }} - {{ punto.coordenadas }} 
-    {% if punto.estado %}
-    -  Publicado 
-    {% else %}
-    - Despublicado
-    {% endif %}
-    - {{ punto.telefono }} - {{ punto.email }} </li>
+      <tr>
+        <td>{{ punto.name }}</td>
+        <td>{{punto.direccion}}</td>
+        <td>{{punto.coordenadas }}</td>
+        {% if punto.estado %}
+        <td>Publicado </td>
+        {% else %}
+        <td>Despublicado</td>
+        {% endif %}
+        <td>{{ punto.telefono }}</td>
+        <td>{{ punto.email }}</td>
+      </tr>
   {% endfor %}
+  </table>
   <a href="{{ url_for('home') }}" class="link">Volver</a>
   <a href="{{ url_for('puntos_new') }}" class="link">Nuevo</a>
 {% endblock %}

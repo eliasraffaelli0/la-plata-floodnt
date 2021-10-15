@@ -1,3 +1,4 @@
+import bcrypt
 from flask import redirect, render_template, request, url_for, session, abort
 from app.models.user import User
 from app.helpers.auth import authenticated
@@ -26,7 +27,12 @@ def create():
     if not authenticated(session):
         abort(401)
 
+    
     new_user = User(**request.form)
+    #hasheo de la contraseña
+    salt = brcypt.gensalt()
+    new_user["password"] = brcypt.hashpw(new_user["password"], salt)
+
     db.session.add(new_user)
     db.session.commit()
     return redirect(url_for("user_index"))

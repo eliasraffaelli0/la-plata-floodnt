@@ -1,6 +1,7 @@
 from flask import redirect, render_template, request, url_for, session, abort
 from app.models.user import User
 from app.helpers.auth import authenticated
+from app.db import db
 
 # Protected resources
 def index():
@@ -25,6 +26,7 @@ def create():
     if not authenticated(session):
         abort(401)
 
-    #conn = connection()
-    #User.create(conn, request.form)
+    new_user = User(**request.form)
+    db.session.add(new_user)
+    db.session.commit()
     return redirect(url_for("user_index"))

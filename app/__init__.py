@@ -57,6 +57,7 @@ def create_app(environment="development"):
     app.add_url_rule("/usuarios", "user_index", user.index)
     app.add_url_rule("/usuarios", "user_create", user.create, methods=["POST"])
     app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
+    app.add_url_rule("/usuarios/edit", "user_edit", user.new)
 
     # Ruta para el Home (usando decorator)
     @app.route("/")

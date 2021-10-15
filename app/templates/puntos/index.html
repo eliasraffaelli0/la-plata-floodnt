@@ -5,9 +5,15 @@
 {% endblock %}
 {% block content %}
   <h1>Acá van a estar los puntos de encuentro</h1>
-  {% for user in users %}
-  <li>{{ user.email }} - {{ user.first_name }} - {{ user.last_name }} - {{ user.password }}</li>
+  {% for punto in puntos %}
+  <li>{{ punto.name }} - {{ punto.direccion }} - {{ punto.coordenadas }} 
+    {% if punto.estado %}
+    -  Publicado 
+    {% else %}
+    - Despublicado
+    {% endif %}
+    - {{ punto.telefono }} - {{ punto.email }} </li>
   {% endfor %}
   <a href="{{ url_for('home') }}" class="link">Volver</a>
-  <a href="{{ url_for('user_new') }}" class="link">Nuevo</a>
+  <a href="{{ url_for('puntos_new') }}" class="link">Nuevo</a>
 {% endblock %}

@@ -5,14 +5,14 @@
 {% endblock %}
 {% block content %}
   <h1>Crear un punto de encuentro</h1>
-  <form action="{{ url_for('punto_create') }}" method="POST">
+  <form action="{{ url_for('puntos_create') }}" method="POST">
     <p>
       <label>Nombre<label></br>
-      <input name="nombre" placeholder="Nombre"/>
+      <input name="name" placeholder="Nombre"/>
     </p>
     <p>
       <label>Direccion<label></br>
-      <input name="password" placeholder="Direccion"/>
+      <input name="direccion" placeholder="Direccion"/>
     </p>
     <p>
       <label>Coordenadas<label></br>
@@ -21,8 +21,8 @@
     <p>
       <label>Estado<label></br>
         <select name='estado'>
-            <option value='0'>Publicado</option>
-            <option value='1'>Oculto</option>
+            <option value='1'>Publicado</option>
+            <option value='0'>Oculto</option>
         </select>
     <p>
     <p>

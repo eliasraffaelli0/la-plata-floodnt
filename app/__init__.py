@@ -70,8 +70,8 @@ def create_app(environment="development"):
 
     # Rutas de Puntos de encuentro
     app.add_url_rule("/puntos_de_encuentro", "puntos_index", puntos.index)
-    app.add_url_rule("/usuarios", "punto_create", user.create, methods=["POST"])
-    app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
+    app.add_url_rule("/puntos_de_encuentro", "puntos_create", puntos.create, methods=["POST"])
+    app.add_url_rule("/puntos_de_encuentro/nuevo", "puntos_new", puntos.new)
 
     # Rutas de Recorridos de evacuación
     app.add_url_rule("/recorridos_de_evacuacion", "recorridos_index", recorridos.index)

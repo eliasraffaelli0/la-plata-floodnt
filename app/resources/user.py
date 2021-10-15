@@ -41,6 +41,7 @@ def create():
     
     #hasheo de la contraseña
     salt = bcrypt.gensalt()
+    new_user.salt = salt
     new_user.password = bcrypt.hashpw(new_user.password.encode(), salt)
 
     db.session.add(new_user)

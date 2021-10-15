@@ -8,6 +8,7 @@ class User(db.Model):
     email = Column(String (30), unique=True)
     username = Column(String (30), unique=True)
     password = Column(String (255))
+    salt = Column(String (255))
     activo = Column(Integer)
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     created_at = Column(DateTime(timezone=True), server_default=func.now())
@@ -15,10 +16,11 @@ class User(db.Model):
     last_name = Column(String (30))
 
 
-def __init__(self, email=None, username=None, activo=None, password=None, first_name=None, last_name=None):
-    self.email = email
-    self.username = username
-    self.password = password
-    self.activo = activo
-    self.first_name = first_name
-    self.last_name = last_name
+    def __init__(self, email=None, username=None, activo=None, password=None, salt=None, first_name=None, last_name=None):
+        self.email = email
+        self.username = username
+        self.password = password
+        self.salt = salt
+        self.activo = activo
+        self.first_name = first_name
+        self.last_name = last_name

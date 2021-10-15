@@ -8,19 +8,30 @@
   <form action="{{ url_for('user_create') }}" method="POST">
     <p>
       <label>Email<label></br>
-      <input name="email" placeholder="Correo"/>
+      <input name="email" placeholder="Correo" required/>
+    </p>
+    <p>
+      <label>Username<label></br>
+      <input name="username" placeholder="username" required/>
     </p>
     <p>
       <label>Clave<label></br>
-      <input type="password" name="password" placeholder="Clave"/>
+      <input type="password" name="password" placeholder="Clave" required/>
+    </p>
+    <p>
+      <label>¿Crear usuario activado?<label></br>
+      <select name='activo'>
+        <option value='0'>Desactivado</option>
+        <option value='1'>Activado</option>
+      </select>
     </p>
     <p>
       <label>Nombre<label></br>
-      <input name="first_name" placeholder="Nombre"/>
+      <input name="first_name" placeholder="Nombre" required/>
     </p>
     <p>
       <label>Apellido<label></br>
-      <input name="last_name" placeholder="Apellido"/>
+      <input name="last_name" placeholder="Apellido" required/>
     </p>
     <p>
       <input type="submit" value="Crear">

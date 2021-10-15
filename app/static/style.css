@@ -87,7 +87,8 @@ a.link {
 	background-color: #fff; 
 	} 
 
-
-
-
+.usuario-listado, .usuario-listado:visited {
+  text-decoration: none;
+  color: black;
+}
 

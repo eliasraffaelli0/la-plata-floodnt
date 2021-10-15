@@ -5,8 +5,55 @@
 {% endblock %}
 {% block content %}
   <h1>usuarios</h1>
+  <table>
+    <tr>
+      <th>Email</th>
+      <th>Username</th>
+      <th>Estado</th>
+      <th>Nombre</th>
+      <th>apellido</th>
+    </tr>
   {% for user in users %}
-  <li>{{ user.email }} - {{ user.first_name }} - {{ user.last_name }} - {{ user.password }}</li>
+    {% if not session["user"]== user.email %} 
+    <tr>
+      <td>
+        <a href="{{ url_for('user_edit') }}" class="usuario-listado">
+          {{ user.email }}
+        </a>
+        </td>
+        <td>
+          <a href="{{ url_for('user_edit') }}" class="usuario-listado">
+            {{user.username}}
+          </a>
+        </td>
+        <a href="{{ url_for('user_edit') }}" class="usuario-listado">
+        </a>
+        {% if user.activo %}
+          <td>
+            <a href="{{ url_for('user_edit') }}" class="usuario-listado"></a>
+              Activo
+            </a>
+          </td>
+        {% else %}
+           <td>
+            <a href="{{ url_for('user_edit') }}" class="usuario-listado"></a> 
+              Desactivado
+            </a>
+          </td>
+        {% endif %}
+        <td>
+          <a href="{{ url_for('user_edit') }}" class="usuario-listado">
+            {{ user.first_name }}
+          </a>
+        </td>
+        <td>
+          <a href="{{ url_for('user_edit') }}" class="usuario-listado">
+            {{ user.last_name }}
+          </a>
+        </td>
+      </tr>
+      {% endif %}
+  </table> 
   {% endfor %}
   <a href="{{ url_for('home') }}" class="link">Volver</a>
   <a href="{{ url_for('user_new') }}" class="link">Nuevo</a>

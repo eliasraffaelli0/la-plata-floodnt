@@ -1,4 +1,4 @@
-# import bcrypt
+import bcrypt
 from flask import redirect, render_template, request, url_for, session, abort, flash
 from app.models.user import User
 from app.helpers.auth import authenticated
@@ -8,9 +8,6 @@ from app.db import db
 def index():
     if not authenticated(session):
         abort(401)
-
-    #conn = connection()
-    #users = User.all(conn)
 
     users = User.query.all()
     return render_template("user/index.html", users=users)
@@ -41,9 +38,10 @@ def create():
     if new_user.email== '' or new_user.username=='' or new_user.password=='' or new_user.first_name=='' or new_user.last_name=='':
         flash("Debe completar todos los campos")
         return redirect(url_for("user_new"))
+    
     #hasheo de la contraseña
-    # salt = brcypt.gensalt()
-    # new_user["password"] = brcypt.hashpw(new_user["password"], salt)
+    salt = bcrypt.gensalt()
+    new_user.password = bcrypt.hashpw(new_user.password.encode(), salt)
 
     db.session.add(new_user)
     db.session.commit()

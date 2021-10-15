@@ -7,16 +7,13 @@ def login():
 
 
 def authenticate():
-    #conn = connection()
-    #params = request.form
-
-    #user = User.find_by_email_and_pass(conn, params["email"], params["password"])
-
     params = request.form
 
     user = User.query.filter(User.email == params["email"] 
     and User.password == params["password"]).first()
-
+    flash(user.email)
+    flash(params["password"])
+    flash(user.password)
 
     if not user:
         flash("Usuario o clave incorrecto.")

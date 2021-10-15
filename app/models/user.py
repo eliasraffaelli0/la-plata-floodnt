@@ -7,7 +7,7 @@ class User(db.Model):
     id = Column(Integer, primary_key=True)
     email = Column(String (30), unique=True)
     username = Column(String (30), unique=True)
-    password = Column(String (30))
+    password = Column(String (255))
     activo = Column(Integer)
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     created_at = Column(DateTime(timezone=True), server_default=func.now())

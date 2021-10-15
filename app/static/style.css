@@ -43,3 +43,8 @@ a.link {
   margin-top: 50px;
   letter-spacing: 1px;
 }
+
+.usuario-listado, .usuario-listado:visited {
+  text-decoration: none;
+  color: black;
+}

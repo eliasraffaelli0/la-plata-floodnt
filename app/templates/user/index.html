@@ -6,11 +6,19 @@
 {% block content %}
   <h1>usuarios</h1>
   {% for user in users %}
-  <li>{{ user.email }} {{user.username}} - {{user.activo}} - {{ user.first_name }} - {{ user.last_name }}
-    {% if session["user"]== user.email %} 
-    - {{ user.password }}
-    {% endif %}
-  </li>
+  <a href="#" class="usuario-listado">
+    <li>
+      {% if not session["user"]== user.email %} 
+      {{ user.email }} {{user.username}} 
+        {% if user.activo %}
+          -  activo 
+          {% else %}
+          - desactivado
+        {% endif %}
+      - {{ user.first_name }} - {{ user.last_name }}
+      {% endif %}
+    </li>
+  </a>
   {% endfor %}
   <a href="{{ url_for('home') }}" class="link">Volver</a>
   <a href="{{ url_for('user_new') }}" class="link">Nuevo</a>

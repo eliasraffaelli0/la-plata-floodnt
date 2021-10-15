@@ -1,5 +1,5 @@
-import bcrypt
-from flask import redirect, render_template, request, url_for, session, abort
+# import bcrypt
+from flask import redirect, render_template, request, url_for, session, abort, flash
 from app.models.user import User
 from app.helpers.auth import authenticated
 from app.db import db
@@ -26,12 +26,24 @@ def new():
 def create():
     if not authenticated(session):
         abort(401)
-
     
     new_user = User(**request.form)
+    user = User.query.filter(User.email == new_user.email).first()
+    if user:
+        flash("El mail ya está registrado.")
+        return redirect(url_for("user_new"))
+
+    user = User.query.filter(User.username == new_user.username).first()
+    if user:
+        flash("El username ya está registrado.")
+        return redirect(url_for("user_new"))    
+
+    if new_user.email== '' or new_user.username=='' or new_user.password=='' or new_user.first_name=='' or new_user.last_name=='':
+        flash("Debe completar todos los campos")
+        return redirect(url_for("user_new"))
     #hasheo de la contraseña
-    salt = brcypt.gensalt()
-    new_user["password"] = brcypt.hashpw(new_user["password"], salt)
+    # salt = brcypt.gensalt()
+    # new_user["password"] = brcypt.hashpw(new_user["password"], salt)
 
     db.session.add(new_user)
     db.session.commit()

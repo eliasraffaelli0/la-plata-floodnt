@@ -8,15 +8,15 @@
   <form action="{{ url_for('puntos_create') }}" method="POST">
     <p>
       <label>Nombre<label></br>
-      <input name="name" placeholder="Nombre"/>
+      <input name="name" placeholder="Nombre" required/>
     </p>
     <p>
       <label>Direccion<label></br>
-      <input name="direccion" placeholder="Direccion"/>
+      <input name="direccion" placeholder="Direccion" required/>
     </p>
     <p>
       <label>Coordenadas<label></br>
-      <input name="coordenadas" placeholder="Coordenadas"/>
+      <input name="coordenadas" placeholder="Coordenadas" required/>
     </p>
     <p>
       <label>Estado<label></br>
@@ -27,11 +27,11 @@
     <p>
     <p>
       <label>Telefono<label></br>
-      <input name="telefono" placeholder="Telefono"/>
+      <input name="telefono" placeholder="Telefono" required/>
     </p>
     <p>
       <label>Email<label></br>
-      <input name="email" placeholder="Email"/>
+      <input type="email" name="email" placeholder="Email" required/>
     </p>
       <input type="submit" value="Crear">
       <button type="reset">Limpiar</button>

@@ -1,4 +1,4 @@
-import bcrypt
+import bcrypt, re
 from flask import redirect, render_template, request, url_for, session, abort, flash
 from app.models.user import User
 from app.helpers.auth import authenticated
@@ -25,6 +25,13 @@ def create():
         abort(401)
     
     new_user = User(**request.form)
+
+    #raw string utilizado para validar que se trate de un mail
+    regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+    if not (re.fullmatch(regex, new_user.email)):
+        flash("Ingrese un mail válido.")
+        return redirect(url_for("user_new"))
+
     user = User.query.filter(User.email == new_user.email).first()
     if user:
         flash("El mail ya está registrado.")
@@ -41,6 +48,7 @@ def create():
     
     #hasheo de la contraseña
     salt = bcrypt.gensalt()
+    new_user.salt = salt
     new_user.password = bcrypt.hashpw(new_user.password.encode(), salt)
 
     db.session.add(new_user)

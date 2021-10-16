@@ -3,6 +3,7 @@ from flask import redirect, render_template, request, url_for, session, abort, f
 from app.models.user import User
 from app.helpers.auth import authenticated
 from app.db import db
+from app.validators.uniquenessValidator import uniquenessChecker
 
 # Protected resources
 def index():
@@ -32,15 +33,11 @@ def create():
         flash("Ingrese un mail válido.")
         return redirect(url_for("user_new"))
 
-    user = User.query.filter(User.email == new_user.email).first()
-    if user:
-        flash("El mail ya está registrado.")
+    if uniquenessChecker(User.email, new_user.email, 'mail'):
         return redirect(url_for("user_new"))
 
-    user = User.query.filter(User.username == new_user.username).first()
-    if user:
-        flash("El username ya está registrado.")
-        return redirect(url_for("user_new"))    
+    if uniquenessChecker(User.username, new_user.username, 'username'):
+        return redirect(url_for("user_new"))
 
     if new_user.email== '' or new_user.username=='' or new_user.password=='' or new_user.first_name=='' or new_user.last_name=='':
         flash("Debe completar todos los campos")

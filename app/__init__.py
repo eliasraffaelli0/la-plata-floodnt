@@ -6,9 +6,20 @@ from app import db
 from app.resources import issue
 from app.resources import user
 from app.resources import auth
+from app.resources import puntos
+from app.resources import recorridos
+from app.resources import zonas
 from app.resources.api.issue import issue_api
 from app.helpers import handler
 from app.helpers import auth as helper_auth
+import logging
+
+#Sentencias que muestran el log de las querys que ejecuta la aplicación
+
+logging.basicConfig()
+logging.getLogger("sqlalchemy.engine").setLevel(logging.INFO)
+
+
 
 
 def create_app(environment="development"):
@@ -46,11 +57,27 @@ def create_app(environment="development"):
     app.add_url_rule("/usuarios", "user_index", user.index)
     app.add_url_rule("/usuarios", "user_create", user.create, methods=["POST"])
     app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
+    app.add_url_rule("/usuarios/edit", "user_edit", user.new)
 
     # Ruta para el Home (usando decorator)
     @app.route("/")
     def home():
         return render_template("home.html")
+
+    # Rutas de Zonas inundables
+    app.add_url_rule("/zonas_inundables", "zonas_index", zonas.index)
+    app.add_url_rule("/usuarios", "user_create", user.create, methods=["POST"])
+    app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
+
+    # Rutas de Puntos de encuentro
+    app.add_url_rule("/puntos_de_encuentro", "puntos_index", puntos.index)
+    app.add_url_rule("/puntos_de_encuentro", "puntos_create", puntos.create, methods=["POST"])
+    app.add_url_rule("/puntos_de_encuentro/nuevo", "puntos_new", puntos.new)
+
+    # Rutas de Recorridos de evacuación
+    app.add_url_rule("/recorridos_de_evacuacion", "recorridos_index", recorridos.index)
+    app.add_url_rule("/usuarios", "user_create", user.create, methods=["POST"])
+    app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
 
     # Rutas de API-REST (usando Blueprints)
     api = Blueprint("api", __name__, url_prefix="/api")

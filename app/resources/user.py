@@ -1,16 +1,16 @@
-from flask import redirect, render_template, request, url_for, session, abort
-from app.db import connection
+import bcrypt, re
+from flask import redirect, render_template, request, url_for, session, abort, flash
 from app.models.user import User
 from app.helpers.auth import authenticated
+from app.db import db
+from app.validators.uniquenessValidator import uniquenessChecker
 
 # Protected resources
 def index():
     if not authenticated(session):
         abort(401)
 
-    conn = connection()
-    users = User.all(conn)
-
+    users = User.query.all()
     return render_template("user/index.html", users=users)
 
 
@@ -24,7 +24,30 @@ def new():
 def create():
     if not authenticated(session):
         abort(401)
+    
+    new_user = User(**request.form)
 
-    conn = connection()
-    User.create(conn, request.form)
+    #raw string utilizado para validar que se trate de un mail
+    regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+    if not (re.fullmatch(regex, new_user.email)):
+        flash("Ingrese un mail válido.")
+        return redirect(url_for("user_new"))
+
+    if uniquenessChecker(User.email, new_user.email, 'mail'):
+        return redirect(url_for("user_new"))
+
+    if uniquenessChecker(User.username, new_user.username, 'username'):
+        return redirect(url_for("user_new"))
+
+    if new_user.email== '' or new_user.username=='' or new_user.password=='' or new_user.first_name=='' or new_user.last_name=='':
+        flash("Debe completar todos los campos")
+        return redirect(url_for("user_new"))
+    
+    #hasheo de la contraseña
+    salt = bcrypt.gensalt()
+    new_user.salt = salt
+    new_user.password = bcrypt.hashpw(new_user.password.encode(), salt)
+
+    db.session.add(new_user)
+    db.session.commit()
     return redirect(url_for("user_index"))

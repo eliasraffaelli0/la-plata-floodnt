@@ -6,5 +6,5 @@ class Rol(db.model):
     id = Column(Integer, primary_key=True)
     name = Column(String (30), unique=True)
 
-def __init__(self, name=None):
-    self.name = name
+    def __init__(self, name=None):
+        self.name = name

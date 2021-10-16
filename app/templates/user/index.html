@@ -30,13 +30,13 @@
         </a>
         {% if user.activo %}
           <td>
-            <a href="{{ url_for('user_edit') }}" class="usuario-listado"></a>
+            <a href="{{ url_for('user_edit') }}" class="usuario-listado">
               Activo
             </a>
           </td>
         {% else %}
            <td>
-            <a href="{{ url_for('user_edit') }}" class="usuario-listado"></a> 
+            <a href="{{ url_for('user_edit') }}" class="usuario-listado"> 
               Desactivado
             </a>
           </td>
@@ -52,9 +52,9 @@
           </a>
         </td>
       </tr>
-      {% endif %}
-  </table> 
+    {% endif %}
   {% endfor %}
+  </table> 
   <a href="{{ url_for('home') }}" class="link">Volver</a>
   <a href="{{ url_for('user_new') }}" class="link">Nuevo</a>
 {% endblock %}

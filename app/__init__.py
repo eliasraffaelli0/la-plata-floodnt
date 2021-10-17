@@ -8,7 +8,6 @@ from app.resources import auth
 from app.resources import puntos
 from app.resources import recorridos
 from app.resources import zonas
-# from app.resources.api.issue import issue_api
 from app.helpers import handler
 from app.helpers import auth as helper_auth
 from app.helpers import permisoValidator as helper_permisos
@@ -72,13 +71,6 @@ def create_app(environment="development"):
 
     # Rutas de Recorridos de evacuación
     app.add_url_rule("/recorridos_de_evacuacion", "recorridos_index", recorridos.index)
-
-    
-    # Rutas de API-REST (usando Blueprints)
-    api = Blueprint("api", __name__, url_prefix="/api")
-    api.register_blueprint(issue_api)
-
-    # app.register_blueprint(api)
 
     # Handlers
     app.register_error_handler(404, handler.not_found_error)

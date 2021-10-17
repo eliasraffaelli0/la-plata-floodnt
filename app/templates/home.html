@@ -3,33 +3,7 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
-
-{% block header %}
-  {% if not is_authenticated(session) %}
-    <form action="{{ url_for('auth_authenticate') }}" method="POST">
-      <input name="email" placeholder="Correo" required/>
-      <input type="password" name="password" placeholder="Clave" required/>
-      <input type="submit" value="Login">
-    </form> 
-  {% endif %}
-{% endblock %}
-
-{% block navbar %}
-  {% if is_authenticated(session) %}
-  {% else %}
-    
-  {% endif %}
-{% endblock %}
-
 {% block content %}
   <h1>Inicio</h1>
   <p>Página de inicio de la aplicación</p>
-  <a href="{{ url_for('issue_index') }}" class="link">Consultas</a>
-  {% if is_authenticated(session) %}
-    <a href="{{ url_for('user_index') }}" class="link">Usuarios</a>
-    <a href="{{ url_for('auth_logout') }}" class="link">Cerrar sesión</a>
-  {% else %}
-    <a href="{{ url_for('auth_login') }}" class="link">Iniciar sesión</a>
-  {% endif %}
-
 {% endblock %}

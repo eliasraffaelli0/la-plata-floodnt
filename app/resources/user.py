@@ -16,7 +16,7 @@ def index():
 def new():
     if not authenticated(session):
         abort(401)
-
+    
     return render_template("user/new.html")
 
 
@@ -46,4 +46,11 @@ def create():
 
     db.session.add(new_user)
     db.session.commit()
+    return redirect(url_for("user_index"))
+
+def update_estado(username):
+    params = request.form
+    user = User.query.filter(User.username == username).first()
+    user.activo = params["activo"]
+    db.session.commit() 
     return redirect(url_for("user_index"))

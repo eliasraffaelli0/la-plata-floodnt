@@ -4,7 +4,7 @@ from app.models.rol import Rol
 from sqlalchemy import Column, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
-class UserRol(db.Model):
+class RolPermiso(db.Model):
     __tablename__= "rol_tiene_permiso"
     id = Column(Integer, primary_key=True)
     rol_id = Column(Integer, ForeignKey("roles.id"))

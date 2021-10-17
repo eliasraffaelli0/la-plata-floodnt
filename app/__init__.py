@@ -11,6 +11,7 @@ from app.resources import zonas
 # from app.resources.api.issue import issue_api
 from app.helpers import handler
 from app.helpers import auth as helper_auth
+from app.helpers import permisoValidator as helper_permisos
 import logging
 
 #Sentencias que muestran el log de las querys que ejecuta la aplicación
@@ -39,6 +40,7 @@ def create_app(environment="development"):
 
     # Funciones que se exportan al contexto de Jinja2
     app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
+    app.jinja_env.globals.update(has_permission=helper_permisos.permisoChercker)
 
     # Autenticación
     app.add_url_rule("/iniciar_sesion", "auth_login", auth.login)

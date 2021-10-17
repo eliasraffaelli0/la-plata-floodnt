@@ -3,6 +3,7 @@ from flask import redirect, render_template, request, url_for, session, abort, f
 from app.models.user import User
 from app.helpers.auth import authenticated
 from app.db import db
+from sqlalchemy import and_
 
 # Protected resources
 def index():
@@ -49,8 +50,13 @@ def create():
     return redirect(url_for("user_index"))
 
 def update_estado(username):
-    params = request.form
+    params = User(**request.form)
     user = User.query.filter(User.username == username).first()
-    user.activo = params["activo"]
+    user.activo = params.activo
     db.session.commit() 
     return redirect(url_for("user_index"))
+
+def filter():
+    params = User(**request.form)
+    users = User.query.filter(and_(User.first_name == params.first_name, User.activo == params.activo))
+    return render_template("user/index.html", users=users)

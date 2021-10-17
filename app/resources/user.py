@@ -58,5 +58,9 @@ def update_estado(username):
 
 def filter():
     params = User(**request.form)
-    users = User.query.filter(and_(User.first_name == params.first_name, User.activo == params.activo))
+    if params.first_name:
+        users = User.query.filter(and_(User.first_name == params.first_name, User.activo == params.activo))
+    else:
+        users = User.query.filter(User.activo == params.activo)
+
     return render_template("user/index.html", users=users)

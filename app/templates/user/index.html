@@ -5,7 +5,7 @@
 {% endblock %}
 {% block content %}
   <h1>usuarios</h1>
-  <p>Filtrar por nombre y activo/desactivado:</p>
+  <p>Filtrar por nombre y/o activo/desactivado:</p>
   <form action="{{ url_for('user_search') }}" method="post">
     <input type="search" placeholder="Nombre" name="first_name">
     <select name='activo'>

@@ -37,7 +37,6 @@
         </td>
         <a href="{{ url_for('user_edit') }}" class="usuario-listado">
         </a>
-<<<<<<< HEAD
         {% if user.activo %}
           <td>
             <a href="{{ url_for('user_edit') }}" class="usuario-listado">
@@ -51,8 +50,6 @@
             </a>
           </td>
         {% endif %}
-=======
->>>>>>> feature/ListadoDeUsuarios
         <td>
           <a href="{{ url_for('user_edit') }}" class="usuario-listado">
             {{ user.first_name }}
@@ -63,12 +60,6 @@
             {{ user.last_name }}
           </a>
         </td>
-<<<<<<< HEAD
-      </tr>
-    {% endif %}
-  {% endfor %}
-  </table> 
-=======
         <td>
         <form action="{{ url_for('user_edit_estado', username=user.username) }}" method="POST">
           {% if user.activo %}
@@ -89,7 +80,6 @@
       {% endif %}
       {% endfor %}
     </table> 
->>>>>>> feature/ListadoDeUsuarios
   <a href="{{ url_for('home') }}" class="link">Volver</a>
   <a href="{{ url_for('user_new') }}" class="link">Nuevo</a>
 {% endblock %}

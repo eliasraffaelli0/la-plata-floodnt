@@ -5,6 +5,7 @@ from app.helpers.auth import authenticated
 from app.helpers.permisoValidator import permisoChercker
 from app.db import db
 from app.validators.userDuplicateValidator import userDuplicateChecker
+from sqlalchemy import and_
 
 # Protected resources
 def index():
@@ -55,3 +56,19 @@ def create():
     db.session.add(new_user)
     db.session.commit()
     return redirect(url_for("user_index"))
+
+def update_estado(username):
+    params = User(**request.form)
+    user = User.query.filter(User.username == username).first()
+    user.activo = params.activo
+    db.session.commit() 
+    return redirect(url_for("user_index"))
+
+def filter():
+    params = User(**request.form)
+    if params.first_name:
+        users = User.query.filter(and_(User.first_name == params.first_name, User.activo == params.activo))
+    else:
+        users = User.query.filter(User.activo == params.activo)
+
+    return render_template("user/index.html", users=users)

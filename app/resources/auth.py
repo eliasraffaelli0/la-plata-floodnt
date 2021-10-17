@@ -14,7 +14,7 @@ def authenticate():
     
     if not user:
         flash("Usuario incorrecto.")
-        return redirect(url_for("auth_login"))
+        return redirect(url_for("home"))
     
     #hasheo la contraseña y la comparo con la que está en la base de datos
     user_pass = bcrypt.hashpw(params["password"].encode(), user.salt.encode())
@@ -22,9 +22,10 @@ def authenticate():
     
     if not user:
         flash("Clave incorrecta o usuario inactivo")
-        return redirect(url_for("auth_login"))
+        return redirect(url_for("home"))
 
     session["user"] = user.email
+    session["username"] = user.username
     flash("La sesión se inició correctamente.")
 
     return redirect(url_for("home"))
@@ -35,4 +36,4 @@ def logout():
     session.clear()
     flash("La sesión se cerró correctamente.")
 
-    return redirect(url_for("auth_login"))
+    return redirect(url_for("home"))

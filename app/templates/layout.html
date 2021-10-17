@@ -38,18 +38,16 @@
     <!-- ------------------------NAVBAR -------------------->
     <nav id="navbar"> 
       {% if is_authenticated(session) %} 
-      <ul>
-      <li><a href="{{ url_for('zonas_index') }}" >Administrar zonas inundables</a></li> 
-        <li><a href="{{ url_for('puntos_index') }}">Administrar puntos de encuentro</a></li> 
-        <li><a href="{{ url_for('recorridos_index') }}">Administrar recorridos de evacuación</a></li> 
-        <li><a href="#">Administrar eventos</a></li> 
-        <li><a href="{{ url_for('user_index') }}">Usuarios</a></li>       
+        <ul>
+        <li><a href="{{ url_for('zonas_index') }}" >Administrar zonas inundables</a></li> 
+          <li><a href="{{ url_for('puntos_index') }}">Administrar puntos de encuentro</a></li> 
+          <li><a href="{{ url_for('recorridos_index') }}">Administrar recorridos de evacuación</a></li> 
+          <li><a href="#">Administrar eventos</a></li> 
+          {% if has_permission(session, 'user_index') %}
+            <li><a href="{{ url_for('user_index') }}">Usuarios</a></li>       
+          {% endif %}
         {% endif %}
-        {% if tiene_permiso_administrador %}
-        <li><a href="{{ url_for('user_index') }}">Panel de usuarios</a></li>  
-        <li><a href="{{ url_for('user_index') }}">Configurar sistema</a></li> 
       </ul> 
-        {% endif %}
       {% block navbar%}
       {% endblock %}
     </nav> 

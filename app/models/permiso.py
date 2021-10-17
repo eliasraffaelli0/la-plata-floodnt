@@ -1,11 +1,10 @@
 from sqlalchemy import Column, Integer, String
 from app.db import db
 
-class Category(db.Model):
-
-    __tablename__ = "categories"
+class Permiso(db.Model):
+    __tablename__= "permisos"
     id = Column(Integer, primary_key=True)
-    name = Column(String(30), unique=True)
+    name = Column(String (30), unique=True)
 
     def __init__(self, name=None):
         self.name = name

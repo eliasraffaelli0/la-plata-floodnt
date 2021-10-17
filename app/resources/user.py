@@ -2,20 +2,24 @@ import bcrypt, re
 from flask import redirect, render_template, request, url_for, session, abort, flash
 from app.models.user import User
 from app.helpers.auth import authenticated
+from app.helpers.permisoValidator import permisoChercker
 from app.db import db
-from app.validators.uniquenessValidator import uniquenessChecker
+from app.validators.userDuplicateValidator import userDuplicateChecker
 
 # Protected resources
 def index():
     if not authenticated(session):
         abort(401)
-
+    if not permisoChercker(session, 'user_index'):
+        abort(401)
     users = User.query.all()
     return render_template("user/index.html", users=users)
 
 
 def new():
     if not authenticated(session):
+        abort(401)
+    if not permisoChercker(session, 'user_index'):
         abort(401)
 
     return render_template("user/new.html")
@@ -33,10 +37,10 @@ def create():
         flash("Ingrese un mail válido.")
         return redirect(url_for("user_new"))
 
-    if uniquenessChecker(User.email, new_user.email, 'mail'):
+    if userDuplicateChecker(User.email, new_user.email, 'mail'):
         return redirect(url_for("user_new"))
 
-    if uniquenessChecker(User.username, new_user.username, 'username'):
+    if userDuplicateChecker(User.username, new_user.username, 'username'):
         return redirect(url_for("user_new"))
 
     if new_user.email== '' or new_user.username=='' or new_user.password=='' or new_user.first_name=='' or new_user.last_name=='':

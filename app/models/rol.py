@@ -4,8 +4,8 @@ from sqlalchemy.orm import relationship
 from app.models.permiso import Permiso
 
 association_table = db.Table('rol_tiene_permiso', db.metadata,
-    Column('usuario_id', ForeignKey('roles.id'), primary_key=True),
-    Column('rol_id', ForeignKey('permisos.id'), primary_key=True)
+    Column('rol_id', ForeignKey('roles.id'), primary_key=True),
+    Column('permiso_id', ForeignKey('permisos.id'), primary_key=True)
 )
 
 class Rol(db.Model):

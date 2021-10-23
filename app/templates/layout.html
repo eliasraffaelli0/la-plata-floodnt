@@ -24,7 +24,9 @@
         <li><a href="{{ url_for('puntos_index') }}">Administrar puntos de encuentro</a></li> 
         <li><a href="{{ url_for('recorridos_index') }}">Administrar recorridos de evacuación</a></li> 
         <li><a href="http://github.com">Administrar eventos</a></li> 
-        <li><a href="{{ url_for('user_index') }}">Reportar evento</a></li>       
+          {% if has_permission(session, 'user_index') %}
+            <li><a href="{{ url_for('user_index') }}">Reportar evento</a></li>       
+          {% endif %}
         {% endif %}
         {% if tiene_permiso_administrador %}
         <li><a href="{{ url_for('user_index') }}">Panel de usuarios</a></li>  

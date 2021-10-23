@@ -2,7 +2,7 @@ import bcrypt, re
 from flask import redirect, render_template, request, url_for, session, abort, flash
 from app.models.user import User
 from app.helpers.auth import authenticated
-from app.helpers.permisoValidator import permisoChercker
+from app.helpers.permisoValidator import permisoChecker
 from app.db import db
 from app.validators.userDuplicateValidator import userDuplicateChecker
 from sqlalchemy import and_
@@ -11,7 +11,7 @@ from sqlalchemy import and_
 def index():
     if not authenticated(session):
         abort(401)
-    if not permisoChercker(session, 'user_index'):
+    if not permisoChecker(session, 'user_index'):
         abort(401)
     users = User.query.all()
     return render_template("user/index.html", users=users)
@@ -20,7 +20,7 @@ def index():
 def new():
     if not authenticated(session):
         abort(401)
-    if not permisoChercker(session, 'user_index'):
+    if not permisoChecker(session, 'user_index'):
         abort(401)
 
     return render_template("user/new.html")

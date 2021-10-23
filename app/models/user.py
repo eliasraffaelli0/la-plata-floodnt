@@ -1,6 +1,14 @@
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, Table, ForeignKey
 from sqlalchemy.sql import func
 from app.db import db
+from sqlalchemy.orm import relationship
+from app.models.rol import Rol
+
+
+association_table = db.Table('usuario_tiene_rol', db.metadata,
+    Column('usuario_id', ForeignKey('usuarios.id'), primary_key=True),
+    Column('rol_id', ForeignKey('roles.id'), primary_key=True)
+)
 
 class User(db.Model):
     __tablename__= "usuarios"
@@ -14,6 +22,9 @@ class User(db.Model):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     first_name = Column(String (30))
     last_name = Column(String (30))
+    roles = relationship(Rol,
+                    secondary=association_table,
+                    backref="usuarios")
 
 
     def __init__(self, email=None, username=None, activo=None, password=None, salt=None, first_name=None, last_name=None):

@@ -40,7 +40,7 @@ def create_app(environment="development"):
 
     # Funciones que se exportan al contexto de Jinja2
     app.jinja_env.globals.update(is_authenticated=helper_auth.authenticated)
-    app.jinja_env.globals.update(has_permission=helper_permisos.permisoChercker)
+    app.jinja_env.globals.update(has_permission=helper_permisos.permisoChecker)
 
     # Autenticación
     app.add_url_rule("/iniciar_sesion", "auth_login", auth.login)

@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block title %}Configuración{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+    <section id="container-configuracion">
+        <form id="formulario-configuracion" action="{{ url_for('configuracion_index') }}">
+            <p>
+                <label>Paleta de colores</label>
+                <ul id="listaConfiguracion">
+                    <li class="colores" id="azul"></li>
+                    <li class="colores" id="rojo"></li>
+                    <li class="colores" id="verde"></li>
+                </ul>
+            </p>
+            <p>
+                <label>Elementos por página</label>
+                <input type="number">
+            </p>
+            <p>
+                <label>Criterio de ordenación</label><br>
+                <select name='criterio'>
+                    <option>Más reciente</option>
+                    <option>Nombre</option>
+                </select>
+            </p>
+            </p>
+                <input type="submit" value="Aplicar">
+            </p>  
+        </form>
+    </section>
+{% endblock %}

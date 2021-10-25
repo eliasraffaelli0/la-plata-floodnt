@@ -77,6 +77,12 @@ a.link {
   letter-spacing: 1px;
 }
 
+
+/* Estilo del Navbar */
+
+#navbar{
+  margin-bottom: 10px;
+}
 #navbar ul { 
 	margin: 0; 
 	padding: 5px; 
@@ -152,6 +158,51 @@ a.link {
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #ffffff;
 color: #000;} 
+
+
+
+/* Estilo del modulo de configuración*/
+
+#container-configuracion{
+  display: flex;  
+}
+
+#formulario-configuracion{
+  margin: auto;
+  background: #204784;
+  width: 300px;
+  border-radius: 10%;
+  text-align: center;
+  color: white;
+}
+
+#listaConfiguracion{
+  margin: 0; 
+	padding: 5px; 
+	text-align: center; 
+}
+.colores{
+  display: inline-block;
+  list-style: none;
+  width: 30px;
+  height: 30px;
+  margin: 17px auto;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  cursor: pointer;
+}
+
+#azul{
+  background: #204784;
+}
+#rojo{
+  background: #842020;
+}
+#verde{
+  background: #208431;
+}
+
+
 
 
 .culo {

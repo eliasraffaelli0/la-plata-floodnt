@@ -8,6 +8,7 @@ from app.resources import auth
 from app.resources import puntos
 from app.resources import recorridos
 from app.resources import zonas
+from app.resources import configuracion
 from app.helpers import handler
 from app.helpers import auth as helper_auth
 from app.helpers import permisoValidator as helper_permisos
@@ -71,6 +72,9 @@ def create_app(environment="development"):
 
     # Rutas de Recorridos de evacuación
     app.add_url_rule("/recorridos_de_evacuacion", "recorridos_index", recorridos.index)
+
+    # Rutas del Modulo de Configuración
+    app.add_url_rule("/configuracion", "configuracion_index", configuracion.index)
 
     # Handlers
     app.register_error_handler(404, handler.not_found_error)

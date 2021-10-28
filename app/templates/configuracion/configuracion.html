@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block title %}Configuración{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<section id="container-configuracion">
+
+    <form id="formulario-configuracion" action="{{ url_for('configuracion_update') }}" method="POST">
+
+        <p>
+            <label>Paleta de colores privada</label><br>
+            <select name='tema_privado'>
+                <option value="blue">Azul</option>
+                <option value="red">Rojo</option>
+                <option value="green">Verde</option>
+            </select>
+        </p>
+        <!-- <ul class="listaConfiguracion">
+            <li class="colores azul"></li>
+            <li class="colores rojo"></li>
+            <li class="colores verde"></li>
+        </ul> -->
+        <p>
+            <label>Paleta de colores pública</label><br>
+            <select name='tema_publico'>
+                <option value="blue">Azul</option>
+                <option value="red">Rojo</option>
+                <option value="green">Verde</option>
+            </select>
+        </p>
+        <!-- <ul class="listaConfiguracion">
+            <li class="colores azul"></li>
+            <li class="colores rojo"></li>
+            <li class="colores verde"></li>
+        </ul> -->
+        </p>
+        <p>
+            <label>Elementos por página</label>
+            <input type="number" name="elementos_por_pagina">
+        </p>
+        <p>
+            <label>Criterio de ordenación</label><br>
+            <select name='criterio_de_ordenacion'>
+                <option>Más reciente</option>
+                <option>Nombre</option>
+            </select>
+        </p>
+        </p>
+        <input type="submit" value="Aplicar">
+        </p>
+    </form>
+</section>
+{% endblock %}

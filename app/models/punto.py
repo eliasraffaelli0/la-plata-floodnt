@@ -1,21 +1,39 @@
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.sql import func
+from sqlalchemy.orm import relationship
+from app.models.permiso import Permiso
 from app.db import db
 
+
+# association_table = db.Table(
+#     "rol_tiene_permiso",
+#     db.metadata,
+#     Column("rol_id", ForeignKey("roles.id"), primary_key=True),
+#     Column("permiso_id", ForeignKey("permisos.id"), primary_key=True),
+# )
+
+
 class Punto(db.Model):
-    __tablename__= "puntos_de_encuentro"
+    __tablename__ = "puntos_de_encuentro"
     id = Column(Integer, primary_key=True)
-    name = Column(String (50), unique=True)
-    direccion = Column(String (50))
-    coordenadas = Column(String (50), unique=True)
+    name = Column(String(50), unique=True)
+    direccion = Column(String(50))
+    coordenadas = Column(String(50), unique=True)
     estado = Column(Integer)
-    telefono = Column(String (50))
-    email = Column(String (50))
+    telefono = Column(String(50))
+    email = Column(String(50))
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
-
-    def __init__(self, name=None, direccion=None, coordenadas=None, estado=None, telefono=None, email=None):
+    def __init__(
+        self,
+        name=None,
+        direccion=None,
+        coordenadas=None,
+        estado=None,
+        telefono=None,
+        email=None,
+    ):
         self.name = name
         self.direccion = direccion
         self.coordenadas = coordenadas

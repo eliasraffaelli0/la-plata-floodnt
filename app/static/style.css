@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700');
 @import url('https://fonts.googleapis.com/css?family=Catamaran:400,800');
 body {
-  /* background-color: #67B7F2; */
   font-family: 'Montserrat', Helvetica, sans-serif;
   font-size: 14px;
   min-height: 100vh;
@@ -10,7 +9,6 @@ body {
 }
 
 .header{
-  /* background-color: #204784; */
   width: 100%;
   margin: 0 auto;
   display: inline-block;
@@ -44,7 +42,6 @@ body {
   height: 50px;
   margin: auto;
   text-align: center;
-  /* background-color: #204784; */
   color: white;
   /* position: fixed;
   left: 0;
@@ -88,7 +85,6 @@ a.link {
 	padding: 5px; 
 	list-style-type: none; 
 	text-align: center; 
-	/* background-color: #204784;  */
 	} 
  
 #navbar ul li {  
@@ -99,7 +95,6 @@ a.link {
 	text-decoration: none; 
 	padding: .2em 1em; 
 	color: #fff; 
-	/* background-color: #204784;  */
 	} 
  
 #navbar ul li a:hover { 
@@ -116,7 +111,6 @@ a.link {
  /* Dropdown Button */
  .dropbtn {
   display: inline-block;
-  /* background-color: #426aac; */
   color: white;
   padding: 16px;
   font-size: 16px;
@@ -169,7 +163,6 @@ color: #000;}
 
 #formulario-configuracion{
   margin: 10px auto 10px auto;
-  /* background: #204784; */
   width: 300px;
   border-radius: 10%;
   text-align: center;
@@ -229,4 +222,3 @@ color: #000;}
   float: right  !important;
   
 }
-

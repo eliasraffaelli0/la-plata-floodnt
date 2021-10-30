@@ -63,8 +63,6 @@ def create_app(environment="development"):
     # Ruta para el Home (usando decorator)
     @app.route("/")
     def home():
-        config = Configuracion.query.first()
-        g.config = config
         return render_template("home.html")
 
     # Rutas de Zonas inundables
@@ -90,6 +88,11 @@ def create_app(environment="development"):
     app.register_error_handler(404, handler.not_found_error)
     app.register_error_handler(401, handler.unauthorized_error)
     # Implementar lo mismo para el error 500
+
+    @app.context_processor
+    def context_processor():
+        config = Configuracion.query.first()
+        return dict(config=config)
 
     # Retornar la instancia de app configurada
     return app

@@ -8,9 +8,9 @@
   {% endblock %}
 </head>
 
-<body class="{{g.config.tema_privado}}">
+<body class="{{config.tema_privado}}">
   <!--------------------------HEADER ---------------------->
-  <header class="header background-{{g.config.tema_privado}}">
+  <header class="header background-{{config.tema_privado}}">
 
     <ul class="culo">
       <li><img id="logo" src="{{ url_for('static', filename='images/Logo.jpeg') }}" /></li>
@@ -28,7 +28,7 @@
       {% else %}
       <li class="li-boton">
         <div class="dropdown">
-          <button class="dropbtn background-{{g.config.tema_privado}}">{{session["username"]}}</button>
+          <button class="dropbtn background-{{config.tema_privado}}">{{session["username"]}}</button>
           <div class="dropdown-content">
             <a href="#">Perfil</a>
             <a href="{{ url_for('auth_logout') }}">Cerrar sesión</a>
@@ -41,7 +41,7 @@
     </div>
   </header>
   <!-- ------------------------NAVBAR -------------------->
-  <nav id="navbar" class="background-{{g.config.tema_privado}}">
+  <nav id="navbar" class="background-{{config.tema_privado}}">
     {% if is_authenticated(session) %}
     <ul>
       <li><a href="{{ url_for('zonas_index') }}">Administrar zonas inundables</a></li>
@@ -72,7 +72,7 @@
   </div>
 
   <!-- ------------------------ FOOTER -------------------- -->
-  <footer class="footer background-{{g.config.tema_privado}}">
+  <footer class="footer background-{{config.tema_privado}}">
     <p>Proyecto de software</p>
     {% block footer %}
     {% endblock %}

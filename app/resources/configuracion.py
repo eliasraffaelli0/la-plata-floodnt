@@ -2,7 +2,6 @@ from flask import redirect, render_template, request, url_for, session, abort
 from app.db import db
 from app.helpers.auth import authenticated
 from app.models.configuracion import Configuracion
-from flask import g
 import pdb
 
 

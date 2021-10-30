@@ -3,14 +3,14 @@ import re
 
 
 class UserValidator:
-    def __init__(self, user, params):
+    def __init__(self, user):
         self.errors = {}
         self.user = user
 
     def validate(self):
-        self.__validate_username()
         self.__validate_email_format()
         self.__validate_email()
+        self.__validate_username()
         self.__validate_input_field()
 
         return self.errors

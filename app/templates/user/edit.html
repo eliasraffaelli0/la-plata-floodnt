@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block title %}Usuarios{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<!-- <h1>Editar usuario</h1>
+<form action="{{ url_for('user_edit', username=user.username) }}" method="POST">
+    <p>
+        <label>Email<label></br>
+                <input type="email" name="email" placeholder="Correo" required />
+    </p>
+    <p>
+        <label>Username<label></br>
+                <input name="username" placeholder="username" required />
+    </p>
+    aca hay que checkear que el usuario logueado sea igual al que quiere editar
+    <p>
+        <label>Clave<label></br>
+                <input type="password" name="password" placeholder="Clave" required />
+    </p>
+    <p>
+        <label>¿Crear usuario activado?<label></br>
+                <select name='activo'>
+                    <option value='0'>Desactivado</option>
+                    <option value='1'>Activado</option>
+                </select>
+    </p>
+    <p>
+        <label>Nombre<label></br>
+                <input name="first_name" placeholder="Nombre" required />
+    </p>
+    <p>
+        <label>Apellido<label></br>
+                <input name="last_name" placeholder="Apellido" required />
+    </p>
+    <p>
+        <input type="submit" value="Crear">
+        <button type="reset">Limpiar</button>
+    </p>
+</form>
+<a href="{{ url_for('user_index') }}" class="link">Volver</a> -->
+{% endblock %}

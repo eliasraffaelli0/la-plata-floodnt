@@ -1,85 +1,70 @@
 {% extends "layout.html" %}
 {% block title %}Usuarios{% endblock %}
 {% block head %}
-  {{ super() }}
+{{ super() }}
 {% endblock %}
 {% block content %}
-  <h1>usuarios</h1>
-  <p>Filtrar por nombre y/o activo/desactivado:</p>
-  <form action="{{ url_for('user_search') }}" method="post">
-    <input type="search" placeholder="Nombre" name="first_name">
-    <select name='activo'>
-      <option value='1'>Activado</option>
-      <option value='0'>Desactivado</option>
-    </select>
-    <button type="submit">Filtrar</button>
-  </form>
-  <table>
-    <tr>
-      <th>Email</th>
-      <th>Username</th>
-      <th>Nombre</th>
-      <th>apellido</th>
-      <th>Estado</th>
-    </tr>
+<h1>usuarios</h1>
+<p>Filtrar por nombre y/o activo/desactivado:</p>
+<form action="{{ url_for('user_search') }}" method="post">
+  <input type="search" placeholder="Nombre" name="first_name">
+  <select name='activo'>
+    <option value='1'>Activado</option>
+    <option value='0'>Desactivado</option>
+  </select>
+  <button type="submit">Filtrar</button>
+</form>
+<table>
+  <tr>
+    <th>Email</th>
+    <th>Username</th>
+    <th>Nombre</th>
+    <th>apellido</th>
+    <th>Estado</th>
+  </tr>
   {% for user in users %}
-    {% if not session["user"]== user.email %} 
-    <tr>
-      <td>
-        <a href="{{ url_for('user_edit') }}" class="usuario-listado">
-          {{ user.email }}
-        </a>
-        </td>
-        <td>
-          <a href="{{ url_for('user_edit') }}" class="usuario-listado">
-            {{user.username}}
-          </a>
-        </td>
-        <a href="{{ url_for('user_edit') }}" class="usuario-listado">
-        </a>
+  {% if not session["user"]== user.email %}
+  <tr>
+    <td>
+      <a href="{{ url_for('user_edit_info', username=user.username) }}" class="usuario-listado">
+        {{ user.email }}
+      </a>
+    </td>
+    <td>
+      <a href="{{ url_for('user_edit_info', username=user.username) }}" class="usuario-listado">
+        {{user.username}}
+      </a>
+    </td>
+    <td>
+      <a href="{{ url_for('user_edit_info', username=user.username) }}" class="usuario-listado">
+        {{ user.first_name }}
+      </a>
+    </td>
+    <td>
+      <a href="{{ url_for('user_edit_info', username=user.username) }}" class="usuario-listado">
+        {{ user.last_name }}
+      </a>
+    </td>
+    <td>
+      <form action="{{ url_for('user_edit_estado', username=user.username) }}" method="POST">
         {% if user.activo %}
-          <td>
-            <a href="{{ url_for('user_edit') }}" class="usuario-listado">
-              Activo
-            </a>
-          </td>
+        <select name='activo'>
+          <option value='1'>Activado</option>
+          <option value='0'>Desactivado</option>
+        </select>
         {% else %}
-           <td>
-            <a href="{{ url_for('user_edit') }}" class="usuario-listado"> 
-              Desactivado
-            </a>
-          </td>
+        <select name='activo'>
+          <option value='0'>Desactivado</option>
+          <option value='1'>Activado</option>
+        </select>
         {% endif %}
-        <td>
-          <a href="{{ url_for('user_edit') }}" class="usuario-listado">
-            {{ user.first_name }}
-          </a>
-        </td>
-        <td>
-          <a href="{{ url_for('user_edit') }}" class="usuario-listado">
-            {{ user.last_name }}
-          </a>
-        </td>
-        <td>
-        <form action="{{ url_for('user_edit_estado', username=user.username) }}" method="POST">
-          {% if user.activo %}
-            <select name='activo'>
-              <option value='1'>Activado</option>
-              <option value='0'>Desactivado</option>
-            </select>
-          {% else %}
-            <select name='activo'>
-              <option value='0'>Desactivado</option>
-              <option value='1'>Activado</option>
-            </select>
-          {% endif %}
-            <input type="submit" value="actualizar">
-        </form>
-          </td>
-        </tr>
-      {% endif %}
-      {% endfor %}
-    </table> 
-  <a href="{{ url_for('home') }}" class="link">Volver</a>
-  <a href="{{ url_for('user_new') }}" class="link">Nuevo</a>
+        <input type="submit" value="actualizar">
+      </form>
+    </td>
+  </tr>
+  {% endif %}
+  {% endfor %}
+</table>
+<a href="{{ url_for('home') }}" class="link">Volver</a>
+<a href="{{ url_for('user_new') }}" class="link">Nuevo</a>
 {% endblock %}

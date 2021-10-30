@@ -15,6 +15,12 @@ class UserValidator:
 
         return self.errors
 
+    def validate_update(self):
+        self.__validate_email_format()
+        self.__validate_email()
+        self.__validate_username()
+        self.__validate_input_field()
+
     def __validate_email_format(self):
         # raw string utilizado para validar que se trate de un mail
         regex = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"

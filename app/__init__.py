@@ -51,13 +51,19 @@ def create_app(environment="development"):
     app.add_url_rule("/usuarios/nuevo", "user_create", user.create, methods=["POST"])
     app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
     app.add_url_rule("/usuarios", "user_edit", user.update_estado)
+    app.add_url_rule("/usuarios", "user_search", user.filter, methods=["POST"])
     app.add_url_rule(
         "/usuarios/<string:username>",
         "user_edit_estado",
         user.update_estado,
         methods=["GET", "POST"],
     )
-    app.add_url_rule("/usuarios", "user_search", user.filter, methods=["POST"])
+    app.add_url_rule(
+        "/usuarios/edit/<string:username>",
+        "user_edit_info",
+        user.edit,
+        methods=["GET"],
+    )
     # app.add_url_rule(
     #     "/usuarios/edit/<string:username>",
     #     "user_edit",

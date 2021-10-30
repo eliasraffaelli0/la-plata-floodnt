@@ -47,14 +47,6 @@ def create():
     return redirect(url_for("user_index"))
 
 
-def update_estado(username):
-    params = User(**request.form)
-    user = User.query.filter(User.username == username).first()
-    user.activo = params.activo
-    db.session.commit()
-    return redirect(url_for("user_index"))
-
-
 def filter():
     params = User(**request.form)
     if params.first_name:
@@ -67,5 +59,46 @@ def filter():
     return render_template("user/index.html", users=users)
 
 
-# def edit():
-#     return "hola"
+def update_estado(username):
+    params = User(**request.form)
+    user = User.query.filter(User.username == username).first()
+    user.activo = params.activo
+    db.session.commit()
+    return redirect(url_for("user_index"))
+
+
+def edit(username):
+    if not authenticated(session):
+        abort(401)
+
+    user = User.query.filter(User.username == username).first()
+    errors = {}
+    return render_template(
+        "user/edit.html", errors=errors, username=username, fieldsInfo=user
+    )
+
+
+def editInfo():
+    if not authenticated(session):
+        abort(401)
+
+    new_user = User(**request.form)
+    errors = {}
+    errors = UserValidator(new_user).validate()
+
+    if errors:
+        return render_template(
+            "user/edit.html",
+            errors=errors,
+            username=new_user.username,
+            fieldsInfo=new_user,
+        )
+
+    # hasheo de la contraseña
+    salt = bcrypt.gensalt()
+    new_user.salt = salt
+    new_user.password = bcrypt.hashpw(new_user.password.encode(), salt)
+
+    db.session.add(new_user)
+    db.session.commit()
+    return redirect(url_for("user_index"))

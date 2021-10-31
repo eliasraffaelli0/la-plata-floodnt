@@ -6,7 +6,8 @@
 {% block content %}
 <section id="container-configuracion">
 
-    <form id="formulario-configuracion" action="{{ url_for('configuracion_update') }}" method="POST">
+    <form id="formulario-configuracion" class="background-{{config.tema_privado}}"
+        action="{{ url_for('configuracion_update') }}" method="POST">
 
         <p>
             <label>Paleta de colores privada</label><br>

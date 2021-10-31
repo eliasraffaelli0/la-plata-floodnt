@@ -12,7 +12,6 @@ def index():
     # Accedo a la variable de configuracion de la session y pagino por la cantidad de
     # elementos que tenga almacenada en esa variable
     puntos = Punto.query.paginate(per_page=session["config"].elementos_por_pagina)
-
     return render_template("puntos/index.html", puntos=puntos)
 
 

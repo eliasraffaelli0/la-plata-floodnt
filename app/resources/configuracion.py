@@ -22,4 +22,6 @@ def update():
     configuracion.tema_privado = params.tema_privado
     configuracion.criterio_de_ordenacion = params.criterio_de_ordenacion
     db.session.commit()
+    c = Configuracion.query.first()
+    session["config"] = c
     return redirect(url_for("configuracion_index"))

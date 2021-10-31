@@ -29,6 +29,13 @@
   </tr>
   {% endfor %}
 </table>
+<div>
+  {% for page_num in puntos.iter_pages() %}
+  {% if page_num %}
+  <a class="link" href="{{ url_for('puntos_index',page=page_num) }}">{{ page_num }}</a>
+  {% endif %}
+  {% endfor %}
+</div>
 <a href="{{ url_for('home') }}" class="link">Volver</a>
 <a href="{{ url_for('puntos_new') }}" class="link">Nuevo</a>
 {% endblock %}

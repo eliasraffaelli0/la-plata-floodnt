@@ -50,7 +50,7 @@ def create_app(environment="development"):
     app.add_url_rule("/usuarios", "user_index", user.index)
     app.add_url_rule("/usuarios/nuevo", "user_create", user.create, methods=["POST"])
     app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
-    app.add_url_rule("/usuarios", "user_edit", user.update_estado)
+    # app.add_url_rule("/usuarios", "user_edit", user.update_estado)
     app.add_url_rule("/usuarios", "user_search", user.filter, methods=["POST"])
     app.add_url_rule(
         "/usuarios/<string:username>",
@@ -59,17 +59,17 @@ def create_app(environment="development"):
         methods=["GET", "POST"],
     )
     app.add_url_rule(
-        "/usuarios/edit/<string:username>",
+        "/usuarios/edit/<int:id>",
         "user_edit_info",
         user.edit,
         methods=["GET"],
     )
-    # app.add_url_rule(
-    #     "/usuarios/edit/<string:username>",
-    #     "user_edit",
-    #     user.edit,
-    #     methods=["GET", "POST"],
-    # )
+    app.add_url_rule(
+        "/usuarios/edit/<int:id>",
+        "user_edit",
+        user.editInfo,
+        methods=["GET", "POST"],
+    )
 
     # Ruta para el Home (usando decorator)
     @app.route("/")

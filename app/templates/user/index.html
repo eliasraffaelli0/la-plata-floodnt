@@ -26,22 +26,22 @@
   {% if not session["user"]== user.email %}
   <tr>
     <td>
-      <a href="{{ url_for('user_edit_info', username=user.username) }}" class="usuario-listado">
+      <a href="{{ url_for('user_edit_info', id=user.id) }}" class="usuario-listado">
         {{ user.email }}
       </a>
     </td>
     <td>
-      <a href="{{ url_for('user_edit_info', username=user.username) }}" class="usuario-listado">
+      <a href="{{ url_for('user_edit_info', id=user.id) }}" class="usuario-listado">
         {{user.username}}
       </a>
     </td>
     <td>
-      <a href="{{ url_for('user_edit_info', username=user.username) }}" class="usuario-listado">
+      <a href="{{ url_for('user_edit_info', id=user.id) }}" class="usuario-listado">
         {{ user.first_name }}
       </a>
     </td>
     <td>
-      <a href="{{ url_for('user_edit_info', username=user.username) }}" class="usuario-listado">
+      <a href="{{ url_for('user_edit_info', id=user.id) }}" class="usuario-listado">
         {{ user.last_name }}
       </a>
     </td>

@@ -4,7 +4,7 @@
 {{ super() }}
 {% endblock %}
 {% block content %}
-<h1>Crear un usuario</h1>
+<h1>Editar información del usuario</h1>
 <form action="{{ url_for('user_edit',id=id ) }}" method="POST">
     <p>
         <label>Email<label></br>
@@ -61,8 +61,7 @@
                 {% endif %}
     </p>
     <p>
-        <input type="submit" value="Crear">
-        <button type="reset">Limpiar</button>
+        <input type="submit" value="Actualizar">
     </p>
 </form>
 <a href="{{ url_for('user_index') }}" class="link">Volver</a>

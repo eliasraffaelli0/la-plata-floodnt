@@ -46,7 +46,7 @@
   <div class="container">
 
     {% if is_authenticated(session) %}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary m-3 rounded-pill text-center">
       <div class="container">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
           <span class="navbar-toggler-icon"></span>
@@ -64,6 +64,7 @@
             {% if has_permission(session, 'user_index') %}
             <li class="nav-item"><a class="nav-link" href="{{ url_for('user_index') }}">Usuarios</a></li>
             {% endif %}
+            <li class="nav-item"><a class="nav-link" href="#">Configuracion</a></li>
           </ul>
         </div>
       </div>

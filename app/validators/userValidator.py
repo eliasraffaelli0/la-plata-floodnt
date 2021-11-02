@@ -30,7 +30,7 @@ class UserValidator:
         # raw string utilizado para validar que se trate de un mail
         regex = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
         if not (re.fullmatch(regex, self.params.email)):
-            self.errors["email"] = "Ya existe un usuario con este email"
+            self.errors["email"] = "Ingrese un email válido"
 
     def __validate_email(self):
         mail_is_registered = User.query.filter(User.email == self.params.email).first()

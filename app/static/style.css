@@ -4,6 +4,7 @@ body {
   background-color: #67B7F2;
   font-family: 'Montserrat', Helvetica, sans-serif;
   font-size: 14px;
+  /* esto es para lograr que el footer se pegue al pie de la pagina usando flexbox */
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -45,7 +46,6 @@ body {
   text-align: center;
   background-color: #204784;
   text-decoration: white;
-
   margin-top: auto;
 }
 .footer p{
@@ -71,10 +71,10 @@ a.link {
   color: #416475;
   display: inline-block;
   margin-right: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   line-height: 1.5;
   text-decoration: none;
-  margin-top: 50px;
+  /* margin-top: 5px; */
   letter-spacing: 1px;
 }
 

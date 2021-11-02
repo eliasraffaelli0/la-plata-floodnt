@@ -46,6 +46,7 @@
       </a>
     </td>
     <td>
+      {% if has_permission(session, 'user_deactivate') %}
       <form action="{{ url_for('user_edit_estado', username=user.username) }}" method="POST">
         {% if user.activo %}
         <select name='activo'>
@@ -60,6 +61,17 @@
         {% endif %}
         <input type="submit" value="actualizar">
       </form>
+      {% else %}
+      {% if user.activo %}
+      <a href="{{ url_for('user_edit_info', id=user.id) }}" class="usuario-listado">
+        Activado
+      </a>
+      {% else %}
+      <a href="{{ url_for('user_edit_info', id=user.id) }}" class="usuario-listado">
+        Desactivado
+      </a>
+      {% endif %}
+      {% endif %}
     </td>
   </tr>
   {% endif %}

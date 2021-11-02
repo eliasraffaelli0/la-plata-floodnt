@@ -26,3 +26,10 @@ class User(db.Model):
     first_name = Column(String(30))
     last_name = Column(String(30))
     roles = relationship(Rol, secondary=association_table, backref="usuarios")
+
+    def permisos(self):
+        userRoles = []
+        for rol in self.roles:
+            for permiso in rol.permisos:
+                userRoles.append(permiso.name)
+        return userRoles

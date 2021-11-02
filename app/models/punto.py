@@ -5,14 +5,6 @@ from app.models.permiso import Permiso
 from app.db import db
 
 
-# association_table = db.Table(
-#     "rol_tiene_permiso",
-#     db.metadata,
-#     Column("rol_id", ForeignKey("roles.id"), primary_key=True),
-#     Column("permiso_id", ForeignKey("permisos.id"), primary_key=True),
-# )
-
-
 class Punto(db.Model):
     __tablename__ = "puntos_de_encuentro"
     id = Column(Integer, primary_key=True)
@@ -24,19 +16,3 @@ class Punto(db.Model):
     email = Column(String(50))
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     created_at = Column(DateTime(timezone=True), server_default=func.now())
-
-    def __init__(
-        self,
-        name=None,
-        direccion=None,
-        coordenadas=None,
-        estado=None,
-        telefono=None,
-        email=None,
-    ):
-        self.name = name
-        self.direccion = direccion
-        self.coordenadas = coordenadas
-        self.estado = estado
-        self.telefono = telefono
-        self.email = email

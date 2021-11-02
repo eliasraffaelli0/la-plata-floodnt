@@ -5,7 +5,7 @@ from config import config
 from app import db
 from app.resources import user
 from app.resources import auth
-from app.resources import puntos
+from app.resources import punto
 from app.resources import recorridos
 from app.resources import zonas
 from app.resources import configuracion
@@ -71,11 +71,11 @@ def create_app(environment="development"):
     app.add_url_rule("/zonas_inundables", "zonas_index", zonas.index)
 
     # Rutas de Puntos de encuentro
-    app.add_url_rule("/puntos_de_encuentro", "puntos_index", puntos.index)
+    app.add_url_rule("/puntos_de_encuentro", "puntos_index", punto.index)
     app.add_url_rule(
-        "/puntos_de_encuentro", "puntos_create", puntos.create, methods=["POST"]
+        "/puntos_de_encuentro", "puntos_create", punto.create, methods=["POST"]
     )
-    app.add_url_rule("/puntos_de_encuentro/nuevo", "puntos_new", puntos.new)
+    app.add_url_rule("/puntos_de_encuentro/nuevo", "puntos_new", punto.new)
 
     # Rutas de Recorridos de evacuación
     app.add_url_rule("/recorridos_de_evacuacion", "recorridos_index", recorridos.index)
@@ -91,11 +91,11 @@ def create_app(environment="development"):
     app.register_error_handler(401, handler.unauthorized_error)
     # Implementar lo mismo para el error 500
 
-    # Definición del context processor para poder tener la configuración en todos los templates
-    @app.context_processor
-    def context_processor():
+    # Seteo la configuracion antes de todos los request
+    @app.before_request
+    def set_configuration():
         config = Configuracion.query.first()
-        return dict(config=config)
+        g.config = config
 
     # Retornar la instancia de app configurada
     return app

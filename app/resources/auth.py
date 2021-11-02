@@ -1,6 +1,5 @@
 import bcrypt
 from flask import redirect, render_template, request, url_for, abort, session, flash
-from app.models.configuracion import Configuracion
 from app.models.user import User
 from sqlalchemy import and_
 
@@ -12,7 +11,6 @@ def login():
 def authenticate():
     params = request.form
     user = User.query.filter(User.email == params["email"]).first()
-    c = Configuracion.query.first()
     if not user:
         flash("Usuario incorrecto.")
         return redirect(url_for("home"))
@@ -26,7 +24,6 @@ def authenticate():
     if not user:
         flash("Clave incorrecta o usuario inactivo")
         return redirect(url_for("home"))
-    session["config"] = c  # Almaceno en la session la variable de configuracion
     session["user"] = user.email
     session["username"] = user.username
     flash("La sesión se inició correctamente.")

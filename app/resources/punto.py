@@ -3,15 +3,25 @@ from flask import g
 from app.db import config_db, db
 from app.helpers.auth import authenticated
 from app.models.punto import Punto
-from app.models.configuracion import Configuracion
 from app.validators.puntoDuplicateValidator import puntoDuplicateChecker
+from sqlalchemy.sql import text
 import re
 
 
 def index():
-    # Accedo a la variable de configuracion de la session y pagino por la cantidad de
-    # elementos que tenga almacenada en esa variable
-    puntos = Punto.query.paginate(per_page=session["config"].elementos_por_pagina)
+    # Accedo a la variable de configuracion del g object, pagino por la cantidad de
+    # elementos que tenga almacenada en esa variable y ordeno por el criterio
+    if g.config.criterio_de_ordenacion == "asc":
+
+        puntos = Punto.query.order_by(Punto.created_at.asc()).paginate(
+            per_page=g.config.elementos_por_pagina
+        )
+
+    elif g.config.criterio_de_ordenacion == "desc":
+        puntos = Punto.query.order_by(Punto.created_at.desc()).paginate(
+            per_page=g.config.elementos_por_pagina
+        )
+
     return render_template("puntos/index.html", puntos=puntos)
 
 

@@ -6,7 +6,7 @@
 {% block content %}
 <section id="container-configuracion">
 
-    <form id="formulario-configuracion" class="background-{{config.tema_privado}}"
+    <form id="formulario-configuracion" class="background-{{g.config.tema_privado}}"
         action="{{ url_for('configuracion_update') }}" method="POST">
 
         <p>
@@ -17,11 +17,6 @@
                 <option value="green">Verde</option>
             </select>
         </p>
-        <!-- <ul class="listaConfiguracion">
-            <li class="colores azul"></li>
-            <li class="colores rojo"></li>
-            <li class="colores verde"></li>
-        </ul> -->
         <p>
             <label>Paleta de colores pública</label><br>
             <select name='tema_publico'>
@@ -30,21 +25,16 @@
                 <option value="green">Verde</option>
             </select>
         </p>
-        <!-- <ul class="listaConfiguracion">
-            <li class="colores azul"></li>
-            <li class="colores rojo"></li>
-            <li class="colores verde"></li>
-        </ul> -->
         </p>
         <p>
             <label>Elementos por página</label>
-            <input type="number" name="elementos_por_pagina" required>
+            <input value="{{g.config.elementos_por_pagina}}" type="number" name="elementos_por_pagina" required>
         </p>
         <p>
             <label>Criterio de ordenación</label><br>
             <select name='criterio_de_ordenacion'>
-                <option>Más reciente</option>
-                <option>Nombre</option>
+                <option value="desc">Más reciente</option>
+                <option value="asc">Menos reciente</option>
             </select>
         </p>
         </p>

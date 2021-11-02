@@ -1,13 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700');
 @import url('https://fonts.googleapis.com/css?family=Catamaran:400,800');
 body {
-  background-color: #67B7F2;
   font-family: 'Montserrat', Helvetica, sans-serif;
   font-size: 14px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .header{
-  background-color: #204784;
   width: 100%;
   margin: 0 auto;
   display: inline-block;
@@ -39,16 +40,12 @@ body {
 .footer {
   width: 100%;
   height: 50px;
-  margin: 0 auto;
+  margin: auto;
   text-align: center;
-  background-color: #204784;
-  text-decoration: white;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-}
-.footer p{
   color: white;
+  /* position: fixed;
+  left: 0;
+  bottom: 0; */
 }
 
 #container {
@@ -88,7 +85,6 @@ a.link {
 	padding: 5px; 
 	list-style-type: none; 
 	text-align: center; 
-	background-color: #204784; 
 	} 
  
 #navbar ul li {  
@@ -99,7 +95,6 @@ a.link {
 	text-decoration: none; 
 	padding: .2em 1em; 
 	color: #fff; 
-	background-color: #204784; 
 	} 
  
 #navbar ul li a:hover { 
@@ -116,7 +111,6 @@ a.link {
  /* Dropdown Button */
  .dropbtn {
   display: inline-block;
-  background-color: #426aac;
   color: white;
   padding: 16px;
   font-size: 16px;
@@ -168,15 +162,14 @@ color: #000;}
 }
 
 #formulario-configuracion{
-  margin: auto;
-  background: #204784;
+  margin: 10px auto 10px auto;
   width: 300px;
   border-radius: 10%;
   text-align: center;
   color: white;
 }
 
-#listaConfiguracion{
+.listaConfiguracion{
   margin: 0; 
 	padding: 5px; 
 	text-align: center; 
@@ -192,16 +185,27 @@ color: #000;}
   cursor: pointer;
 }
 
-#azul{
-  background: #204784;
+.blue{
+  background: #78AED3;
 }
-#rojo{
-  background: #842020;
+.red{
+  background: #FF8FAB;
 }
-#verde{
-  background: #208431;
+.green{
+  background: #52B2CF;
 }
 
+.background-red {
+  background-color: #E27396;
+}
+
+.background-blue {
+  background-color: #4F77AA;
+}
+
+.background-green {
+  background-color: #7EC4CF;
+}
 
 
 

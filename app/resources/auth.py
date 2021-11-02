@@ -11,23 +11,22 @@ def login():
 def authenticate():
     params = request.form
     user = User.query.filter(User.email == params["email"]).first()
-    
     if not user:
         flash("Usuario incorrecto.")
         return redirect(url_for("home"))
-    
-    #hasheo la contraseña y la comparo con la que está en la base de datos
+
+    # hasheo la contraseña y la comparo con la que está en la base de datos
     user_pass = bcrypt.hashpw(params["password"].encode(), user.salt.encode())
-    user = User.query.filter(and_(User.email == params["email"], User.password == user_pass,User.activo)).first()
-    
+    user = User.query.filter(
+        and_(User.email == params["email"], User.password == user_pass, User.activo)
+    ).first()
+
     if not user:
         flash("Clave incorrecta o usuario inactivo")
         return redirect(url_for("home"))
-
     session["user"] = user.email
     session["username"] = user.username
     flash("La sesión se inició correctamente.")
-
     return redirect(url_for("home"))
 
 

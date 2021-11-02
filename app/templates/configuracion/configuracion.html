@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block title %}Configuración{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<section id="container-configuracion">
+
+    <form id="formulario-configuracion" class="{{g.config.tema_privado}}" action="{{ url_for('configuracion_update') }}"
+        method="POST">
+
+        <p>
+            <label>Paleta de colores privada</label><br>
+            <select name='tema_privado' aria-selected="">
+                <option value="blue" {% if g.config.tema_privado=="blue" %} selected="selected" {% endif %}>Azul
+                </option>
+                <option value="red" {% if g.config.tema_privado=="red" %} selected="selected" {% endif %}>Rojo</option>
+                <option value="green" {% if g.config.tema_privado=="green" %} selected="selected" {% endif %}>Verde
+                </option>
+            </select>
+        </p>
+        <p>
+            <label>Paleta de colores pública</label><br>
+            <select name='tema_publico'>
+                <option value="blue" {% if g.config.tema_publico=="blue" %} selected="selected" {% endif %}>Azul
+                </option>
+                <option value="red" {% if g.config.tema_publico=="red" %} selected="selected" {% endif %}>Rojo</option>
+                <option value="green" {% if g.config.tema_publico=="green" %} selected="selected" {% endif %}>Verde
+                </option>
+            </select>
+        </p>
+        </p>
+        <p>
+            <label>Elementos por página</label>
+            <input value="{{g.config.elementos_por_pagina}}" type="number" name="elementos_por_pagina" required>
+        </p>
+        <p>
+            <label>Criterio de ordenación</label><br>
+            <select name='criterio_de_ordenacion'>
+                <option value="desc" {% if g.config.criterio_de_ordenacion=="desc" %} selected="selected" {% endif %}>
+                    Más reciente</option>
+                <option value="asc" {% if g.config.criterio_de_ordenacion=="asc" %} selected="selected" {% endif %}>
+                    Menos reciente</option>
+            </select>
+        </p>
+        </p>
+        <input type="submit" value="Aplicar">
+        </p>
+    </form>
+</section>
+{% endblock %}

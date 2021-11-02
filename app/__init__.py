@@ -5,10 +5,11 @@ from config import config
 from app import db
 from app.resources import user
 from app.resources import auth
-from app.resources import puntos
+from app.resources import punto
 from app.resources import recorridos
 from app.resources import zonas
 from app.resources import configuracion
+from app.models.configuracion import Configuracion
 from app.helpers import handler
 from app.helpers import auth as helper_auth
 from app.helpers import permisoValidator as helper_permisos
@@ -74,28 +75,39 @@ def create_app(environment="development"):
     # Ruta para el Home (usando decorator)
     @app.route("/")
     def home():
+        c = Configuracion.query.first()
+        g.config = c
         return render_template("home.html")
 
     # Rutas de Zonas inundables
     app.add_url_rule("/zonas_inundables", "zonas_index", zonas.index)
 
     # Rutas de Puntos de encuentro
-    app.add_url_rule("/puntos_de_encuentro", "puntos_index", puntos.index)
+    app.add_url_rule("/puntos_de_encuentro", "puntos_index", punto.index)
     app.add_url_rule(
-        "/puntos_de_encuentro", "puntos_create", puntos.create, methods=["POST"]
+        "/puntos_de_encuentro", "puntos_create", punto.create, methods=["POST"]
     )
-    app.add_url_rule("/puntos_de_encuentro/nuevo", "puntos_new", puntos.new)
+    app.add_url_rule("/puntos_de_encuentro/nuevo", "puntos_new", punto.new)
 
     # Rutas de Recorridos de evacuación
     app.add_url_rule("/recorridos_de_evacuacion", "recorridos_index", recorridos.index)
 
     # Rutas del Modulo de Configuración
     app.add_url_rule("/configuracion", "configuracion_index", configuracion.index)
+    app.add_url_rule(
+        "/configuracion", "configuracion_update", configuracion.update, methods=["POST"]
+    )
 
     # Handlers
     app.register_error_handler(404, handler.not_found_error)
     app.register_error_handler(401, handler.unauthorized_error)
     # Implementar lo mismo para el error 500
+
+    # Seteo la configuracion antes de todos los request
+    @app.before_request
+    def set_configuration():
+        config = Configuracion.query.first()
+        g.config = config
 
     # Retornar la instancia de app configurada
     return app

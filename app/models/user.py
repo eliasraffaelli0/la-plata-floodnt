@@ -31,5 +31,5 @@ class User(db.Model):
         userRoles = []
         for rol in self.roles:
             for permiso in rol.permisos:
-                userRoles.append(permiso)
+                userRoles.append(permiso.name)
         return userRoles

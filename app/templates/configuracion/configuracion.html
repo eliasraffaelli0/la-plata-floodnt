@@ -6,23 +6,27 @@
 {% block content %}
 <section id="container-configuracion">
 
-    <form id="formulario-configuracion" class="background-{{g.config.tema_privado}}"
-        action="{{ url_for('configuracion_update') }}" method="POST">
+    <form id="formulario-configuracion" class="{{g.config.tema_privado}}" action="{{ url_for('configuracion_update') }}"
+        method="POST">
 
         <p>
             <label>Paleta de colores privada</label><br>
-            <select name='tema_privado'>
-                <option value="blue">Azul</option>
-                <option value="red">Rojo</option>
-                <option value="green">Verde</option>
+            <select name='tema_privado' aria-selected="">
+                <option value="blue" {% if g.config.tema_privado=="blue" %} selected="selected" {% endif %}>Azul
+                </option>
+                <option value="red" {% if g.config.tema_privado=="red" %} selected="selected" {% endif %}>Rojo</option>
+                <option value="green" {% if g.config.tema_privado=="green" %} selected="selected" {% endif %}>Verde
+                </option>
             </select>
         </p>
         <p>
             <label>Paleta de colores pública</label><br>
             <select name='tema_publico'>
-                <option value="blue">Azul</option>
-                <option value="red">Rojo</option>
-                <option value="green">Verde</option>
+                <option value="blue" {% if g.config.tema_publico=="blue" %} selected="selected" {% endif %}>Azul
+                </option>
+                <option value="red" {% if g.config.tema_publico=="red" %} selected="selected" {% endif %}>Rojo</option>
+                <option value="green" {% if g.config.tema_publico=="green" %} selected="selected" {% endif %}>Verde
+                </option>
             </select>
         </p>
         </p>
@@ -33,8 +37,10 @@
         <p>
             <label>Criterio de ordenación</label><br>
             <select name='criterio_de_ordenacion'>
-                <option value="desc">Más reciente</option>
-                <option value="asc">Menos reciente</option>
+                <option value="desc" {% if g.config.criterio_de_ordenacion=="desc" %} selected="selected" {% endif %}>
+                    Más reciente</option>
+                <option value="asc" {% if g.config.criterio_de_ordenacion=="asc" %} selected="selected" {% endif %}>
+                    Menos reciente</option>
             </select>
         </p>
         </p>

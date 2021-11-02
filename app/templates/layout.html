@@ -8,9 +8,9 @@
   {% endblock %}
 </head>
 
-<body class="{{g.config.tema_privado}}">
+<body class="background-{{g.config.tema_privado}}">
   <!--------------------------HEADER ---------------------->
-  <header class="header background-{{g.config.tema_privado}}">
+  <header class="header {{g.config.tema_privado}}">
 
     <ul class="culo">
       <li><img id="logo" src="{{ url_for('static', filename='images/Logo.jpeg') }}" /></li>
@@ -28,11 +28,10 @@
       {% else %}
       <li class="li-boton">
         <div class="dropdown">
-          <button class="dropbtn background-{{g.config.tema_privado}}">{{session["username"]}}</button>
+          <button class="dropbtn {{g.config.tema_privado}}">{{session["username"]}}</button>
           <div class="dropdown-content">
             <a href="#">Perfil</a>
             <a href="{{ url_for('auth_logout') }}">Cerrar sesión</a>
-            <a href="{{ url_for('configuracion_index') }}">Configuracion</a>
           </div>
         </div>
       </li>
@@ -41,7 +40,7 @@
     </div>
   </header>
   <!-- ------------------------NAVBAR -------------------->
-  <nav id="navbar" class="background-{{g.config.tema_privado}}">
+  <nav id="navbar" class="{{g.config.tema_privado}}">
     {% if is_authenticated(session) %}
     <ul>
       <li><a href="{{ url_for('zonas_index') }}">Administrar zonas inundables</a></li>
@@ -50,6 +49,12 @@
       <li><a href="#">Administrar eventos</a></li>
       {% if has_permission(session, 'user_index') %}
       <li><a href="{{ url_for('user_index') }}">Usuarios</a></li>
+      {% endif %}
+      <!-- Reemplazar el user index por el nombre del permiso para acceder a la configuracion -->
+      {% if has_permission(session, 'user_index') %}
+      <li>
+        <a href="{{ url_for('configuracion_index') }}">Configuracion</a>
+      </li>
       {% endif %}
       {% endif %}
     </ul>
@@ -72,7 +77,7 @@
   </div>
 
   <!-- ------------------------ FOOTER -------------------- -->
-  <footer class="footer background-{{g.config.tema_privado}}">
+  <footer class="footer {{g.config.tema_privado}}">
     <p>Proyecto de software</p>
     {% block footer %}
     {% endblock %}

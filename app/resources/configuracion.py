@@ -1,6 +1,7 @@
 from flask import redirect, render_template, request, url_for, session, abort
 from app.db import db
 from app.helpers.auth import authenticated
+from app.helpers.permisoValidator import permisoChecker
 from app.models.configuracion import Configuracion
 import pdb
 
@@ -8,7 +9,8 @@ import pdb
 def index():
     if not authenticated(session):
         abort(401)
-
+    if not permisoChecker(session, "user_index"):
+        abort(401)
     return render_template("configuracion/configuracion.html")
 
 

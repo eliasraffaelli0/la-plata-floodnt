@@ -11,7 +11,7 @@
 
         <p>
             <label>Paleta de colores privada</label><br>
-            <select name='tema_privado' aria-selected="">
+            <select class="form-select-sm" name='tema_privado' aria-selected="">
                 <option value="blue" {% if g.config.tema_privado=="blue" %} selected="selected" {% endif %}>Azul
                 </option>
                 <option value="red" {% if g.config.tema_privado=="red" %} selected="selected" {% endif %}>Rojo</option>
@@ -21,7 +21,7 @@
         </p>
         <p>
             <label>Paleta de colores pública</label><br>
-            <select name='tema_publico'>
+            <select class="form-select-sm" name='tema_publico'>
                 <option value="blue" {% if g.config.tema_publico=="blue" %} selected="selected" {% endif %}>Azul
                 </option>
                 <option value="red" {% if g.config.tema_publico=="red" %} selected="selected" {% endif %}>Rojo</option>
@@ -36,7 +36,7 @@
         </p>
         <p>
             <label>Criterio de ordenación</label><br>
-            <select name='criterio_de_ordenacion'>
+            <select class="form-select-sm" name='criterio_de_ordenacion'>
                 <option value="desc" {% if g.config.criterio_de_ordenacion=="desc" %} selected="selected" {% endif %}>
                     Más reciente</option>
                 <option value="asc" {% if g.config.criterio_de_ordenacion=="asc" %} selected="selected" {% endif %}>
@@ -44,7 +44,7 @@
             </select>
         </p>
         </p>
-        <input type="submit" value="Aplicar">
+        <input class="btn btn-outline-dark btn-sm" type="submit" value="Aplicar">
         </p>
     </form>
 </section>

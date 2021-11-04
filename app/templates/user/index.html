@@ -11,6 +11,7 @@
     <form action="{{ url_for('user_search') }}" method="post">
       <input type="search" placeholder="Nombre" name="first_name">
       <select class="form-select-sm" name='activo'>
+        <option value="">Estado</option>
         <option value='1'>Activado</option>
         <option value='0'>Desactivado</option>
       </select>

@@ -53,12 +53,26 @@ def create():
 
 def filter():
     params = User(**request.form)
-    if params.first_name:
-        users = User.query.filter(
-            and_(User.first_name == params.first_name, User.activo == params.activo)
+    if params.first_name and not params.activo:
+        users = (
+            User.query.filter(User.first_name == params.first_name)
+            .order_by(text(f"created_at {g.config.criterio_de_ordenacion}"))
+            .paginate(per_page=g.config.elementos_por_pagina)
+        )
+    elif params.activo and not params.first_name:
+        users = (
+            User.query.filter(User.activo == params.activo)
+            .order_by(text(f"created_at {g.config.criterio_de_ordenacion}"))
+            .paginate(per_page=g.config.elementos_por_pagina)
         )
     else:
-        users = User.query.filter(User.activo == params.activo)
+        users = (
+            User.query.filter(
+                and_(User.first_name == params.first_name, User.activo == params.activo)
+            )
+            .order_by(text(f"created_at {g.config.criterio_de_ordenacion}"))
+            .paginate(per_page=g.config.elementos_por_pagina)
+        )
 
     return render_template("user/index.html", users=users)
 

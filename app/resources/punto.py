@@ -1,6 +1,5 @@
-from flask import redirect, render_template, request, url_for, session, abort, flash
-from flask import g
-from app.db import config_db, db
+from flask import redirect, render_template, request, url_for, session, abort, flash, g
+from app.db import db
 from app.helpers.auth import authenticated
 from app.models.punto import Punto
 from app.validators.puntoDuplicateValidator import puntoDuplicateChecker

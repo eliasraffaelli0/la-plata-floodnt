@@ -1,5 +1,5 @@
-import bcrypt, re
-from flask import redirect, render_template, request, url_for, session, abort, flash
+import bcrypt
+from flask import redirect, render_template, request, url_for, session, abort, g
 from app.models.user import User
 from app.helpers.auth import authenticated
 from app.helpers.permisoValidator import permisoChecker
@@ -13,7 +13,18 @@ def index():
         abort(401)
     if not permisoChecker(session, "user_index"):
         abort(401)
-    users = User.query.all()
+
+    if g.config.criterio_de_ordenacion == "asc":
+
+        users = User.query.order_by(User.created_at.asc()).paginate(
+            per_page=g.config.elementos_por_pagina
+        )
+
+    elif g.config.criterio_de_ordenacion == "desc":
+        users = User.query.order_by(User.created_at.desc()).paginate(
+            per_page=g.config.elementos_por_pagina
+        )
+
     return render_template("user/index.html", users=users)
 
 

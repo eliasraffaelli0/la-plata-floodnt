@@ -1,41 +1,46 @@
 {% extends "layout.html" %}
 {% block title %}Puntos de encuentro{% endblock %}
 {% block head %}
-  {{ super() }}
+{{ super() }}
 {% endblock %}
 {% block content %}
+<div class="container mb-2 text-center rounded-3" style="background-color: rgba(0, 0, 0, 0.1)">
   <h1>Crear un punto de encuentro</h1>
-  <form action="{{ url_for('puntos_create') }}" method="POST">
-    <p>
-      <label>Nombre<label></br>
-      <input name="name" placeholder="Nombre" required/>
-    </p>
-    <p>
-      <label>Direccion<label></br>
-      <input name="direccion" placeholder="Direccion" required/>
-    </p>
-    <p>
-      <label>Coordenadas<label></br>
-      <input name="coordenadas" placeholder="Coordenadas" required/>
-    </p>
-    <p>
-      <label>Estado<label></br>
-        <select name='estado'>
-            <option value='1'>Publicado</option>
-            <option value='0'>Oculto</option>
+  <form class="needs-validation" action="{{ url_for('puntos_create') }}" method="POST">
+    <div class="row">
+
+      <p>
+        <label>Nombre</label></br>
+        <input name="name" placeholder="Nombre" required />
+      </p>
+      <p>
+        <label>Direccion</label></br>
+        <input name="direccion" placeholder="Direccion" required />
+      </p>
+      <p>
+        <label>Coordenadas</label></br>
+        <input name="coordenadas" placeholder="Coordenadas" required />
+      </p>
+      <p>
+        <label>Estado</label></br>
+        <select class="form-select-sm" name='estado'>
+          <option value='1'>Publicado</option>
+          <option value='0'>Oculto</option>
         </select>
-    <p>
-    <p>
-      <label>Telefono<label></br>
-      <input name="telefono" placeholder="Telefono" required/>
-    </p>
-    <p>
-      <label>Email<label></br>
-      <input type="email" name="email" placeholder="Email" required/>
-    </p>
-      <input type="submit" value="Crear">
-      <button type="reset">Limpiar</button>
-    </p>
+      </p>
+      <p>
+        <label>Telefono</label></br>
+        <input name="telefono" placeholder="Telefono" required />
+      </p>
+      <p>
+        <label>Email</label></br>
+        <input type="email" name="email" placeholder="Email" required />
+      </p>
+      <p>
+        <input class="btn btn-outline-dark btn-sm" type="submit" value="Crear">
+      </p>
+    </div>
   </form>
-  <a href="{{ url_for('puntos_index') }}" class="link">Volver</a>
+  <a href="{{ url_for('puntos_index') }}" class="btn btn-primary mb-2">Volver</a>
+</div>
 {% endblock %}

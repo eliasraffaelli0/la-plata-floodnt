@@ -14,7 +14,8 @@
       <tr class="table-light">
         <th>Nombre</th>
         <th>Direccion</th>
-        <th>Coordenadas</th>
+        <th>Latitud</th>
+        <th>Longitud</th>
         <th>Estado</th>
         <th>Tefelono</th>
         <th>Email</th>
@@ -22,14 +23,15 @@
       {% for punto in puntos.items %}
       <tr class="table-info">
         <td class="table-info">{{ punto.name }}</td>
-        <td class="table-info">{{punto.direccion}}</td>
-        <td class="table-info">{{punto.coordenadas }}</td>
-        {% if punto.estado %}
+        <td class="table-info">{{punto.address}}</td>
+        <td class="table-info">{{punto.latitude }}</td>
+        <td class="table-info">{{punto.longitude }}</td>
+        {% if punto.state %}
         <td class="table-info">Publicado </td>
         {% else %}
         <td class="table-info">Despublicado</td>
         {% endif %}
-        <td class="table-info">{{ punto.telefono }}</td>
+        <td class="table-info">{{ punto.telephone }}</td>
         <td class="table-info">{{ punto.email }}</td>
       </tr>
       {% endfor %}

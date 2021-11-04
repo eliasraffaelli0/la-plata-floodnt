@@ -17,8 +17,8 @@ import logging
 
 # Sentencias que muestran el log de las querys que ejecuta la aplicación
 
-logging.basicConfig()
-logging.getLogger("sqlalchemy.engine").setLevel(logging.INFO)
+# logging.basicConfig()
+# logging.getLogger("sqlalchemy.engine").setLevel(logging.INFO)
 
 
 def create_app(environment="development"):
@@ -35,6 +35,7 @@ def create_app(environment="development"):
     Session(app)
 
     # Configure db
+    app.config["SQLALCHEMY_ECHO"] = environment == "development"
     db.init_app(app)
 
     # Funciones que se exportan al contexto de Jinja2

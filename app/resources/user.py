@@ -5,7 +5,7 @@ from app.helpers.auth import authenticated
 from app.helpers.permisoValidator import permisoChecker
 from app.db import db
 from app.validators.userValidator import UserValidator
-from sqlalchemy import and_
+from sqlalchemy import and_, text
 
 # Protected resources
 def index():
@@ -14,16 +14,9 @@ def index():
     if not permisoChecker(session, "user_index"):
         abort(401)
 
-    if g.config.criterio_de_ordenacion == "asc":
-
-        users = User.query.order_by(User.created_at.asc()).paginate(
-            per_page=g.config.elementos_por_pagina
-        )
-
-    elif g.config.criterio_de_ordenacion == "desc":
-        users = User.query.order_by(User.created_at.desc()).paginate(
-            per_page=g.config.elementos_por_pagina
-        )
+    users = User.query.order_by(
+        text(f"created_at {g.config.criterio_de_ordenacion}")
+    ).paginate(per_page=g.config.elementos_por_pagina)
 
     return render_template("user/index.html", users=users)
 
@@ -93,7 +86,6 @@ def editInfo(id):
 
     user = User.query.filter(User.id == id).first()
     new_user = User(**request.form)
-    errors = {}
     errors = UserValidator(new_user, user).validate_update()
 
     if errors:

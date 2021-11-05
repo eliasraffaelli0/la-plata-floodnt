@@ -10,31 +10,57 @@
     <div class="row">
 
       <p>
-        <label>Nombre</label></br>
-        <input name="name" placeholder="Nombre" required />
+        <label class="form-label">Nombre</label></br>
+        {% if errors["name"] %}
+        <input value="{{fieldsInfo.name}}" name="name" placeholder="Nombre" required
+          style="box-shadow: 0 0 3px #CC0000" />
+      <p style="color:red"> {{errors["name"]}} </p>
+      {% elif errors %}
+      <input value="{{fieldsInfo.name}}" name="name" required />
+      {% else %}
+      <input name="name" placeholder="Nombre" required />
+      {% endif %}
       </p>
       <p>
-        <label>Direccion</label></br>
-        <input name="direccion" placeholder="Direccion" required />
+        <label class="form-label">Direccion</label></br>
+        {% if errors %}
+        <input value="{{fieldsInfo.address}}" name="address" required />
+        {% else %}
+        <input name="address" placeholder="Direccion" required />
+        {% endif %}
       </p>
       <p>
-        <label>Coordenadas</label></br>
-        <input name="coordenadas" placeholder="Coordenadas" required />
+        <label>Latitud</label></br>
+        <input name="latitude" placeholder="Latitud" required />
+      </p>
+      <p>
+        <label>Longitud</label></br>
+        <input name="longitude" placeholder="Longitud" required />
       </p>
       <p>
         <label>Estado</label></br>
-        <select class="form-select-sm" name='estado'>
+        <select class="form-select-sm" name='state'>
           <option value='1'>Publicado</option>
           <option value='0'>Oculto</option>
         </select>
       </p>
       <p>
-        <label>Telefono</label></br>
-        <input name="telefono" placeholder="Telefono" required />
+        <label class="form-label">Telefono</label></br>
+        {% if errors %}
+        <input value="{{fieldsInfo.telephone}}" name="telephone" required />
+        {% else %}
+        <input name="telephone" placeholder="Telefono" required />
+        {% endif %}
       </p>
       <p>
-        <label>Email</label></br>
-        <input type="email" name="email" placeholder="Email" required />
+        <label class="form-label" for="email">Email</label></br>
+        {% if errors %}
+        <input id="email" value="{{fieldsInfo.email}}" type="email" name="email" placeholder="Correo" required
+          style="box-shadow: 0 0 3px #CC0000" />
+      <p style="color:red"> {{errors["email"]}} </p>
+      {% else %}
+      <input id="email" type="email" name="email" placeholder="Correo" required />
+      {% endif %}
       </p>
       <p>
         <input class="btn btn-outline-dark btn-sm" type="submit" value="Crear">

@@ -232,3 +232,9 @@ input:invalid,
 textarea:invalid {
   border-color: red;
 }
+
+
+.fotito{
+  width: 20px;
+  height: 20px;
+}

@@ -28,48 +28,36 @@
         <th>Nombre</th>
         <th>apellido</th>
         <th>Estado</th>
+        <th>Acciones</th>
       </tr>
       {% for user in users.items %}
       {% if not session["user"]== user.email %}
       <tr class="table-info">
         <td class="table-info">
-          <a href="{{ url_for('user_edit_info', id=user.id) }}" class="usuario-listado">
-            {{ user.email }}
-          </a>
+          {{ user.email }}
         </td>
         <td class="table-info">
-          <a href="{{ url_for('user_edit_info', id=user.id) }}" class="usuario-listado">
-            {{user.username}}
-          </a>
+          {{user.username}}
         </td>
         <td class="table-info">
-          <a href="{{ url_for('user_edit_info', id=user.id) }}" class="usuario-listado">
-            {{ user.first_name }}
-          </a>
+          {{ user.first_name }}
         </td>
         <td class="table-info">
-          <a href="{{ url_for('user_edit_info', id=user.id) }}" class="usuario-listado">
-            {{ user.last_name }}
-          </a>
+          {{ user.last_name }}
         </td>
         <td class="table-info">
-          <form action="{{ url_for('user_edit_estado', username=user.username) }}" method="POST">
-            {% if user.activo %}
-            <select name='activo'>
-              <option value='1'>Activado</option>
-              <option value='0'>Desactivado</option>
-            </select>
-            {% else %}
-            <select name='activo'>
-              <option value='0'>Desactivado</option>
-              <option value='1'>Activado</option>
-            </select>
-            {% endif %}
-            <input type="submit" value="actualizar">
-          </form>
+          {% if user.activo %}
+          Activado
+          {% else %}
+          Desactivado
+          {% endif %}
+        </td>
+        <td class="table-info"><a href="{{ url_for('user_edit', id=user.id) }}"><img src="static/images/pencil.png"
+              class="fotito"></a>
         </td>
       </tr>
       {% endif %}
+
       {% endfor %}
     </table>
   </div>

@@ -7,6 +7,16 @@
 <div class="container text-center">
   <div class="container mb-2">
     <h1>Puntos de encuentro</h1>
+    <p>Filtrar por nombre y/o publicado/oculto:</p>
+    <form action="{{ url_for('puntos_search') }}" method="post">
+      <input type="search" placeholder="Nombre" name="name">
+      <select class="form-select-sm" name='state'>
+        <option value="">Estado</option>
+        <option value='1'>Publicado</option>
+        <option value='0'>Oculto</option>
+      </select>
+      <button class="btn btn-outline-primary btn-sm" type="submit">Filtrar</button>
+    </form>
   </div>
   <div class="table-responsive">
 
@@ -14,23 +24,35 @@
       <tr class="table-light">
         <th>Nombre</th>
         <th>Direccion</th>
-        <th>Coordenadas</th>
+        <th>Latitud</th>
+        <th>Longitud</th>
         <th>Estado</th>
         <th>Tefelono</th>
         <th>Email</th>
+        <th>Acciones</th>
       </tr>
       {% for punto in puntos.items %}
       <tr class="table-info">
-        <td class="table-info">{{ punto.name }}</td>
-        <td class="table-info">{{punto.direccion}}</td>
-        <td class="table-info">{{punto.coordenadas }}</td>
-        {% if punto.estado %}
-        <td class="table-info">Publicado </td>
-        {% else %}
-        <td class="table-info">Despublicado</td>
-        {% endif %}
-        <td class="table-info">{{ punto.telefono }}</td>
+        <td class="table-info">{{ punto.name }}</a></td>
+        <td class="table-info">{{ punto.address }}</td>
+        <td class="table-info">{{ punto.latitude }}</td>
+        <td class="table-info">{{ punto.longitude }}</td>
+        <td class="table-info">
+          <form action="{{ url_for('puntos_edit_estado', name=punto.name) }}" method="POST">
+            {% if punto.state %}
+            Publicado
+            {% else %}
+            Oculto
+            {% endif %}
+        </td>
+        <td class="table-info">{{ punto.telephone }}</td>
         <td class="table-info">{{ punto.email }}</td>
+        <td class="table-info">
+          <a href="{{ url_for('puntos_edit', id=punto.id) }}"><img src="static/images/pencil.png" class="fotito"></a>
+          <a href=" {{ url_for('puntos_delete', id=punto.id) }}"
+            onclick="return confirm('Desea eliminar el punto: {{ punto.name }}? Esta acción no podrá deshacerse');"
+            title="Delete Merchant"><img src="static/images/delete.png" class="fotito"></a>
+        </td>
       </tr>
       {% endfor %}
     </table>

@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+{% block title %}Puntos de encuentro{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<div class="container mb-2 text-center rounded-3" style="background-color: rgba(0, 0, 0, 0.1)">
+    <h1>Editar información del punto de encuentro</h1>
+
+    <form class="needs-validation" action="{{ url_for('puntos_edit',id=id ) }}" method="POST">
+        <div class="row">
+
+            <p>
+                <label class="form-label" for="name">Nombre</label></br>
+                {% if errors["name"] %}
+                <input id="name" value="{{fieldsInfo.name}}" type="name" name="name" placeholder="Correo" required
+                    style="box-shadow: 0 0 3px #CC0000" />
+            <p style="color:red"> {{errors["name"]}} </p>
+            {% else %}
+            <input id="name" value="{{fieldsInfo.name}}" type="name" name="name" placeholder="Correo" required />
+            {% endif %}
+            </p>
+            {% if errors[""] %}
+            <p style="color:red"> {{errors[""]}} </p>
+            {% else %}
+            {% endif %}
+            <p>
+                <label class="form-label">Direccion</label></br>
+                {% if errors["address"] %}
+                <input value="{{fieldsInfo.address}}" name="address" placeholder="address" required
+                    style="box-shadow: 0 0 3px #CC0000" />
+            <p style="color:red"> {{errors["address"]}} </p>
+            {% else %}
+            <input value="{{fieldsInfo.address}}" name="address" placeholder="address" required />
+            {% endif %}
+            </p>
+            <p>
+                <label>Cambiar estado de usuario</label></br>
+                {% if fieldsInfo.state %}
+                <select class="form-select-sm" name='state'>
+                    <option value='1'>Publicado</option>
+                    <option value='0'>Oculto</option>
+                </select>
+                {% else %}
+                <select class="form-select-sm" name='state'>
+                    <option value='0'>Oculto</option>
+                    <option value='1'>Publicado</option>
+                </select>
+                {% endif %}
+            </p>
+            <p>
+                <label>Telefono</label></br>
+                {% if errors %}
+                <input value="{{fieldsInfo.telephone}}" name="telephone" placeholder="Nombre" required />
+                {% else %}
+                <input value="{{fieldsInfo.telephone}}" name="telephone" placeholder="Nombre" required />
+                {% endif %}
+            </p>
+            <p>
+                <label class="form-label" for="email">Email</label></br>
+                {% if errors["email"] %}
+                <input id="email" value="{{fieldsInfo.email}}" type="email" name="email" placeholder="Correo" required
+                    style="box-shadow: 0 0 3px #CC0000" />
+            <p style="color:red"> {{errors["email"]}} </p>
+            {% else %}
+            <input id="email" value="{{fieldsInfo.email}}" type="email" name="email" placeholder="Correo" required />
+            {% endif %}
+            </p>
+            <p>
+                <input class="btn btn-outline-dark btn-sm" type="submit" value="Actualizar">
+            </p>
+        </div>
+    </form>
+    <a href="{{ url_for('puntos_index') }}" class="btn btn-primary mb-2">Volver</a>
+</div>
+{% endblock %}

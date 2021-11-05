@@ -7,6 +7,15 @@
 <div class="container text-center">
   <div class="container mb-2">
     <h1>Puntos de encuentro</h1>
+    <p>Filtrar por nombre y/o publicado/oculto:</p>
+    <form action="{{ url_for('puntos_search') }}" method="post">
+      <input type="search" placeholder="Nombre" name="name">
+      <select class="form-select-sm" name='state'>
+        <option value='1'>Publicado</option>
+        <option value='0'>Oculto</option>
+      </select>
+      <button class="btn btn-outline-primary btn-sm" type="submit">Filtrar</button>
+    </form>
   </div>
   <div class="table-responsive">
 
@@ -29,7 +38,7 @@
         {% if punto.state %}
         <td class="table-info">Publicado </td>
         {% else %}
-        <td class="table-info">Despublicado</td>
+        <td class="table-info">Oculto</td>
         {% endif %}
         <td class="table-info">{{ punto.telephone }}</td>
         <td class="table-info">{{ punto.email }}</td>

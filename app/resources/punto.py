@@ -4,7 +4,7 @@ from app.helpers.auth import authenticated
 from app.models.punto import Punto
 from app.validators.puntoValidator import PuntoValidator
 from app.helpers.permisoValidator import permisoChecker
-from sqlalchemy.sql import text
+from sqlalchemy.sql import text, and_
 import re
 
 
@@ -59,3 +59,29 @@ def create():
     db.session.add(new_punto)
     db.session.commit()
     return redirect(url_for("puntos_index"))
+
+
+def filter():
+    params = Punto(**request.form)
+    if params.name and not params.state:
+        puntos = (
+            Punto.query.filter(Punto.name == params.name)
+            .order_by(text(f"created_at {g.config.criterio_de_ordenacion}"))
+            .paginate(per_page=g.config.elementos_por_pagina)
+        )
+    elif params.state and not params.name:
+        puntos = (
+            Punto.query.filter(Punto.state == params.state)
+            .order_by(text(f"created_at {g.config.criterio_de_ordenacion}"))
+            .paginate(per_page=g.config.elementos_por_pagina)
+        )
+    else:
+        puntos = (
+            Punto.query.filter(
+                and_(Punto.name == params.name, Punto.state == params.state)
+            )
+            .order_by(text(f"created_at {g.config.criterio_de_ordenacion}"))
+            .paginate(per_page=g.config.elementos_por_pagina)
+        )
+
+    return render_template("puntos/index.html", puntos=puntos)

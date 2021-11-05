@@ -110,6 +110,8 @@ def create_app(environment="development"):
         punto.editInfo,
         methods=["GET", "POST"],
     )
+    app.add_url_rule("/puntos_de_encuentro/<int:id>", "puntos_delete", punto.delete)
+
     # Rutas de Recorridos de evacuación
     app.add_url_rule("/recorridos_de_evacuacion", "recorridos_index", recorridos.index)
 

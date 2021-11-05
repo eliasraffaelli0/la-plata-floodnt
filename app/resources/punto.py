@@ -128,3 +128,12 @@ def editInfo(id):
     punto.telephone = new_punto.telephone
     db.session.commit()
     return redirect(url_for("puntos_index"))
+
+
+def delete(id):
+    if not authenticated(session):
+        abort(401)
+    punto = Punto.query.filter(Punto.id == id).first()
+    db.session.delete(punto)
+    db.session.commit()
+    return redirect(url_for("puntos_index"))

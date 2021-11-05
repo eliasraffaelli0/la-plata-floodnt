@@ -11,6 +11,7 @@
     <form action="{{ url_for('puntos_search') }}" method="post">
       <input type="search" placeholder="Nombre" name="name">
       <select class="form-select-sm" name='state'>
+        <option value="">Estado</option>
         <option value='1'>Publicado</option>
         <option value='0'>Oculto</option>
       </select>
@@ -31,15 +32,26 @@
       </tr>
       {% for punto in puntos.items %}
       <tr class="table-info">
-        <td class="table-info">{{ punto.name }}</td>
-        <td class="table-info">{{punto.address}}</td>
-        <td class="table-info">{{punto.latitude }}</td>
-        <td class="table-info">{{punto.longitude }}</td>
-        {% if punto.state %}
-        <td class="table-info">Publicado </td>
-        {% else %}
-        <td class="table-info">Oculto</td>
-        {% endif %}
+        <td class="table-info"><a href="{{ url_for('puntos_edit', id=punto.id)}}">{{ punto.name }}</a></td>
+        <td class="table-info">{{ punto.address }}</td>
+        <td class="table-info">{{ punto.latitude }}</td>
+        <td class="table-info">{{ punto.longitude }}</td>
+        <td class="table-info">
+          <form action="{{ url_for('puntos_edit_estado', name=punto.name) }}" method="POST">
+            {% if punto.state %}
+            <select name='state'>
+              <option value='1'>Publicado</option>
+              <option value='0'>Oculto</option>
+            </select>
+            {% else %}
+            <select name='state'>
+              <option value='0'>Oculto</option>
+              <option value='1'>Publicado</option>
+            </select>
+            {% endif %}
+            <input type="submit" value="actualizar">
+          </form>
+        </td>
         <td class="table-info">{{ punto.telephone }}</td>
         <td class="table-info">{{ punto.email }}</td>
       </tr>

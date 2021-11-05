@@ -19,8 +19,7 @@ class PuntoValidator:
     # Validaciones a afectuar a la hora de actualizar la info de un usuario tercero
     def validate_update(self):
         self.__validate_email_format()
-        self.__validate_email_update()
-        self.__validate_username_update()
+        self.__validate_name_update()
         self.__validate_input_field()
 
         return self.errors
@@ -44,15 +43,15 @@ class PuntoValidator:
         ):
             self.errors["emptyField"] = "Debe completar todos los campos"
 
-    # def __validate_email_update(self):
-    #     mail_is_registered = (
-    #         User.query.filter(User.email == self.params.email)
-    #         .filter(User.email != self.user.email)
-    #         .first()
-    #     )
+    def __validate_name_update(self):
+        name_is_registered = (
+            Punto.query.filter(Punto.name == self.params.name)
+            .filter(Punto.name != self.punto.name)
+            .first()
+        )
 
-    #     if mail_is_registered:
-    #         self.errors["email"] = "Ya existe un usuario con este email"
+        if name_is_registered:
+            self.errors["name"] = "Ya existe un punto con este nombre"
 
     # def __validate_username_update(self):
     #     mail_is_registered = (

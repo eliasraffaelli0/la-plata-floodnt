@@ -85,3 +85,46 @@ def filter():
         )
 
     return render_template("puntos/index.html", puntos=puntos)
+
+
+def update_estado(name):
+    params = Punto(**request.form)
+    punto = Punto.query.filter(Punto.name == name).first()
+    punto.state = params.state
+    db.session.commit()
+    return redirect(url_for("puntos_index"))
+
+
+def edit(id):
+    if not authenticated(session):
+        abort(401)
+
+    punto = Punto.query.filter(Punto.id == id).first()
+    errors = {}
+    return render_template(
+        "puntos/edit.html", id=punto.id, errors=errors, fieldsInfo=punto
+    )
+
+
+def editInfo(id):
+    if not authenticated(session):
+        abort(401)
+
+    punto = Punto.query.filter(Punto.id == id).first()
+    new_punto = Punto(**request.form)
+    errors = PuntoValidator(new_punto, punto).validate_update()
+
+    if errors:
+        return render_template(
+            "puntos/edit.html",
+            errors=errors,
+            id=punto.id,
+            fieldsInfo=new_punto,
+        )
+    punto.email = new_punto.email
+    punto.name = new_punto.name
+    punto.address = new_punto.address
+    punto.state = new_punto.state
+    punto.telephone = new_punto.telephone
+    db.session.commit()
+    return redirect(url_for("puntos_index"))

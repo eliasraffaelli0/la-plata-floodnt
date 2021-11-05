@@ -87,14 +87,6 @@ def filter():
     return render_template("puntos/index.html", puntos=puntos)
 
 
-def update_estado(name):
-    params = Punto(**request.form)
-    punto = Punto.query.filter(Punto.name == name).first()
-    punto.state = params.state
-    db.session.commit()
-    return redirect(url_for("puntos_index"))
-
-
 def edit(id):
     if not authenticated(session):
         abort(401)

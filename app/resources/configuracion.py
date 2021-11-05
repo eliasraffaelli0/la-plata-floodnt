@@ -1,4 +1,5 @@
 from flask import redirect, render_template, request, url_for, session, abort
+from sqlalchemy.sql.expression import false
 from app.db import db
 from app.helpers.auth import authenticated
 from app.helpers.permisoValidator import permisoChecker
@@ -15,6 +16,7 @@ def index():
 
 
 def update():
+
     if not authenticated(session):
         abort(401)
     params = Configuracion(**request.form)
@@ -24,6 +26,4 @@ def update():
     configuracion.tema_privado = params.tema_privado
     configuracion.criterio_de_ordenacion = params.criterio_de_ordenacion
     db.session.commit()
-    c = Configuracion.query.first()
-    session["config"] = c
     return redirect(url_for("configuracion_index"))

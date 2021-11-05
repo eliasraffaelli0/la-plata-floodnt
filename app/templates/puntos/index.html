@@ -38,12 +38,11 @@
         <td class="table-info">{{ punto.latitude }}</td>
         <td class="table-info">{{ punto.longitude }}</td>
         <td class="table-info">
-          <form action="{{ url_for('puntos_edit_estado', name=punto.name) }}" method="POST">
-            {% if punto.state %}
-            Publicado
-            {% else %}
-            Oculto
-            {% endif %}
+          {% if punto.state %}
+          Publicado
+          {% else %}
+          Oculto
+          {% endif %}
         </td>
         <td class="table-info">{{ punto.telephone }}</td>
         <td class="table-info">{{ punto.email }}</td>

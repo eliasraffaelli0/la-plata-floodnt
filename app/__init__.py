@@ -93,12 +93,6 @@ def create_app(environment="development"):
         "/puntos_de_encuentro", "puntos_search", punto.filter, methods=["POST"]
     )
     app.add_url_rule(
-        "/puntos_de_encuentro/<string:name>",
-        "puntos_edit_estado",
-        punto.update_estado,
-        methods=["GET", "POST"],
-    )
-    app.add_url_rule(
         "/puntos_de_encuentro/edit/<int:id>",
         "puntos_edit",
         punto.edit,

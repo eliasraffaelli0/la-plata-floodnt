@@ -2,11 +2,25 @@
 {% block title %}Puntos de encuentro{% endblock %}
 {% block head %}
 {{ super() }}
+
+<!-- leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+  crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
+
+<!-- leaflet draw -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js"></script>
+
+<script type="module" src="{{ url_for('static', filename='js/index.js') }}"></script>
 {% endblock %}
 {% block content %}
 <div class="container mb-2 text-center rounded-3" style="background-color: rgba(0, 0, 0, 0.1)">
   <h1>Crear un punto de encuentro</h1>
-  <form class="needs-validation" action="{{ url_for('puntos_create') }}" method="POST">
+  <form id="create-punto-form" class="needs-validation" action="{{ url_for('puntos_create') }}" method="POST">
     <div class="row">
 
       <p>
@@ -30,13 +44,14 @@
         {% endif %}
       </p>
       <p>
-        <label>Latitud</label></br>
-        <input name="latitude" placeholder="Latitud" required />
+        <input id="latitude" name="latitude" placeholder="Latitud" required />
       </p>
       <p>
-        <label>Longitud</label></br>
-        <input name="longitude" placeholder="Longitud" required />
+        <input id="longitude" name="longitude" placeholder="Longitud" required />
       </p>
+      <div id="map">
+        <div id="mapid"></div>
+      </div>
       <p>
         <label>Estado</label></br>
         <select class="form-select-sm" name='state'>

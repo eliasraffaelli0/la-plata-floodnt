@@ -238,3 +238,13 @@ textarea:invalid {
   width: 20px;
   height: 20px;
 }
+
+
+#latitude, #longitude{
+  display: none;
+}
+
+#map{
+  height: 500px;
+  width: 500px;
+}

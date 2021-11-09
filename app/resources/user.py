@@ -127,12 +127,18 @@ def editRol(id):
 
     user = User.query.filter(User.id == id).first()
     params = request.form.getlist("name")
+
+    """Traigo los roles que tengan el mismo nombre que los que contiene params y se los agrego al usuario"""
     for param in params:
         rol = Rol.query.filter(Rol.name == param).first()
         user.roles.append(rol)
 
-    db.session.commit()
-    import pdb
+    """uso list comprehension para obtener los nombres de los roles que tiene el usuario, luego quito los que ya están en params.
+    De esta forma verifico que en el formulario se le haya quitado un rol que el usuario tenía asignado.
+    Luego de quedarme con los roles que el usuario ya no debería tener, hago un remove y se los quito de sus roles"""
+    rolesARemover = list(set([x.name for x in user.roles]) - set(params))
+    for rol in rolesARemover:
+        user.roles.remove(Rol.query.filter(Rol.name == rol).first())
 
-    pdb.set_trace()
+    db.session.commit()
     return redirect(url_for("user_index"))

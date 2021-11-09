@@ -245,6 +245,11 @@ textarea:invalid {
 }
 
 #map{
-  height: 500px;
-  width: 500px;
+  height: 400px;
+  width: 100%;
+  display: inline-block;
+}
+#mapid{
+  height: 399px;
+  width: 100%;
 }

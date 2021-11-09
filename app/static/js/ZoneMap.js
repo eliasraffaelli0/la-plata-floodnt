@@ -17,6 +17,7 @@ export class ZoneMap {
         this.map.on('draw:deleted', () => {
             this.#deleteHandler(this.map, this.editControls, this.createControls)
         });
+        this.map.addEventListener('click', (e) => { addMarker(e.latlng) });
 
     }
 
@@ -31,6 +32,13 @@ export class ZoneMap {
 
     }
 
+
+    addMarker({ lat, lng }) {
+        if (marker) {
+            marker.remove();
+        };
+        marker = L.marker([lat, lng]).addTo(this.map)
+    }
     #eventHandler(e, map, drawnItems, editControls, createControls) {
         const existingZones = Object.values(drawnItems._layers);
 
@@ -39,7 +47,7 @@ export class ZoneMap {
             const layer = e.layer;
 
             if (type === 'marker') {
-                //kk
+                this.addMarker(e.latlng);
             }
             layer.editing.enable();
             drawnItems.addLayer(layer);
@@ -75,7 +83,6 @@ export class ZoneMap {
         return this.createControlsToolbar ||= new L.Control.Draw({
             draw: {
                 circle: false,
-                marker: false,
                 polyline: false
             }
         });

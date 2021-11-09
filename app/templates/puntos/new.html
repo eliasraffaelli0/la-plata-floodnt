@@ -22,7 +22,6 @@
   <h1>Crear un punto de encuentro</h1>
   <form id="create-punto-form" class="needs-validation" action="{{ url_for('puntos_create') }}" method="POST">
     <div class="row">
-
       <p>
         <label class="form-label">Nombre</label></br>
         {% if errors["name"] %}

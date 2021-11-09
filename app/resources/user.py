@@ -1,6 +1,7 @@
 import bcrypt
 from flask import redirect, render_template, request, url_for, session, abort, g
 from app.models.user import User
+from app.models.rol import Rol
 from app.helpers.auth import authenticated
 from app.helpers.permisoValidator import permisoChecker
 from app.db import db
@@ -91,7 +92,9 @@ def edit(id):
 
     user = User.query.filter(User.id == id).first()
     errors = {}
-    return render_template("user/edit.html", id=user.id, errors=errors, fieldsInfo=user)
+    return render_template(
+        "user/edit.html", id=user.id, errors=errors, fieldsInfo=user, rolInfo=user.roles
+    )
 
 
 def editInfo(id):
@@ -100,6 +103,7 @@ def editInfo(id):
 
     user = User.query.filter(User.id == id).first()
     new_user = User(**request.form)
+
     errors = UserValidator(new_user, user).validate_update()
 
     if errors:
@@ -114,4 +118,21 @@ def editInfo(id):
     user.first_name = new_user.first_name
     user.last_name = new_user.last_name
     db.session.commit()
+    return redirect(url_for("user_index"))
+
+
+def editRol(id):
+    if not authenticated(session):
+        abort(401)
+
+    user = User.query.filter(User.id == id).first()
+    params = request.form.getlist("name")
+    for param in params:
+        rol = Rol.query.filter(Rol.name == param).first()
+        user.roles.append(rol)
+
+    db.session.commit()
+    import pdb
+
+    pdb.set_trace()
     return redirect(url_for("user_index"))

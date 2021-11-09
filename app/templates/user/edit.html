@@ -14,7 +14,7 @@
             </h4>
             <form class="p-2" action="{{ url_for('user_edit_rol', id=id) }}" method="POST">
                 <ul class="list-group mb-3">
-                    {% if rolInfo|selectattr("name", "None") %}
+                    {% if rolInfo|selectattr("name", "equalto", "Moderador")| list %}
                     <li class="list-group-item d-flex justify-content-between lh-sm">
                         <div class="form-check form-switch">
                             <input class="form-check-input" name="name" value="Moderador" type="checkbox" checked>
@@ -29,7 +29,7 @@
                         </div>
                     </li>
                     {% endif %}
-                    {% if rolInfo|selectattr("name", "Administrador") %}
+                    {% if rolInfo|selectattr("name", "equalto", "Administrador")| list %}
                     <li class="list-group-item d-flex justify-content-between lh-sm">
                         <div class="form-check form-switch">
                             <input class="form-check-input" name="name" value="Administrador" type="checkbox" checked>

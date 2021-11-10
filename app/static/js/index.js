@@ -14,7 +14,12 @@ const submitHandler = (event, map) => {
 
         const formData = new FormData();
         formData.append('name', name);
+        formData.append('address', address);
         formData.append('coordinates', JSON.stringify(coordinates));
+        formData.append('state', state);
+        formData.append('telephone', telephone);
+        formData.append('email', email);
+
 
         fetch('/puntos_de_encuentro/nuevo', {
             method: 'POST',
@@ -23,10 +28,19 @@ const submitHandler = (event, map) => {
     }
 }
 
+const punto_geometric_figures = {
+    circle: false,
+    polyline: false,
+    rectangle: false,
+    polygon: false,
+
+}
+
 window.onload = () => {
     const map = new ZoneMap({
         selector: 'mapid',
-        addSearch: true
+        addSearch: false,
+        geometricFigures: punto_geometric_figures
     });
     const form = document.querySelector('#create-punto-form');
 

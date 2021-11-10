@@ -4,11 +4,12 @@ const mapLayerUrl = 'https://{s}.tile.openstreetmap.de/{z}/{x}/{y}.png'
 
 export class ZoneMap {
     #drawnItems;
+    #geometricFigures;
 
-    constructor({ selector }) {
+    constructor({ selector, geometricFigures }) {
         this.#drawnItems = new L.FeatureGroup();
-
-        this.#initializeMap(selector);
+        this.#geometricFigures = geometricFigures;
+        this.#initializeMap(selector, this.#geometricFigures);
 
         this.map.on(L.Draw.Event.CREATED, (e) => {
             this.#eventHandler(e, this.map, this.#drawnItems, this.editControls, this.createControls)
@@ -17,7 +18,6 @@ export class ZoneMap {
         this.map.on('draw:deleted', () => {
             this.#deleteHandler(this.map, this.editControls, this.createControls)
         });
-        this.map.addEventListener('click', (e) => { addMarker(e.latlng) });
 
     }
 
@@ -32,13 +32,6 @@ export class ZoneMap {
 
     }
 
-
-    addMarker({ lat, lng }) {
-        if (marker) {
-            marker.remove();
-        };
-        marker = L.marker([lat, lng]).addTo(this.map)
-    }
     #eventHandler(e, map, drawnItems, editControls, createControls) {
         const existingZones = Object.values(drawnItems._layers);
 
@@ -46,10 +39,7 @@ export class ZoneMap {
             const type = e.layerType;
             const layer = e.layer;
 
-            if (type === 'marker') {
-                this.addMarker(e.latlng);
-            }
-            layer.editing.enable();
+
             drawnItems.addLayer(layer);
             editControls.addTo(map);
             createControls.remove();
@@ -81,10 +71,7 @@ export class ZoneMap {
 
     get createControls() {
         return this.createControlsToolbar ||= new L.Control.Draw({
-            draw: {
-                circle: false,
-                polyline: false
-            }
+            draw: this.#geometricFigures
         });
     }
 }

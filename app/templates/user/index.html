@@ -75,6 +75,8 @@
     </nav>
 
     <a href="{{ url_for('home') }}" class="btn btn-primary mb-2">Volver</a>
+    {% if has_permission(session, 'user_new') %}
     <a href="{{ url_for('user_new') }}" class="btn btn-primary mb-2">Nuevo</a>
+    {% endif %}
   </div>
   {% endblock %}

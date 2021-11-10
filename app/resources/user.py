@@ -1,6 +1,7 @@
 import bcrypt
 from flask import redirect, render_template, request, url_for, session, abort, g
 from app.models.user import User
+from app.models.rol import Rol
 from app.helpers.auth import authenticated
 from app.helpers.permisoValidator import permisoChecker
 from app.db import db
@@ -24,7 +25,7 @@ def index():
 def new():
     if not authenticated(session):
         abort(401)
-    if not permisoChecker(session, "user_index"):
+    if not permisoChecker(session, "user_new"):
         abort(401)
     errors = {}
     return render_template("user/new.html", errors=errors)
@@ -32,6 +33,8 @@ def new():
 
 def create():
     if not authenticated(session):
+        abort(401)
+    if not permisoChecker(session, "user_new"):
         abort(401)
 
     new_user = User(**request.form)
@@ -88,18 +91,25 @@ def update_estado(username):
 def edit(id):
     if not authenticated(session):
         abort(401)
+    if not permisoChecker(session, "user_edit"):
+        abort(401)
 
     user = User.query.filter(User.id == id).first()
     errors = {}
-    return render_template("user/edit.html", id=user.id, errors=errors, fieldsInfo=user)
+    return render_template(
+        "user/edit.html", id=user.id, errors=errors, fieldsInfo=user, rolInfo=user.roles
+    )
 
 
 def editInfo(id):
     if not authenticated(session):
         abort(401)
+    if not permisoChecker(session, "user_new"):
+        abort(401)
 
     user = User.query.filter(User.id == id).first()
     new_user = User(**request.form)
+
     errors = UserValidator(new_user, user).validate_update()
 
     if errors:
@@ -113,5 +123,30 @@ def editInfo(id):
     user.username = new_user.username
     user.first_name = new_user.first_name
     user.last_name = new_user.last_name
+    db.session.commit()
+    return redirect(url_for("user_index"))
+
+
+def editRol(id):
+    if not authenticated(session):
+        abort(401)
+    if not permisoChecker(session, "user_edit_rol"):
+        abort(401)
+
+    user = User.query.filter(User.id == id).first()
+    params = request.form.getlist("name")
+
+    """Traigo los roles que tengan el mismo nombre que los que contiene params y se los agrego al usuario"""
+    for param in params:
+        rol = Rol.query.filter(Rol.name == param).first()
+        user.roles.append(rol)
+
+    """uso list comprehension para obtener los nombres de los roles que tiene el usuario, luego quito los que ya están en params.
+    De esta forma verifico que en el formulario se le haya quitado un rol que el usuario tenía asignado.
+    Luego de quedarme con los roles que el usuario ya no debería tener, hago un remove y se los quito de sus roles"""
+    rolesARemover = list(set([x.name for x in user.roles]) - set(params))
+    for rol in rolesARemover:
+        user.roles.remove(Rol.query.filter(Rol.name == rol).first())
+
     db.session.commit()
     return redirect(url_for("user_index"))

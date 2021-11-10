@@ -25,7 +25,7 @@ def index():
 def new():
     if not authenticated(session):
         abort(401)
-    if not permisoChecker(session, "user_index"):
+    if not permisoChecker(session, "user_new"):
         abort(401)
     errors = {}
     return render_template("user/new.html", errors=errors)
@@ -33,6 +33,8 @@ def new():
 
 def create():
     if not authenticated(session):
+        abort(401)
+    if not permisoChecker(session, "user_new"):
         abort(401)
 
     new_user = User(**request.form)
@@ -89,6 +91,8 @@ def update_estado(username):
 def edit(id):
     if not authenticated(session):
         abort(401)
+    if not permisoChecker(session, "user_edit"):
+        abort(401)
 
     user = User.query.filter(User.id == id).first()
     errors = {}
@@ -99,6 +103,8 @@ def edit(id):
 
 def editInfo(id):
     if not authenticated(session):
+        abort(401)
+    if not permisoChecker(session, "user_new"):
         abort(401)
 
     user = User.query.filter(User.id == id).first()
@@ -123,6 +129,8 @@ def editInfo(id):
 
 def editRol(id):
     if not authenticated(session):
+        abort(401)
+    if not permisoChecker(session, "user_edit_rol"):
         abort(401)
 
     user = User.query.filter(User.id == id).first()

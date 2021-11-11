@@ -96,8 +96,13 @@ def editInfo(id):
     if not authenticated(session):
         abort(401)
 
+    latLng = json.loads(request.form["coordinates"])
+    params = request.form.to_dict()
+    del params["coordinates"]
+    params["latitude"] = latLng["lat"]
+    params["longitude"] = latLng["lng"]
     punto = Punto.query.filter(Punto.id == id).first()
-    new_punto = Punto(**request.form)
+    new_punto = Punto(**params)
     errors = PuntoValidator(new_punto, punto).validate_update()
 
     if errors:

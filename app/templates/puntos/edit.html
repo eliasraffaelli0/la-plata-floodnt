@@ -2,12 +2,30 @@
 {% block title %}Puntos de encuentro{% endblock %}
 {% block head %}
 {{ super() }}
+
+<!-- leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+
+
+<!-- leaflet draw -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.10/leaflet.draw.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.10/leaflet.draw.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+
+<script type="module" src="{{ url_for('static', filename='js/index.js') }}"></script>
 {% endblock %}
 {% block content %}
 <div class="container mb-2 text-center rounded-3" style="background-color: rgba(0, 0, 0, 0.1)">
     <h1>Editar información del punto de encuentro</h1>
 
-    <form class="needs-validation" action="{{ url_for('puntos_edit',id=id ) }}" method="POST">
+    <form id="create-punto-form" class="needs-validation" action="{{ url_for('puntos_edit',id=id ) }}" method="POST">
         <div class="row">
 
             <p>
@@ -34,6 +52,13 @@
             <input value="{{fieldsInfo.address}}" name="address" placeholder="address" required />
             {% endif %}
             </p>
+
+            <input name="coordinates" type="text" id="coordinates" />
+
+            <div id="map">
+                <div id="mapid"></div>
+            </div>
+
             <p>
                 <label>Cambiar estado de usuario</label></br>
                 {% if fieldsInfo.state %}

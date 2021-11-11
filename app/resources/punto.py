@@ -22,6 +22,8 @@ def index():
             per_page=g.config.elementos_por_pagina
         )
 
+    # if ( request.params['puntoCreado'] == 'true'):
+    # mostrar cartel
     return render_template("puntos/index.html", puntos=puntos)
 
 
@@ -37,13 +39,17 @@ def new():
 def create():
     if not authenticated(session):
         abort(401)
+    # import pdb
 
-    new_punto = Punto(**request.form)
+    # pdb.set_trace()
+    new_punto = Punto(**request.json)
     errors = {}
     errors = PuntoValidator(new_punto).validate_create()
-
     if errors:
-        return render_template("puntos/new.html", errors=errors, fieldsInfo=new_punto)
+        return (
+            render_template("puntos/new.html", errors=errors, fieldsInfo=new_punto),
+            422,
+        )
 
     if (
         new_punto.name == ""

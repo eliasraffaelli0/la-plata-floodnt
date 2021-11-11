@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+{% block title %}Recorridos de evacuación{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<div class="container text-center">
+  <div class="container mb-2">
+    <h1>Recorridos de evacuación</h1>
+    <p>Filtrar por nombre y/o publicado/oculto:</p>
+    <form action="{{ url_for('evacuation_route_search') }}" method="post">
+      <input type="search" placeholder="Nombre" name="name">
+      <select class="form-select-sm" name='state'>
+        <option value="">Estado</option>
+        <option value='1'>Publicado</option>
+        <option value='0'>Oculto</option>
+      </select>
+      <button class="btn btn-outline-primary btn-sm" type="submit">Filtrar</button>
+    </form>
+  </div>
+  <div class="table-responsive">
+
+    <table class="table table-striped table-border table-sm table-hover">
+      <tr class="table-light">
+        <th>Nombre</th>
+        <th>Descripcion</th>
+        <th>Coordinadas</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+      {% for route in routes.items %}
+      <tr class="table-info">
+        <td class="table-info">{{ punto.name }}</a></td>
+        <td class="table-info">{{ punto.description }}</td>
+        <td class="table-info">{{ punto.coordinates }}</td>
+        <td class="table-info">
+          {% if punto.state %}
+          Publicado
+          {% else %}
+          Oculto
+          {% endif %}
+        </td>
+        <td class="table-info">
+          <a href="{{ url_for('evacuation_route_edit', id=punto.id) }}"><img src="static/images/pencil.png"
+              class="fotito"></a>
+          <a href=" {{ url_for('evacuation_route_delete', id=punto.id) }}"
+            onclick="return confirm('Desea eliminar el punto: {{ punto.name }}? Esta acción no podrá deshacerse');"><img
+              src="static/images/delete.png" class="fotito"></a>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  <div>
+    <nav>
+      <ul class="pagination justify-content-center">
+        {% for page_num in route.iter_pages() %}
+        {% if page_num %}
+        <li class="pag-item">
+          <a class="page-link" href="{{ url_for('evacuation_route_index',page=page_num) }}">{{ page_num }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </nav>
+  </div>
+  <a href="{{ url_for('home') }}" class="btn btn-primary mb-2">Volver</a>
+  <a href="{{ url_for('evacuation_route_new') }}" class="btn btn-primary mb-2">Nuevo</a>
+</div>
+{% endblock %}

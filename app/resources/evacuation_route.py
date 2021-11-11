@@ -1,28 +1,31 @@
 from flask import redirect, render_template, request, url_for, session, abort, g
-from app.db import db
 from app.helpers.auth import authenticated
-from app.models.punto import Punto
-from app.validators.puntoValidator import PuntoValidator
+from app.models.evacuation_route import Evacuation_route
+from app.db import db
 from app.helpers.permisoValidator import permisoChecker
+from app.validators.evacuationRouteValidator import Evacuation_route_validator
 from sqlalchemy.sql import text, and_
 import json
 
 
 def index():
+    if not authenticated(session):
+        abort(401)
+
     """Accedo a la variable de configuracion del g object, pagino por la cantidad de
     elementos que tenga almacenada en esa variable y ordeno por el criterio"""
     if g.config.criterio_de_ordenacion == "asc":
 
-        puntos = Punto.query.order_by(Punto.created_at.asc()).paginate(
-            per_page=g.config.elementos_por_pagina
-        )
+        routes = Evacuation_route.query.order_by(
+            Evacuation_route.created_at.asc()
+        ).paginate(per_page=g.config.elementos_por_pagina)
 
     elif g.config.criterio_de_ordenacion == "desc":
-        puntos = Punto.query.order_by(Punto.created_at.desc()).paginate(
-            per_page=g.config.elementos_por_pagina
-        )
+        routes = Evacuation_route.query.order_by(
+            Evacuation_route.created_at.desc()
+        ).paginate(per_page=g.config.elementos_por_pagina)
 
-    return render_template("puntos/index.html", puntos=puntos)
+    return render_template("evacuation_route/index.html")
 
 
 def new():
@@ -31,7 +34,7 @@ def new():
     if not permisoChecker(session, "user_index"):
         abort(401)
     errors = {}
-    return render_template("puntos/new.html", errors=errors)
+    return render_template("evacuation_route/new.html", errors=errors)
 
 
 def create():
@@ -46,49 +49,54 @@ def create():
     del params["coordinates"]
     params["latitude"] = latLng["lat"]
     params["longitude"] = latLng["lng"]
-    new_punto = Punto(**params)
-    errors = PuntoValidator(new_punto).validate_create()
+    new_route = Evacuation_route(**params)
+    errors = Evacuation_route_validator(new_route).validate_create()
     if errors:
-        return render_template("puntos/new.html", errors=errors, fieldsInfo=new_punto)
-    db.session.add(new_punto)
+        return render_template(
+            "evacuation_route/new.html", errors=errors, fieldsInfo=new_route
+        )
+    db.session.add(new_route)
     db.session.commit()
-    return redirect(url_for("puntos_index"))
+    return redirect(url_for("evacuation_route_index"))
 
 
 def filter():
-    params = Punto(**request.form)
+    params = Evacuation_route(**request.form)
     if params.name and not params.state:
-        puntos = (
-            Punto.query.filter(Punto.name == params.name)
+        routes = (
+            Evacuation_route.query.filter(Evacuation_route.name == params.name)
             .order_by(text(f"created_at {g.config.criterio_de_ordenacion}"))
             .paginate(per_page=g.config.elementos_por_pagina)
         )
     elif params.state and not params.name:
-        puntos = (
-            Punto.query.filter(Punto.state == params.state)
+        routes = (
+            Evacuation_route.query.filter(Evacuation_route.state == params.state)
             .order_by(text(f"created_at {g.config.criterio_de_ordenacion}"))
             .paginate(per_page=g.config.elementos_por_pagina)
         )
     else:
-        puntos = (
-            Punto.query.filter(
-                and_(Punto.name == params.name, Punto.state == params.state)
+        routes = (
+            Evacuation_route.query.filter(
+                and_(
+                    Evacuation_route.name == params.name,
+                    Evacuation_route.state == params.state,
+                )
             )
             .order_by(text(f"created_at {g.config.criterio_de_ordenacion}"))
             .paginate(per_page=g.config.elementos_por_pagina)
         )
 
-    return render_template("puntos/index.html", puntos=puntos)
+    return render_template("evacuation_route/index.html", routes=routes)
 
 
 def edit(id):
     if not authenticated(session):
         abort(401)
 
-    punto = Punto.query.filter(Punto.id == id).first()
+    route = Evacuation_route.query.filter(Evacuation_route.id == id).first()
     errors = {}
     return render_template(
-        "puntos/edit.html", id=punto.id, errors=errors, fieldsInfo=punto
+        "evacuation_route/edit.html", id=route.id, errors=errors, fieldsInfo=route
     )
 
 
@@ -124,7 +132,7 @@ def editInfo(id):
 def delete(id):
     if not authenticated(session):
         abort(401)
-    punto = Punto.query.filter(Punto.id == id).first()
-    db.session.delete(punto)
+    route = Evacuation_route.query.filter(Evacuation_route.id == id).first()
+    db.session.delete(route)
     db.session.commit()
-    return redirect(url_for("puntos_index"))
+    return redirect(url_for("evacuation_route_index"))

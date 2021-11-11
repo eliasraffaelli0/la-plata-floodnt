@@ -1,20 +1,21 @@
 from os import path, environ
-from flask import Flask, render_template, g, Blueprint
+from flask import Flask, render_template, g
 from flask_session import Session
 from config import config
 from app import db
-from app.resources import user
+from app.resources import evacuation_route, user
 from app.resources import auth
 from app.resources import punto
-from app.resources import recorridos
+from app.resources import evacuation_route
 from app.resources import zonas
 from app.resources import configuracion
 from app.models.configuracion import Configuracion
 from app.helpers import handler
 from app.helpers import auth as helper_auth
 from app.helpers import permisoValidator as helper_permisos
-import logging
 
+
+# import logging
 # Sentencias que muestran el log de las querys que ejecuta la aplicación
 
 # logging.basicConfig()
@@ -107,7 +108,36 @@ def create_app(environment="development"):
     app.add_url_rule("/puntos_de_encuentro/<int:id>", "puntos_delete", punto.delete)
 
     # Rutas de Recorridos de evacuación
-    app.add_url_rule("/recorridos_de_evacuacion", "recorridos_index", recorridos.index)
+    app.add_url_rule(
+        "/evacuation_route", "evacuation_route_index", evacuation_route.index
+    )
+    app.add_url_rule(
+        "/puntos_de_encuentro/nuevo", "puntos_create", punto.create, methods=["POST"]
+    )
+    app.add_url_rule(
+        "/evacuation_route/nuevo", "evacuation_route_new", evacuation_route.new
+    )
+    app.add_url_rule(
+        "/evacuation_route",
+        "evacuation_route_search",
+        evacuation_route.filter,
+        methods=["POST"],
+    )
+    app.add_url_rule(
+        "/evacuation_route/edit/<int:id>",
+        "evacuation_route_edit",
+        evacuation_route.edit,
+        methods=["GET"],
+    )
+    app.add_url_rule(
+        "/evacuation_route/edit/<int:id>",
+        "puntos_edit_info",
+        evacuation_route.editInfo,
+        methods=["GET", "POST"],
+    )
+    app.add_url_rule(
+        "/evacuation_route/<int:id>", "evacuation_route_delete", evacuation_route.delete
+    )
 
     # Rutas del Modulo de Configuración
     app.add_url_rule("/configuracion", "configuracion_index", configuracion.index)

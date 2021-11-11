@@ -1,44 +1,17 @@
-import { ZoneMap } from '../ZoneMap.js';
+import { Map } from '../Map.js';
 
 const submitHandler = (event, mapita) => {
-    event.preventDefault();
+
 
     if (!mapita.hasValidZone()) {
+        event.preventDefault();
         alert('Debes dibujar una zona en el mapa.');
     }
     else {
-        const name = document.querySelector('#name').value;
-        const address = document.querySelector('#address').value;
-        // const coordinates = map.drawnlayers[0].getLatLngs().flat().map(coordinate => {
-        //     return { lat: coordinate.lat, lng: coordinate.lng }
-        // });
-        const lat = mapita.drawnlayers[0]._latlng.lat
-        const lng = mapita.drawnlayers[0]._latlng.lng
-        const state = document.querySelector('#state').value;
-        const telephone = document.querySelector('#telephone').value;
-        const email = document.querySelector('#email').value;
 
-        const formData = new FormData();
-        formData.append('name', name);
-        formData.append('address', address);
-        // formData.append('coordinates', JSON.stringify(coordinates));
-        formData.append('latitude', lat);
-        formData.append('longitude', lng);
-        formData.append('state', state);
-        formData.append('telephone', telephone);
-        formData.append('email', email);
-
-        // fetch('/puntos_de_encuentro/nuevo', {
-        //     method: 'POST',
-        //     body: formData
-        // })
-        $.ajax({
-            type: "POST",
-            url: '/puntos_de_encuentro/nuevo',
-            data: formData,
-            processData: false,
-            //contentType: "application/json"
-        });
+        const coordinates = document.querySelector('#coordinates');
+        const lat = mapita.drawnlayers[0]._latlng
+        coordinates.setAttribute('value', JSON.stringify(lat));
     }
 }
 
@@ -49,14 +22,14 @@ const recorrido_geometric_figures = {
     polygon: false,
 
 }
-
-window.onload = () => {
-    const mapita = new ZoneMap({
+const kk = () => {
+    const mapita = new Map({
         selector: 'mapid',
         addSearch: false,
-        geometricFigures: recorrido_geometric_figures
+        geometricFigures: punto_geometric_figures
     });
-    const form = document.querySelector('#create-recorrido-form');
+    const form = document.querySelector('#create-punto-form');
 
     form.addEventListener('submit', (event) => submitHandler(event, mapita));
 }
+window.onload = kk

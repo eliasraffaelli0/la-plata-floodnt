@@ -35,7 +35,12 @@ def create_app(environment="development"):
     Session(app)
 
     # Configure db
-    app.config["SQLALCHEMY_ECHO"] = environment == "development"
+    # app.config["SQLALCHEMY_ECHO"] = environment == "development"
+    # db.init_app(app)
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    app.config[
+        "SQLALCHEMY_DATABASE_URI"
+    ] = f"mysql+pymysql://{app.config['DB_USER']}:{app.config['DB_PASS']}@{app.config['DB_HOST']}:3306/{app.config['DB_NAME']}"
     db.init_app(app)
 
     # Funciones que se exportan al contexto de Jinja2

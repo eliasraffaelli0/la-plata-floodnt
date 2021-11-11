@@ -143,7 +143,8 @@ def editRol(id):
 
     """uso list comprehension para obtener los nombres de los roles que tiene el usuario, luego quito los que ya están en params.
     De esta forma verifico que en el formulario se le haya quitado un rol que el usuario tenía asignado.
-    Luego de quedarme con los roles que el usuario ya no debería tener, hago un remove y se los quito de sus roles"""
+    Luego de quedarme con los roles que el usuario ya no debería tener, hago un remove y se los quito de sus roles.
+    no sé si es la forma más eficiente de hacer esto pero me sentí un hacker"""
     rolesARemover = list(set([x.name for x in user.roles]) - set(params))
     for rol in rolesARemover:
         user.roles.remove(Rol.query.filter(Rol.name == rol).first())

@@ -28,7 +28,9 @@
         <th>Nombre</th>
         <th>apellido</th>
         <th>Estado</th>
+        {% if has_permission(session, 'user_edit') %}
         <th>Acciones</th>
+        {% endif %}
       </tr>
       {% for user in users.items %}
       {% if not session["user"]== user.email %}
@@ -52,9 +54,11 @@
           Desactivado
           {% endif %}
         </td>
+        {% if has_permission(session, 'user_edit') %}
         <td class="table-info"><a href="{{ url_for('user_edit_info', id=user.id) }}"><img src="static/images/pencil.png"
               class="fotito"></a>
         </td>
+        {% endif %}
       </tr>
       {% endif %}
 

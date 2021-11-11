@@ -240,7 +240,7 @@ textarea:invalid {
 }
 
 
-#latitude, #longitude{
+#coordinates{
   display: none;
 }
 

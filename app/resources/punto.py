@@ -1,11 +1,10 @@
-from flask import redirect, render_template, request, url_for, session, abort, flash, g
+from flask import redirect, render_template, request, url_for, session, abort, g
 from app.db import db
 from app.helpers.auth import authenticated
 from app.models.punto import Punto
 from app.validators.puntoValidator import PuntoValidator
 from app.helpers.permisoValidator import permisoChecker
 from sqlalchemy.sql import text, and_
-import re
 import json
 
 
@@ -23,8 +22,6 @@ def index():
             per_page=g.config.elementos_por_pagina
         )
 
-    # if ( request.params['puntoCreado'] == 'true'):
-    # mostrar cartel
     return render_template("puntos/index.html", puntos=puntos)
 
 
@@ -40,33 +37,19 @@ def new():
 def create():
     if not authenticated(session):
         abort(401)
-    # new_punto = Punto(**request.json)
     # para el controlador de zona hay que hacer el load para transformarlo a un arreglo de diccionarios
-    kk = json.loads(request.form["coordinates"])
+    """ Se transforma el diccionario inmutable en el que vienen almacenadas las coordenadas
+     a un diccionario mutable y se guardan por separados en los campos de longitud y latitud para
+     mandarlo al punto nuevo"""
+    latLng = json.loads(request.form["coordinates"])
     params = request.form.to_dict()
     del params["coordinates"]
-    params["latitude"] = kk["lat"]
-    params["longitude"] = kk["lng"]
+    params["latitude"] = latLng["lat"]
+    params["longitude"] = latLng["lng"]
     new_punto = Punto(**params)
-    errors = {}
     errors = PuntoValidator(new_punto).validate_create()
     if errors:
-        return (
-            render_template("puntos/new.html", errors=errors, fieldsInfo=new_punto),
-            422,
-        )
-
-    if (
-        new_punto.name == ""
-        or new_punto.address == ""
-        or new_punto.latitude == ""
-        or new_punto.longitude == ""
-        or new_punto.telephone == ""
-        or new_punto.email == ""
-    ):
-        flash("Debe completar todos los campos")
-        return redirect(url_for("puntos_new"))
-
+        return render_template("puntos/new.html", errors=errors, fieldsInfo=new_punto)
     db.session.add(new_punto)
     db.session.commit()
     return redirect(url_for("puntos_index"))

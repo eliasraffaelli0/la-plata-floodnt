@@ -2,7 +2,7 @@ const initialLat = -34.9187
 const initialLng = -57.956
 const mapLayerUrl = 'https://{s}.tile.openstreetmap.de/{z}/{x}/{y}.png'
 
-export class ZoneMap {
+export class Map {
     #drawnItems;
     #geometricFigures;
 
@@ -46,9 +46,15 @@ export class ZoneMap {
         }
     };
 
+    // Si no se elimina el punto, no se eliminan los controles ya que si no se hace esta validación
+    // pueden eliminarse los controles y para borrar el punto habría que refrescar la pagina
     #deleteHandler(map, editControls, createControls) {
-        createControls.addTo(map);
-        editControls.remove();
+        if (!this.hasValidZone()) {
+
+            createControls.addTo(map);
+            editControls.remove();
+
+        }
     }
 
     hasValidZone() {

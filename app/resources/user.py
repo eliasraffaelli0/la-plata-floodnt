@@ -2,6 +2,9 @@ import bcrypt
 from flask import redirect, render_template, request, url_for, session, abort, g
 from app.models.user import User
 from app.models.rol import Rol
+from app.models.coordenate_group import Point_Group
+from app.models.zone import Zone
+from app.models.evacuation_route import Evacuation_route
 from app.helpers.auth import authenticated
 from app.helpers.permisoValidator import permisoChecker
 from app.db import db
@@ -14,6 +17,10 @@ def index():
         abort(401)
     if not permisoChecker(session, "user_index"):
         abort(401)
+
+    kk0 = Point_Group.query.all()
+    kk = Evacuation_route.query.all()
+    kk2 = Zone.query.all()
 
     users = User.query.order_by(
         text(f"created_at {g.config.criterio_de_ordenacion}")

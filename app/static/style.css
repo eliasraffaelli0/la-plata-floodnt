@@ -238,3 +238,18 @@ textarea:invalid {
   width: 20px;
   height: 20px;
 }
+
+
+#coordinates{
+  display: none;
+}
+
+#map{
+  height: 400px;
+  width: 100%;
+  display: inline-block;
+}
+#mapid{
+  height: 399px;
+  width: 100%;
+}

@@ -1,11 +1,11 @@
-from flask import redirect, render_template, request, url_for, session, abort, flash, g
+from flask import redirect, render_template, request, url_for, session, abort, g
 from app.db import db
 from app.helpers.auth import authenticated
 from app.models.punto import Punto
 from app.validators.puntoValidator import PuntoValidator
 from app.helpers.permisoValidator import permisoChecker
 from sqlalchemy.sql import text, and_
-import re
+import json
 
 
 def index():
@@ -37,25 +37,19 @@ def new():
 def create():
     if not authenticated(session):
         abort(401)
-
-    new_punto = Punto(**request.form)
-    errors = {}
+    # para el controlador de zona hay que hacer el load para transformarlo a un arreglo de diccionarios
+    """ Se transforma el diccionario inmutable en el que vienen almacenadas las coordenadas
+     a un diccionario mutable y se guardan por separados en los campos de longitud y latitud para
+     mandarlo al punto nuevo"""
+    latLng = json.loads(request.form["coordinates"])
+    params = request.form.to_dict()
+    del params["coordinates"]
+    params["latitude"] = latLng["lat"]
+    params["longitude"] = latLng["lng"]
+    new_punto = Punto(**params)
     errors = PuntoValidator(new_punto).validate_create()
-
     if errors:
         return render_template("puntos/new.html", errors=errors, fieldsInfo=new_punto)
-
-    if (
-        new_punto.name == ""
-        or new_punto.address == ""
-        or new_punto.latitude == ""
-        or new_punto.longitude == ""
-        or new_punto.telephone == ""
-        or new_punto.email == ""
-    ):
-        flash("Debe completar todos los campos")
-        return redirect(url_for("puntos_new"))
-
     db.session.add(new_punto)
     db.session.commit()
     return redirect(url_for("puntos_index"))
@@ -102,8 +96,13 @@ def editInfo(id):
     if not authenticated(session):
         abort(401)
 
+    latLng = json.loads(request.form["coordinates"])
+    params = request.form.to_dict()
+    del params["coordinates"]
+    params["latitude"] = latLng["lat"]
+    params["longitude"] = latLng["lng"]
     punto = Punto.query.filter(Punto.id == id).first()
-    new_punto = Punto(**request.form)
+    new_punto = Punto(**params)
     errors = PuntoValidator(new_punto, punto).validate_update()
 
     if errors:

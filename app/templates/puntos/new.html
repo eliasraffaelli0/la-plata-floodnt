@@ -2,44 +2,58 @@
 {% block title %}Puntos de encuentro{% endblock %}
 {% block head %}
 {{ super() }}
+
+<!-- leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+  crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
+
+
+<!-- leaflet draw -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.10/leaflet.draw.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.10/leaflet.draw.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+
+<script type="module" src="{{ url_for('static', filename='js/punto/index.js') }}"></script>
 {% endblock %}
 {% block content %}
 <div class="container mb-2 text-center rounded-3" style="background-color: rgba(0, 0, 0, 0.1)">
   <h1>Crear un punto de encuentro</h1>
-  <form class="needs-validation" action="{{ url_for('puntos_create') }}" method="POST">
+  <form id="create-punto-form" class="needs-validation" method="post">
     <div class="row">
-
       <p>
         <label class="form-label">Nombre</label></br>
         {% if errors["name"] %}
-        <input value="{{fieldsInfo.name}}" name="name" placeholder="Nombre" required
+        <input id="name" value="{{fieldsInfo.name}}" name="name" placeholder="Nombre" required
           style="box-shadow: 0 0 3px #CC0000" />
       <p style="color:red"> {{errors["name"]}} </p>
       {% elif errors %}
-      <input value="{{fieldsInfo.name}}" name="name" required />
+      <input id="name" value="{{fieldsInfo.name}}" name="name" id="name" required />
       {% else %}
-      <input name="name" placeholder="Nombre" required />
+      <input id="name" name="name" placeholder="Nombre" required />
       {% endif %}
       </p>
       <p>
         <label class="form-label">Direccion</label></br>
         {% if errors %}
-        <input value="{{fieldsInfo.address}}" name="address" required />
+        <input id="address" value="{{fieldsInfo.address}}" name="address" required />
         {% else %}
-        <input name="address" placeholder="Direccion" required />
+        <input id="address" name="address" placeholder="Direccion" required />
         {% endif %}
       </p>
-      <p>
-        <label>Latitud</label></br>
-        <input name="latitude" placeholder="Latitud" required />
-      </p>
-      <p>
-        <label>Longitud</label></br>
-        <input name="longitude" placeholder="Longitud" required />
-      </p>
+
+      <input name="coordinates" type="text" id="coordinates" />
+      <div id="map">
+        <div id="mapid"></div>
+      </div>
       <p>
         <label>Estado</label></br>
-        <select class="form-select-sm" name='state'>
+        <select id="state" class="form-select-sm" name='state'>
           <option value='1'>Publicado</option>
           <option value='0'>Oculto</option>
         </select>
@@ -47,9 +61,9 @@
       <p>
         <label class="form-label">Telefono</label></br>
         {% if errors %}
-        <input value="{{fieldsInfo.telephone}}" name="telephone" required />
+        <input id="telephone" value="{{fieldsInfo.telephone}}" name="telephone" required />
         {% else %}
-        <input name="telephone" placeholder="Telefono" required />
+        <input id="telephone" name="telephone" placeholder="Telefono" required />
         {% endif %}
       </p>
       <p>
@@ -63,10 +77,12 @@
       {% endif %}
       </p>
       <p>
-        <input class="btn btn-outline-dark btn-sm" type="submit" value="Crear">
+        <input class="btn btn-outline-dark btn-sm" type="submit" value="Crear" />
       </p>
     </div>
   </form>
   <a href="{{ url_for('puntos_index') }}" class="btn btn-primary mb-2">Volver</a>
 </div>
 {% endblock %}
+
+<!-- class="btn btn-outline-dark btn-sm" -->

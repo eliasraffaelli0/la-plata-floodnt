@@ -39,6 +39,8 @@ class PuntoValidator:
         if (
             self.params.email == ""
             or self.params.name == ""
+            or self.params.latitude == ""
+            or self.params.longitude == ""
             or self.params.telephone == ""
         ):
             self.errors["emptyField"] = "Debe completar todos los campos"
@@ -52,12 +54,3 @@ class PuntoValidator:
 
         if name_is_registered:
             self.errors["name"] = "Ya existe un punto con este nombre"
-
-    # def __validate_username_update(self):
-    #     mail_is_registered = (
-    #         User.query.filter(User.username == self.params.username)
-    #         .filter(User.username != self.user.username)
-    #         .first()
-    #     )
-    #     if mail_is_registered:
-    #         self.errors["username"] = "Ya existe un usuario con este username"

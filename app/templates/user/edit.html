@@ -1,0 +1,123 @@
+{% extends "layout.html" %}
+{% block title %}Usuarios{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<div class="container mb-2 text-center rounded-3" style="background-color: rgba(0, 0, 0, 0.1)">
+    <h1>Editar información del usuario</h1>
+    <div class="row g-5">
+        {% if has_permission(session, 'user_edit_rol')%}
+        <div class="col-md-5 col-lg-4 order-md-last">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text">Roles asignados</span>
+            </h4>
+            <form class="p-2" action="{{ url_for('user_edit_rol', id=id) }}" method="POST">
+                <ul class="list-group mb-3">
+                    {% if rolInfo|selectattr("name", "equalto", "Moderador")| list %}
+                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="name" value="Moderador" type="checkbox" checked>
+                            <label class="form-check-label">Operador</label>
+                        </div>
+                    </li>
+                    {% else %}
+                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="name" value="Moderador" type="checkbox">
+                            <label class="form-check-label">Operador</label>
+                        </div>
+                    </li>
+                    {% endif %}
+                    {% if rolInfo|selectattr("name", "equalto", "Administrador")| list %}
+                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="name" value="Administrador" type="checkbox" checked>
+                            <label class="form-check-label">Administrador</label>
+                        </div>
+                    </li>
+                    {% else %}
+                    <li class="list-group-item d-flex justify-content-between lh-sm">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" name="name" value="Administrador" type="checkbox">
+                            <label class="form-check-label">Administrador</label>
+                        </div>
+                    </li>
+                    {% endif %}
+                </ul>
+                <div class="input-group">
+                    <button type="submit" class="btn btn-outline-dark btn-sm">Asignar</button>
+                </div>
+            </form>
+        </div>
+        {% endif %}
+        <div class="col-md-7 col-lg-7">
+
+            <form class="needs-validation" action="{{ url_for('user_edit',id=id ) }}" method="POST">
+                <div class="row">
+
+                    <p>
+                        <label class="form-label" for="email">Email</label></br>
+                        {% if errors["email"] %}
+                        <input id="email" value="{{fieldsInfo.email}}" type="email" name="email" placeholder="Correo"
+                            required style="box-shadow: 0 0 3px #CC0000" />
+                    <p style="color:red"> {{errors["email"]}} </p>
+                    {% else %}
+                    <input id="email" value="{{fieldsInfo.email}}" type="email" name="email" placeholder="Correo"
+                        required />
+                    {% endif %}
+                    </p>
+                    {% if errors[""] %}
+                    <p style="color:red"> {{errors[""]}} </p>
+                    {% else %}
+                    {% endif %}
+                    <p>
+                        <label class="form-label">Username</label></br>
+                        {% if errors["username"] %}
+                        <input value="{{fieldsInfo.username}}" name="username" placeholder="username" required
+                            style="box-shadow: 0 0 3px #CC0000" />
+                    <p style="color:red"> {{errors["username"]}} </p>
+                    {% else %}
+                    <input value="{{fieldsInfo.username}}" name="username" placeholder="username" required />
+                    {% endif %}
+                    </p>
+                    <p>
+                        <label>Cambiar estado de usuario</label></br>
+                        {% if fieldsInfo.activo %}
+                        <select class="form-select-sm" name='activo'>
+                            <option value='1'>Activado</option>
+                            <option value='0'>Desactivado</option>
+                        </select>
+                        {% else %}
+                        <select class="form-select-sm" name='activo'>
+                            <option value='0'>Desactivado</option>
+                            <option value='1'>Activado</option>
+                        </select>
+                        {% endif %}
+                    </p>
+                    <p>
+                        <label>Nombre</label></br>
+                        {% if errors %}
+                        <input value="{{fieldsInfo.first_name}}" name="first_name" placeholder="Nombre" required />
+                        {% else %}
+                        <input value="{{fieldsInfo.first_name}}" name="first_name" placeholder="Nombre" required />
+                        {% endif %}
+                    </p>
+                    <p>
+                        <label>Apellido</label></br>
+                        {% if errors %}
+                        <input value="{{fieldsInfo.last_name}}" name="last_name" placeholder="Apellido" required />
+                        {% else %}
+                        <input value="{{fieldsInfo.last_name}}" name="last_name" placeholder="Apellido" required />
+                        {% endif %}
+                    </p>
+                    <p>
+                        <input class="btn btn-outline-dark btn-sm" type="submit" value="Actualizar">
+                    </p>
+                </div>
+            </form>
+            <a href="{{ url_for('user_index') }}" class="btn btn-primary btn-sm mb-2">Volver</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

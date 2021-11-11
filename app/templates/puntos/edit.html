@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+{% block title %}Puntos de encuentro{% endblock %}
+{% block head %}
+{{ super() }}
+
+<!-- leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+
+
+<!-- leaflet draw -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.10/leaflet.draw.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.10/leaflet.draw.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+
+<script type="module" src="{{ url_for('static', filename='js/punto/index.js') }}"></script>
+{% endblock %}
+{% block content %}
+<div class="container mb-2 text-center rounded-3" style="background-color: rgba(0, 0, 0, 0.1)">
+    <h1>Editar información del punto de encuentro</h1>
+
+    <form id="create-punto-form" class="needs-validation" action="{{ url_for('puntos_edit',id=id ) }}" method="POST">
+        <div class="row">
+
+            <p>
+                <label class="form-label" for="name">Nombre</label></br>
+                {% if errors["name"] %}
+                <input id="name" value="{{fieldsInfo.name}}" type="name" name="name" placeholder="Correo" required
+                    style="box-shadow: 0 0 3px #CC0000" />
+            <p style="color:red"> {{errors["name"]}} </p>
+            {% else %}
+            <input id="name" value="{{fieldsInfo.name}}" type="name" name="name" placeholder="Correo" required />
+            {% endif %}
+            </p>
+            {% if errors[""] %}
+            <p style="color:red"> {{errors[""]}} </p>
+            {% else %}
+            {% endif %}
+            <p>
+                <label class="form-label">Direccion</label></br>
+                {% if errors["address"] %}
+                <input value="{{fieldsInfo.address}}" name="address" placeholder="address" required
+                    style="box-shadow: 0 0 3px #CC0000" />
+            <p style="color:red"> {{errors["address"]}} </p>
+            {% else %}
+            <input value="{{fieldsInfo.address}}" name="address" placeholder="address" required />
+            {% endif %}
+            </p>
+
+            <input name="coordinates" type="text" id="coordinates" />
+
+            <div id="map">
+                <div id="mapid"></div>
+            </div>
+
+            <p>
+                <label>Cambiar estado de usuario</label></br>
+                {% if fieldsInfo.state %}
+                <select class="form-select-sm" name='state'>
+                    <option value='1'>Publicado</option>
+                    <option value='0'>Oculto</option>
+                </select>
+                {% else %}
+                <select class="form-select-sm" name='state'>
+                    <option value='0'>Oculto</option>
+                    <option value='1'>Publicado</option>
+                </select>
+                {% endif %}
+            </p>
+            <p>
+                <label>Telefono</label></br>
+                {% if errors %}
+                <input value="{{fieldsInfo.telephone}}" name="telephone" placeholder="Nombre" required />
+                {% else %}
+                <input value="{{fieldsInfo.telephone}}" name="telephone" placeholder="Nombre" required />
+                {% endif %}
+            </p>
+            <p>
+                <label class="form-label" for="email">Email</label></br>
+                {% if errors["email"] %}
+                <input id="email" value="{{fieldsInfo.email}}" type="email" name="email" placeholder="Correo" required
+                    style="box-shadow: 0 0 3px #CC0000" />
+            <p style="color:red"> {{errors["email"]}} </p>
+            {% else %}
+            <input id="email" value="{{fieldsInfo.email}}" type="email" name="email" placeholder="Correo" required />
+            {% endif %}
+            </p>
+            <p>
+                <input class="btn btn-outline-dark btn-sm" type="submit" value="Actualizar">
+            </p>
+        </div>
+    </form>
+    <a href="{{ url_for('puntos_index') }}" class="btn btn-primary mb-2">Volver</a>
+</div>
+{% endblock %}

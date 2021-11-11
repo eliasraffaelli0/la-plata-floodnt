@@ -1,10 +1,14 @@
 {% extends "layout.html" %}
 {% block title %}Recorridos de evacuación{% endblock %}
 {% block head %}
-  {{ super() }}
+{{ super() }}
 {% endblock %}
 {% block content %}
-  <h1>Acá van a estar los recorridos de evacuación</h1>
-  <a href="{{ url_for('home') }}" class="link">Volver</a>
-  <a href="#" class="link">Nuevo</a>
+<div class="container text-center">
+  <div class="container mb-2">
+    <h1>Recorridos de evacuación</h1>
+    <a href="{{ url_for('home') }}" class="btn btn-primary mb-2">Volver</a>
+    <a href="#" class="btn btn-primary mb-2">Nuevo</a>
+  </div>
+</div>
 {% endblock %}

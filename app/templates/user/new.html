@@ -1,42 +1,71 @@
 {% extends "layout.html" %}
 {% block title %}Usuarios{% endblock %}
 {% block head %}
-  {{ super() }}
+{{ super() }}
 {% endblock %}
 {% block content %}
+<div class="container mb-2 text-center rounded-3" style="background-color: rgba(0, 0, 0, 0.1)">
   <h1>Crear un usuario</h1>
-  <form action="{{ url_for('user_create') }}" method="POST">
-    <p>
-      <label>Email<label></br>
-      <input type="email" name="email" placeholder="Correo" required/>
-    </p>
-    <p>
-      <label>Username<label></br>
-      <input name="username" placeholder="username" required/>
-    </p>
-    <p>
-      <label>Clave<label></br>
-      <input type="password" name="password" placeholder="Clave" required/>
-    </p>
-    <p>
-      <label>¿Crear usuario activado?<label></br>
-      <select name='activo'>
-        <option value='0'>Desactivado</option>
-        <option value='1'>Activado</option>
-      </select>
-    </p>
-    <p>
-      <label>Nombre<label></br>
-      <input name="first_name" placeholder="Nombre" required/>
-    </p>
-    <p>
-      <label>Apellido<label></br>
-      <input name="last_name" placeholder="Apellido" required/>
-    </p>
-    <p>
-      <input type="submit" value="Crear">
-      <button type="reset">Limpiar</button>
-    </p>
+
+  <form class="needs-validation" action="{{ url_for('user_create') }}" method="POST">
+    <div class="row">
+
+      <p>
+        <label class="form-label" for="email">Email</label></br>
+        {% if errors["email"] %}
+        <input id="email" value="{{fieldsInfo.email}}" type="email" name="email" placeholder="Correo" required
+          style="box-shadow: 0 0 3px #CC0000" />
+      <p style="color:red"> {{errors["email"]}} </p>
+      {% elif errors %}
+      <input value="{{fieldsInfo.email}}" name="email" required />
+      {% else %}
+      <input id="email" type="email" name="email" placeholder="Correo" required />
+      {% endif %}
+      </p>
+      <p>
+        <label class="form-label">Username</label></br>
+        {% if errors["username"] %}
+        <input value="{{fieldsInfo.username}}" name="username" placeholder="username" required
+          style="box-shadow: 0 0 3px #CC0000" />
+      <p style="color:red"> {{errors["username"]}} </p>
+      {% elif errors %}
+      <input value="{{fieldsInfo.username}}" name="username" required />
+      {% else %}
+      <input name="username" placeholder="username" required />
+      {% endif %}
+      </p>
+      <p>
+        <label class="form-label">Clave</label></br>
+        <input type="password" name="password" placeholder="Clave" required />
+      </p>
+      <p>
+        <label class="form-label">¿Crear usuario activado?</label></br>
+        <select class="form-select-sm" name='activo'>
+          <option value='0'>Desactivado</option>
+          <option value='1'>Activado</option>
+        </select>
+      </p>
+      <p>
+        <label class="form-label">Nombre</label></br>
+        {% if errors %}
+        <input value="{{fieldsInfo.first_name}}" name="first_name" placeholder="Nombre" required />
+        {% else %}
+        <input name="first_name" placeholder="Nombre" required />
+        {% endif %}
+      </p>
+      <p>
+        <label class="form-label">Apellido</label></br>
+        {% if errors %}
+        <input value="{{fieldsInfo.last_name}}" name="last_name" placeholder="Apellido" required />
+        {% else %}
+        <input name="last_name" placeholder="Apellido" required />
+        {% endif %}
+      </p>
+      <p>
+        <input class="btn btn-outline-dark btn-sm" type="submit" value="Crear">
+      </p>
+    </div>
   </form>
-    <a href="{{ url_for('user_index') }}" class="link">Volver</a>
+  <a href="{{ url_for('user_index') }}" class="btn btn-primary mb-2">Volver</a>
+</div>
 {% endblock %}

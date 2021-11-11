@@ -6,6 +6,7 @@ from app.validators.puntoValidator import PuntoValidator
 from app.helpers.permisoValidator import permisoChecker
 from sqlalchemy.sql import text, and_
 import re
+import json
 
 
 def index():
@@ -39,10 +40,14 @@ def new():
 def create():
     if not authenticated(session):
         abort(401)
-    # import pdb
-
-    # pdb.set_trace()
-    new_punto = Punto(**request.json)
+    # new_punto = Punto(**request.json)
+    # para el controlador de zona hay que hacer el load para transformarlo a un arreglo de diccionarios
+    kk = json.loads(request.form["coordinates"])
+    params = request.form.to_dict()
+    del params["coordinates"]
+    params["latitude"] = kk["lat"]
+    params["longitude"] = kk["lng"]
+    new_punto = Punto(**params)
     errors = {}
     errors = PuntoValidator(new_punto).validate_create()
     if errors:

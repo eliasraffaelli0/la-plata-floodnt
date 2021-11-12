@@ -3,7 +3,7 @@ from app.helpers.auth import authenticated
 from app.models.evacuationRoute import EvacuationRoute
 from app.db import db
 from app.helpers.permisoValidator import permisoChecker
-from app.validators import evacuationRouteValidator
+from app.validators.evacuationRouteValidator import EvacuationRouteValidator
 from sqlalchemy.sql import text, and_
 import json
 
@@ -37,27 +37,27 @@ def new():
     return render_template("evacuationRoute/new.html", errors=errors)
 
 
-# def create():
-#     if not authenticated(session):
-#         abort(401)
-#     # para el controlador de zona hay que hacer el load para transformarlo a un arreglo de diccionarios
-#     """ Se transforma el diccionario inmutable en el que vienen almacenadas las coordenadas
-#      a un diccionario mutable y se guardan por separados en los campos de longitud y latitud para
-#      mandarlo al punto nuevo"""
-#     latLng = json.loads(request.form["coordinates"])
-#     params = request.form.to_dict()
-#     del params["coordinates"]
-#     params["latitude"] = latLng["lat"]
-#     params["longitude"] = latLng["lng"]
-#     new_route = EvacuationRoute(**params)
-#     errors = Evacuation_route_validator(new_route).validate_create()
-#     if errors:
-#         return render_template(
-#             "evacuationRoute/new.html", errors=errors, fieldsInfo=new_route
-#         )
-#     db.session.add(new_route)
-#     db.session.commit()
-#     return redirect(url_for("evacuationRoute_index"))
+def create():
+    if not authenticated(session):
+        abort(401)
+    # para el controlador de zona hay que hacer el load para transformarlo a un arreglo de diccionarios
+    """ Se transforma el diccionario inmutable en el que vienen almacenadas las coordenadas
+     a un diccionario mutable y se guardan por separados en los campos de longitud y latitud para
+     mandarlo al punto nuevo"""
+    latLng = json.loads(request.form["coordinates"])
+    params = request.form.to_dict()
+    del params["coordinates"]
+    params["latitude"] = latLng["lat"]
+    params["longitude"] = latLng["lng"]
+    new_route = EvacuationRoute(**params)
+    errors = EvacuationRouteValidator(new_route).validate_create()
+    if errors:
+        return render_template(
+            "evacuationRoute/new.html", errors=errors, fieldsInfo=new_route
+        )
+    db.session.add(new_route)
+    db.session.commit()
+    return redirect(url_for("evacuationRoute_index"))
 
 
 def filter():

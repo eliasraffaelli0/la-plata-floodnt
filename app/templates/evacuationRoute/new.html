@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}Puntos de encuentro{% endblock %}
+{% block title %}Recorridos de evacuación{% endblock %}
 {% block head %}
 {{ super() }}
 
@@ -23,8 +23,8 @@
 {% endblock %}
 {% block content %}
 <div class="container mb-2 text-center rounded-3" style="background-color: rgba(0, 0, 0, 0.1)">
-    <h1>Crear un punto de encuentro</h1>
-    <form id="create-recorrido-form" class="needs-validation" method="post">
+    <h1>Crear un recorrido de evacuación</h1>
+    <form id="create-evacuationRoute-form" class="needs-validation" method="post">
         <div class="row">
             <p>
                 <label class="form-label">Nombre</label></br>
@@ -57,6 +57,9 @@
                     <option value='1'>Publicado</option>
                     <option value='0'>Oculto</option>
                 </select>
+            </p>
+            <p>
+                <input class="btn btn-outline-dark btn-sm" type="submit" value="Crear" />
             </p>
         </div>
     </form>

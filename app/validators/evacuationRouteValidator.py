@@ -2,7 +2,7 @@ from app.models import evacuationRoute
 import re
 
 
-class evacuationRouteValidator:
+class EvacuationRouteValidator:
     def __init__(self, params, route=None):
         self.errors = {}
         self.params = params

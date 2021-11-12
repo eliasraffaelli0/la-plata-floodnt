@@ -3,7 +3,7 @@ import { Map } from '../Map.js';
 const submitHandler = (event, mapita) => {
 
 
-    if (!mapita.hasValidZone()) {
+    if (!mapita.hasValidMarker()) {
         event.preventDefault();
         alert('Debes dibujar una zona en el mapa.');
     }

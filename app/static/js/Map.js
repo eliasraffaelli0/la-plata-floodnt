@@ -57,8 +57,11 @@ export class Map {
         }
     }
 
-    hasValidZone() {
+    hasValidMarker() {
         return this.drawnlayers.length === 1;
+    }
+    hasValidZone() {
+        return this.drawnlayers.length >= 3;
     }
 
     get drawnlayers() {

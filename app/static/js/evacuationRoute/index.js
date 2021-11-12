@@ -5,17 +5,17 @@ const submitHandler = (event, mapita) => {
 
     if (!mapita.hasValidZone()) {
         event.preventDefault();
-        alert('Debes dibujar una zona en el mapa.');
+        alert('Debes dibujar una zona válida en el mapa.\nPara que sea válida debe contener al menos 3 puntos');
     }
     else {
 
         const coordinates = document.querySelector('#coordinates');
-        const lat = mapita.drawnlayers[0]._latlng
-        coordinates.setAttribute('value', JSON.stringify(lat));
+        const coor = mapita.drawnlayers
+        coordinates.setAttribute('value', JSON.stringify(coor));
     }
 }
 
-const recorrido_geometric_figures = {
+const evacuationRoute_geometric_figures = {
     circle: false,
     marker: false,
     rectangle: false,
@@ -26,9 +26,9 @@ const kk = () => {
     const mapita = new Map({
         selector: 'mapid',
         addSearch: false,
-        geometricFigures: punto_geometric_figures
+        geometricFigures: evacuationRoute_geometric_figures
     });
-    const form = document.querySelector('#create-punto-form');
+    const form = document.querySelector('#create-evacuationRoute-form');
 
     form.addEventListener('submit', (event) => submitHandler(event, mapita));
 }

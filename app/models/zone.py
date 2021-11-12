@@ -8,7 +8,7 @@ class Zone(db.Model):
     tablename = "zone"
     id = Column(Integer, primary_key=True)
     zone_code = Column(Integer, unique=True)
-    name = Column(String(50))
+    name = Column(String(50), unique=True)
     color = Column(String(50))
     state = Column(Integer)
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())

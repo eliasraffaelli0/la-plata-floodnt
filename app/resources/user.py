@@ -2,14 +2,14 @@ import bcrypt
 from flask import redirect, render_template, request, url_for, session, abort, g
 from app.models.user import User
 from app.models.rol import Rol
-from app.models.coordenate_group import Point_Group
-from app.models.zone import Zone
-from app.models.evacuation_route import Evacuation_route
 from app.helpers.auth import authenticated
 from app.helpers.permisoValidator import permisoChecker
 from app.db import db
 from app.validators.userValidator import UserValidator
 from sqlalchemy import and_, text
+from app.models.coordenate_group import Point_group, Zone, Evacuation_route
+from app.models.coordenate import Coordenate
+from sqlalchemy.orm import with_polymorphic
 
 # Protected resources
 def index():
@@ -18,7 +18,8 @@ def index():
     if not permisoChecker(session, "user_index"):
         abort(401)
 
-    kk0 = Point_Group.query.all()
+    kk3 = Coordenate.query.all()
+    kk0 = Point_group.query.all()
     kk = Evacuation_route.query.all()
     kk2 = Zone.query.all()
 

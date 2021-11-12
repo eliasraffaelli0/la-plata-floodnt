@@ -1,10 +1,10 @@
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from app.db import db
 
 
-class Point_Group(db.Model):
+class Point_group(db.Model):
     __tablename__ = "point_group"
     id = Column(Integer, primary_key=True)
     name = Column(String(50), unique=True)
@@ -12,19 +12,23 @@ class Point_Group(db.Model):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     type = Column(String(50))
+    coordenates = relationship("Coordenate", back_populates="point_group")
+
     __mapper_args__ = {"polymorphic_identity": "point_group", "polymorphic_on": type}
 
 
-# nombre
-# estado
-# coordenadas(relacion)
-# recorrido
-# ● Descripción de recorrido: información adicional sobre el recorrido (text).
-# ● Coordenadas2: coordenadas geográficas de los diferentes puntos del recorrido (text).
-# Deberán ingresar al menos tres puntos que representen el recorrido de evacuación.
+class Evacuation_route(Point_group):
+    __tablename__ = "evacuation_route"
+    id = Column(Integer, ForeignKey("point_group.id"), primary_key=True)
+    evacuation_route_name = Column(String(50))
 
-# zona
-# Código de zona: identificador unívoco de la zona inundable
-# ● Coordenadas1: coordenadas geográficas (al menos tres puntos) de la zona
-# inundable (text)
-# ● Color capa
+    __mapper_args__ = {"polymorphic_identity": "evacuation_route"}
+
+
+class Zone(Point_group):
+    __tablename__ = "zone"
+    id = Column(Integer, ForeignKey("point_group.id"), primary_key=True)
+    zone_name = Column(String(50))
+    color = Column(String(50))
+
+    __mapper_args__ = {"polymorphic_identity": "zone"}

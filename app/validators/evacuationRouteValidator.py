@@ -1,8 +1,8 @@
-from app.models.evacuation_route import Evacuation_route
+from app.models import evacuationRoute
 import re
 
 
-class Evacuation_route_validator:
+class evacuationRouteValidator:
     def __init__(self, params, route=None):
         self.errors = {}
         self.params = params
@@ -23,8 +23,8 @@ class Evacuation_route_validator:
         return self.errors
 
     def __validate_name(self):
-        name_is_registered = Evacuation_route.query.filter(
-            Evacuation_route.name == self.params.name
+        name_is_registered = evacuationRoute.query.filter(
+            evacuationRoute.name == self.params.name
         ).first()
         if name_is_registered:
             self.errors["name"] = "Ya existe un recorrido con este nombre"
@@ -40,8 +40,8 @@ class Evacuation_route_validator:
 
     def __validate_name_update(self):
         name_is_registered = (
-            Evacuation_route.query.filter(Evacuation_route.name == self.params.name)
-            .filter(Evacuation_route.name != self.punto.name)
+            evacuationRoute.query.filter(evacuationRoute.name == self.params.name)
+            .filter(evacuationRoute.name != self.punto.name)
             .first()
         )
 

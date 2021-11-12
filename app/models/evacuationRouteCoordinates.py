@@ -3,13 +3,13 @@ from sqlalchemy.orm import relationship
 from app.db import db
 
 
-class EvacuationRouteCoordenate(db.Model):
-    __tablename__ = "evacuation_route_coordenates"
+class EvacuationRouteCoordinate(db.Model):
+    __tablename__ = "evacuation_route_coordinates"
     id = Column(Integer, primary_key=True)
     latitude = Column(Integer)
     longitude = Column(Integer)
     evacuation_route_id = Column(Integer, ForeignKey("evacuation_route.id"))
-    coordenates = relationship("EvacuationRoute", back_populates="evacuation_route")
+    point = relationship("EvacuationRoute", back_populates="coordenates")
 
 
 # ● Nombre*: nombre de recorrido de evacuación (text).

@@ -1,11 +1,14 @@
 import bcrypt
 from flask import redirect, render_template, request, url_for, session, abort, g
+from app.models import evacuationRouteCoordinates
 from app.models.user import User
 from app.helpers.auth import authenticated
 from app.helpers.permisoValidator import permisoChecker
 from app.db import db
 from app.validators.userValidator import UserValidator
 from sqlalchemy import and_, text
+from app.models.evacuationRoute import EvacuationRoute
+from app.models.evacuationRouteCoordinates import EvacuationRouteCoordinate
 
 # Protected resources
 def index():
@@ -17,7 +20,8 @@ def index():
     users = User.query.order_by(
         text(f"created_at {g.config.criterio_de_ordenacion}")
     ).paginate(per_page=g.config.elementos_por_pagina)
-
+    kk = EvacuationRoute.query.all()
+    kk2 = EvacuationRouteCoordinate.query.all()
     return render_template("user/index.html", users=users)
 
 

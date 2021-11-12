@@ -8,7 +8,7 @@
   <div class="container mb-2">
     <h1>Recorridos de evacuación</h1>
     <p>Filtrar por nombre y/o publicado/oculto:</p>
-    <form action="{{ url_for('evacuation_route_search') }}" method="post">
+    <form action="{{ url_for('evacuationRoute_search') }}" method="post">
       <input type="search" placeholder="Nombre" name="name">
       <select class="form-select-sm" name='state'>
         <option value="">Estado</option>
@@ -30,21 +30,21 @@
       </tr>
       {% for route in routes.items %}
       <tr class="table-info">
-        <td class="table-info">{{ punto.name }}</a></td>
-        <td class="table-info">{{ punto.description }}</td>
-        <td class="table-info">{{ punto.coordinates }}</td>
+        <td class="table-info">{{ route.name }}</td>
+        <td class="table-info">{{ route.description }}</td>
+        <td class="table-info">{{ route.coordinates }}</td>
         <td class="table-info">
-          {% if punto.state %}
+          {% if route.state %}
           Publicado
           {% else %}
           Oculto
           {% endif %}
         </td>
         <td class="table-info">
-          <a href="{{ url_for('evacuation_route_edit', id=punto.id) }}"><img src="static/images/pencil.png"
+          <a href="{{ url_for('evacuationRoute_edit', id=route.id) }}"><img src="static/images/pencil.png"
               class="fotito"></a>
-          <a href=" {{ url_for('evacuation_route_delete', id=punto.id) }}"
-            onclick="return confirm('Desea eliminar el punto: {{ punto.name }}? Esta acción no podrá deshacerse');"><img
+          <a href=" {{ url_for('evacuationRoute_delete', id=route.id) }}"
+            onclick="return confirm('Desea eliminar el recorrido: {{ route.name }}? Esta acción no podrá deshacerse');"><img
               src="static/images/delete.png" class="fotito"></a>
         </td>
       </tr>
@@ -54,10 +54,10 @@
   <div>
     <nav>
       <ul class="pagination justify-content-center">
-        {% for page_num in route.iter_pages() %}
+        {% for page_num in routes.iter_pages() %}
         {% if page_num %}
         <li class="pag-item">
-          <a class="page-link" href="{{ url_for('evacuation_route_index',page=page_num) }}">{{ page_num }}</a>
+          <a class="page-link" href="{{ url_for('evacuationRoute_index',page=page_num) }}">{{ page_num }}</a>
         </li>
         {% endif %}
         {% endfor %}
@@ -65,6 +65,6 @@
     </nav>
   </div>
   <a href="{{ url_for('home') }}" class="btn btn-primary mb-2">Volver</a>
-  <a href="{{ url_for('evacuation_route_new') }}" class="btn btn-primary mb-2">Nuevo</a>
+  <a href="{{ url_for('evacuationRoute_new') }}" class="btn btn-primary mb-2">Nuevo</a>
 </div>
 {% endblock %}

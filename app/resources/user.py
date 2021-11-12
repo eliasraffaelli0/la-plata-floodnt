@@ -7,6 +7,9 @@ from app.helpers.permisoValidator import permisoChecker
 from app.db import db
 from app.validators.userValidator import UserValidator
 from sqlalchemy import and_, text
+from app.models.zone import Zone
+from app.models.zone_coordinate import ZoneCoordinate
+
 
 # Protected resources
 def index():
@@ -15,6 +18,8 @@ def index():
     if not permisoChecker(session, "user_index"):
         abort(401)
 
+    kk = Zone.query.all()
+    kk1 = ZoneCoordinate.query.all()
     users = User.query.order_by(
         text(f"created_at {g.config.criterio_de_ordenacion}")
     ).paginate(per_page=g.config.elementos_por_pagina)

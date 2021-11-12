@@ -27,6 +27,7 @@ class User(db.Model):
     last_name = Column(String(30))
     roles = relationship(Rol, secondary=association_table, backref="usuarios")
 
+    # esto no va a quedar así eh, voy a volver vos
     def permisos(self):
         userRoles = []
         for rol in self.roles:

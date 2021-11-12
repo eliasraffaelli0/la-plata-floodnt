@@ -1,11 +1,16 @@
-# from sqlalchemy import Column, Integer, String, ForeignKey
-# from app.db import db
+from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy.sql import func
+from sqlalchemy.orm import relationship
+from app.db import db
 
 
-# class Zone(db.Model):
-#     __tablename__ = "zone"
-#     id = Column(Integer, ForeignKey("point_group.id"), primary_key=True)
-#     zone_name = Column(String(50))
-#     color = Column(String(50))
-
-#     __mapper_args__ = {"polymorphic_identity": "zone"}
+class Zone(db.Model):
+    tablename = "zone"
+    id = Column(Integer, primary_key=True)
+    zone_code = Column(Integer, unique=True)
+    name = Column(String(50))
+    color = Column(String(50))
+    state = Column(Integer)
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    coordinates = relationship("ZoneCoordinate", back_populates="point")

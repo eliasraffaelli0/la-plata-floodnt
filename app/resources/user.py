@@ -1,6 +1,5 @@
 import bcrypt
 from flask import redirect, render_template, request, url_for, session, abort, g
-from sqlalchemy.orm import query
 from app.models.user import User
 from app.models.rol import Rol
 from app.helpers.auth import authenticated

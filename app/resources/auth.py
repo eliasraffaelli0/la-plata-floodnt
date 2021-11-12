@@ -1,5 +1,5 @@
 import bcrypt
-from flask import redirect, render_template, request, url_for, abort, session, flash
+from flask import redirect, render_template, request, url_for, session, flash
 from app.models.user import User
 from sqlalchemy import and_
 

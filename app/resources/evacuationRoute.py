@@ -1,5 +1,6 @@
 from flask import redirect, render_template, request, url_for, session, abort, g
 from app.helpers.auth import authenticated
+from app.models.evacuationRouteCoordinates import EvacuationRouteCoordinate
 from app.models.evacuationRoute import EvacuationRoute
 from app.db import db
 from app.helpers.permisoValidator import permisoChecker
@@ -44,13 +45,27 @@ def create():
     """ Se transforma el diccionario inmutable en el que vienen almacenadas las coordenadas
      a un diccionario mutable y se guardan por separados en los campos de longitud y latitud para
      mandarlo al punto nuevo"""
+
     latLng = json.loads(request.form["coordinates"])
+    import pdb
+
+    new_evacuationRoute = EvacuationRoute()
+    new_evacuationRoute.name = request.form["name"]
+    new_evacuationRoute.description = request.form["description"]
+    new_evacuationRoute.state = request.form["state"]
+    db.session.add(new_evacuationRoute)
+    db.session.commit()
+    for coor in latLng:
+        new_punto = EvacuationRouteCoordinate()
+        new_punto.latitude = latLng["lat"]
+        new_punto.longitude = latLng["lng"]
+        new_punto.evacuation_route_id = new_evacuationRoute.id
+        db.session.add(new_punto)
+        db.session.commit()
+    pdb.set_trace()
     params = request.form.to_dict()
-    del params["coordinates"]
-    params["latitude"] = latLng["lat"]
-    params["longitude"] = latLng["lng"]
-    new_route = EvacuationRoute(**params)
-    errors = EvacuationRouteValidator(new_route).validate_create()
+    new_evacuationRoute = EvacuationRoute(**params)
+    errors = EvacuationRouteValidator(new_evacuationRoute).validate_create()
     if errors:
         return render_template(
             "evacuationRoute/new.html", errors=errors, fieldsInfo=new_route

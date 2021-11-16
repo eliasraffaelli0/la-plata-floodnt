@@ -61,7 +61,7 @@ export class Map {
         return this.drawnlayers.length === 1;
     }
     hasValidZone() {
-        return this.drawnlayers.length >= 3;
+        return this.drawnlayers.length === 1 && this.drawnlayers[0].getLatLngs().length >= 3;
     }
 
     get drawnlayers() {

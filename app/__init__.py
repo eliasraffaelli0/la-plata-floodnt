@@ -104,9 +104,12 @@ def create_app(environment="development"):
 
     # Rutas de Recorridos de evacuación
     app.add_url_rule("/evacuationRoute", "evacuationRoute_index", evacuationRoute.index)
-    # app.add_url_rule(
-    #     "/puntos_de_encuentro/nuevo", "puntos_create", punto.create, methods=["POST"]
-    # )
+    app.add_url_rule(
+        "/evacuationRoute/nuevo",
+        "evacuationRoute_create",
+        evacuationRoute.create,
+        methods=["POST"],
+    )
     app.add_url_rule(
         "/evacuationRoute/nuevo", "evacuationRoute_new", evacuationRoute.new
     )

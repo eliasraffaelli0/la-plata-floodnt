@@ -10,8 +10,11 @@ const submitHandler = (event, mapita) => {
     else {
 
         const coordinates = document.querySelector('#coordinates');
-        const coor = mapita.drawnlayers
-        coordinates.setAttribute('value', JSON.stringify(coor));
+        //    const coor = mapita.drawnlayers[0]._latlng
+        const coorr = mapita.drawnlayers[0].getLatLngs().flat().map(coordinate => {
+            return { lat: coordinate.lat, lng: coordinate.lng }
+        });
+        coordinates.setAttribute('value', JSON.stringify(coorr));
     }
 }
 

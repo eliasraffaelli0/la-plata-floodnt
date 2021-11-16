@@ -11,6 +11,7 @@ const submitHandler = (event, mapita) => {
 
         const coordinates = document.querySelector('#coordinates');
         const lat = mapita.drawnlayers[0]._latlng
+        debbuger
         coordinates.setAttribute('value', JSON.stringify(lat));
     }
 }

@@ -1,6 +1,7 @@
 from os import path, environ
 from flask import Flask, render_template, g, Blueprint
 from flask_session import Session
+from app.models.zone import Zone
 from config import config
 from app import db
 from app.resources import user
@@ -95,6 +96,13 @@ def create_app(environment="development"):
     app.add_url_rule(
         "/zonas_inundables", "zonas_upload", zonas.upload_file, methods=["POST"]
     )
+    app.add_url_rule(
+        "/zonas_inundables/edit/<int:id>",
+        "zones_edit",
+        zonas.edit,
+        methods=["GET"],
+    )
+    app.add_url_rule("/zonas_inundables/<int:id>", "zones_delete", zonas.delete)
 
     # Rutas de Puntos de encuentro
     app.add_url_rule("/puntos_de_encuentro", "puntos_index", punto.index)

@@ -53,25 +53,21 @@ def create():
     new_evacuationRoute.name = request.form["name"]
     new_evacuationRoute.description = request.form["description"]
     new_evacuationRoute.state = request.form["state"]
+    errors = EvacuationRouteValidator(new_evacuationRoute).validate_create()
+    if errors:
+        return render_template(
+            "evacuationRoute/new.html", errors=errors, fieldsInfo=new_evacuationRoute
+        )
     db.session.add(new_evacuationRoute)
     db.session.commit()
     for coor in latLng:
         new_punto = EvacuationRouteCoordinate()
-        new_punto.latitude = latLng["lat"]
-        new_punto.longitude = latLng["lng"]
+        new_punto.latitude = coor["lat"]
+        new_punto.longitude = coor["lng"]
         new_punto.evacuation_route_id = new_evacuationRoute.id
         db.session.add(new_punto)
         db.session.commit()
-    pdb.set_trace()
-    params = request.form.to_dict()
-    new_evacuationRoute = EvacuationRoute(**params)
-    errors = EvacuationRouteValidator(new_evacuationRoute).validate_create()
-    if errors:
-        return render_template(
-            "evacuationRoute/new.html", errors=errors, fieldsInfo=new_route
-        )
-    db.session.add(new_route)
-    db.session.commit()
+
     return redirect(url_for("evacuationRoute_index"))
 
 
@@ -148,6 +144,11 @@ def delete(id):
     if not authenticated(session):
         abort(401)
     route = EvacuationRoute.query.filter(EvacuationRoute.id == id).first()
+    coordinates = EvacuationRouteCoordinate.query.filter(
+        EvacuationRouteCoordinate.evacuation_route_id == id
+    ).all()
+    for coor in coordinates:
+        db.session.delete(coor)
     db.session.delete(route)
     db.session.commit()
     return redirect(url_for("evacuationRoute_index"))

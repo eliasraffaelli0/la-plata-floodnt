@@ -23,14 +23,17 @@ const punto_geometric_figures = {
     polygon: false,
 
 }
-const kk = () => {
+window.onload = () => {
     const mapita = new Map({
         selector: 'mapid',
         addSearch: false,
         geometricFigures: punto_geometric_figures
     });
+    // var marker = L.marker([-34.9187, -57.956].addTo(mapita))
+    //     marker = L.marker([50.84673, 4.35247]).addTo(map);
+    //     const initialLat = -34.9187
+    // const initialLng = -57.956
     const form = document.querySelector('#create-punto-form');
 
     form.addEventListener('submit', (event) => submitHandler(event, mapita));
 }
-window.onload = kk

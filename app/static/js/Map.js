@@ -30,6 +30,7 @@ export class Map {
 
         this.map.addControl(this.createControls);
 
+        // this.map.L.marker([-34.9187, -57.956].addTo(this))
     }
 
     #eventHandler(e, map, drawnItems, editControls, createControls) {

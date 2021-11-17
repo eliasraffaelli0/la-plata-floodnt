@@ -10,7 +10,6 @@ const submitHandler = (event, mapita) => {
     else {
 
         const coordinates = document.querySelector('#coordinates');
-        //    const coor = mapita.drawnlayers[0]._latlng
         const coorr = mapita.drawnlayers[0].getLatLngs().flat().map(coordinate => {
             return { lat: coordinate.lat, lng: coordinate.lng }
         });
@@ -25,7 +24,7 @@ const evacuationRoute_geometric_figures = {
     polygon: false,
 
 }
-const kk = () => {
+window.onload = () => {
     const mapita = new Map({
         selector: 'mapid',
         addSearch: false,
@@ -35,4 +34,3 @@ const kk = () => {
 
     form.addEventListener('submit', (event) => submitHandler(event, mapita));
 }
-window.onload = kk

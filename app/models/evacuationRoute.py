@@ -12,7 +12,7 @@ class EvacuationRoute(db.Model):
     state = Column(Integer)
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     created_at = Column(DateTime(timezone=True), server_default=func.now())
-    coordenates = relationship("EvacuationRouteCoordinate", back_populates="point")
+    coordinates = relationship("EvacuationRouteCoordinate", back_populates="point")
 
 
 # ● Nombre*: nombre de recorrido de evacuación (text).

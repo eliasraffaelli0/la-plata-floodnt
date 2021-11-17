@@ -131,9 +131,9 @@ def create_app(environment="development"):
     #     evacuationRoute.editInfo,
     #     methods=["GET", "POST"],
     # )
-    # app.add_url_rule(
-    #     "/evacuationRoute/<int:id>", "evacuationRoute_delete", evacuationRoute.delete
-    # )
+    app.add_url_rule(
+        "/evacuationRoute/<int:id>", "evacuationRoute_delete", evacuationRoute.delete
+    )
 
     # Rutas del Modulo de Configuración
     app.add_url_rule("/configuracion", "configuracion_index", configuracion.index)

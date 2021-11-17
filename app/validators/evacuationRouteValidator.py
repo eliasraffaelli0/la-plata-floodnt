@@ -1,4 +1,4 @@
-from app.models import evacuationRoute
+from app.models.evacuationRoute import EvacuationRoute
 import re
 
 
@@ -23,25 +23,24 @@ class EvacuationRouteValidator:
         return self.errors
 
     def __validate_name(self):
-        name_is_registered = evacuationRoute.query.filter(
-            evacuationRoute.name == self.params.name
+        name_is_registered = EvacuationRoute.query.filter(
+            EvacuationRoute.name == self.params.name
         ).first()
         if name_is_registered:
             self.errors["name"] = "Ya existe un recorrido con este nombre"
 
     def __validate_input_field(self):
         if (
-            self.params.email == ""
-            or self.params.name == ""
+            self.params.name == ""
             or self.params.description == ""
-            or self.params.coordinates == ""
+            # or self.params.coordinates == ""
         ):
             self.errors["emptyField"] = "Debe completar todos los campos"
 
     def __validate_name_update(self):
         name_is_registered = (
-            evacuationRoute.query.filter(evacuationRoute.name == self.params.name)
-            .filter(evacuationRoute.name != self.punto.name)
+            EvacuationRoute.query.filter(EvacuationRoute.name == self.params.name)
+            .filter(EvacuationRoute.name != self.punto.name)
             .first()
         )
 

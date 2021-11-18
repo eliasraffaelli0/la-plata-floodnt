@@ -53,10 +53,9 @@
             {% endif %}
             </p>
 
-            <input name="latitude" type="text" id="latitude" data-latitude="{{fieldsInfo.latitude}}"
-                value="{{fieldsInfo.latitude}}" />
-            <input name="longitude" type="text" id="longitude" data-longitude="{{fieldsInfo.longitude}}"
-                value="{{fieldsInfo.longitude}}" />
+            <input name="latitude" type="text" id="latitude" data-latitude="{{fieldsInfo.latitude}}" hidden />
+            <input name="longitude" type="text" id="longitude" data-longitude="{{fieldsInfo.longitude}}" hidden />
+            <input name="coordinates" type="text" id="coordinates" />
 
             <div id="map">
                 <div id="mapid"></div>

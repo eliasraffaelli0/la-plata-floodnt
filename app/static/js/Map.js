@@ -48,8 +48,8 @@ export class Map {
         }
     };
 
-    agregarCosa(cosa) {
-        this.#drawnItems.addLayer(cosa);
+    addElement(element) {
+        this.#drawnItems.addLayer(element);
         this.createControls.remove();
         this.editControls.addTo(this.map);
 

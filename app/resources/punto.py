@@ -100,8 +100,8 @@ def editInfo(id):
     del params["coordinates"]
     params["latitude"] = latLng["lat"]
     params["longitude"] = latLng["lng"]
-    punto = Punto.query.filter(Punto.id == id).first()
     new_punto = Punto(**params)
+    punto = Punto.query.filter(Punto.id == id).first()
     errors = PuntoValidator(new_punto, punto).validate_update()
 
     if errors:
@@ -114,6 +114,8 @@ def editInfo(id):
     punto.email = new_punto.email
     punto.name = new_punto.name
     punto.address = new_punto.address
+    punto.latitude = new_punto.latitude
+    punto.longitude = new_punto.longitude
     punto.state = new_punto.state
     punto.telephone = new_punto.telephone
     db.session.commit()

@@ -30,8 +30,9 @@ export class Map {
 
         this.map.addControl(this.createControls);
 
-        // this.map.L.marker([-34.9187, -57.956].addTo(this))
+
     }
+
 
     #eventHandler(e, map, drawnItems, editControls, createControls) {
         const existingZones = Object.values(drawnItems._layers);
@@ -46,6 +47,13 @@ export class Map {
             createControls.remove();
         }
     };
+
+    agregarCosa(cosa) {
+        this.#drawnItems.addLayer(cosa);
+        this.createControls.remove();
+        this.editControls.addTo(this.map);
+
+    }
 
     // Si no se elimina el punto, no se eliminan los controles ya que si no se hace esta validación
     // pueden eliminarse los controles y para borrar el punto habría que refrescar la pagina

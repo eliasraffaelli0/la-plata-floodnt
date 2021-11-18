@@ -28,7 +28,19 @@ window.onload = () => {
         addSearch: false,
         geometricFigures: punto_geometric_figures
     });
+    // var marker = L.marker([-34.9187, -57.956].addTo(mapita))
+    //     marker = L.marker([50.84673, 4.35247]).addTo(map);
+    //     const initialLat = -34.9187
+    // const initialLng = -57.956
+    // marker = L.marker([-34.9187, -57.956])
+    // this.map.addLayer(marker)
     const form = document.querySelector('#create-punto-form');
+    const latitude = document.querySelector('#latitude').getAttribute("data-latitude");
+    const longitude = document.querySelector('#longitude').getAttribute("data-longitude");
+
+    var marker = L.marker([parseFloat(latitude), parseFloat(longitude)]);
+    // mapita.map.addLayer(marker);
+    mapita.agregarCosa(marker);
 
     form.addEventListener('submit', (event) => submitHandler(event, mapita));
 }

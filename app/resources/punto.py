@@ -84,7 +84,6 @@ def filter():
 def edit(id):
     if not authenticated(session):
         abort(401)
-
     punto = Punto.query.filter(Punto.id == id).first()
     errors = {}
     return render_template(

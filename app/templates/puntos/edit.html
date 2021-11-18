@@ -19,7 +19,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 
 
-<script type="module" src="{{ url_for('static', filename='js/punto/index.js') }}"></script>
+<script type="module" src="{{ url_for('static', filename='js/punto/edit.js') }}"></script>
 {% endblock %}
 {% block content %}
 <div class="container mb-2 text-center rounded-3" style="background-color: rgba(0, 0, 0, 0.1)">
@@ -53,7 +53,10 @@
             {% endif %}
             </p>
 
-            <input name="coordinates" type="text" id="coordinates" />
+            <input name="latitude" type="text" id="latitude" data-latitude="{{fieldsInfo.latitude}}"
+                value="{{fieldsInfo.latitude}}" />
+            <input name="longitude" type="text" id="longitude" data-longitude="{{fieldsInfo.longitude}}"
+                value="{{fieldsInfo.longitude}}" />
 
             <div id="map">
                 <div id="mapid"></div>

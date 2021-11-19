@@ -37,11 +37,14 @@ def upload_file():
     for zona_inundada in zone_list:
         new_zona = Zone()
         new_zona.name = zona_inundada["name"]
-        kk = ZoneValidator(new_zona).validate_username()
+        zone_is_registered = Zone.query.filter(Zone.name == new_zona.name).first()
+        if zone_is_registered:
+            ZoneCoordinate.query.filter(
+                ZoneCoordinate.zone_id == zone_is_registered.id
+            ).delete()
+            db.session.commit()
 
         """comiteo primero la zona para que le quede asignado un id para luego pasarselo a cada par de coordenadas"""
-        # db.session.add(new_zona)
-        # db.session.commit()
         """quito los corchetes y hago una lista solo string de par de coordenadas separados por una coma.
         por ejemplo '-35.12234124,-43.34235256"""
         coordinate_list = (
@@ -55,13 +58,14 @@ def upload_file():
             """separo el string en una lista de dos items para obtener el valor de la latitud y la longitud"""
             coordinate_para = coordinate_par.replace(",", " ").split()
             new_coordinate = ZoneCoordinate()
-            # new_coordinate.zone_id = new_zona.id
             new_coordinate.latitude = coordinate_para[0]
             new_coordinate.longitude = coordinate_para[1]
-            new_zona.coordinates.append(new_coordinate)
-            # db.session.add(new_coordinate)
-            # db.session.commit()
-        db.session.add(new_zona)
+            if zone_is_registered:
+                zone_is_registered.coordinates.append(new_coordinate)
+            else:
+                new_zona.coordinates.append(new_coordinate)
+        if not zone_is_registered:
+            db.session.add(new_zona)
         db.session.commit()
     # es una chanchada pero tiempos desesperados requieren medidas desesperadas
 

@@ -37,6 +37,7 @@ def upload_file():
     for zona_inundada in zone_list:
         new_zona = Zone()
         new_zona.name = zona_inundada["name"]
+        """si la zona ya está registrada elimino las coordenadas que tiene y las reemplazo por las que tiene el csv"""
         zone_is_registered = Zone.query.filter(Zone.name == new_zona.name).first()
         if zone_is_registered:
             ZoneCoordinate.query.filter(
@@ -44,8 +45,8 @@ def upload_file():
             ).delete()
             db.session.commit()
 
-        """comiteo primero la zona para que le quede asignado un id para luego pasarselo a cada par de coordenadas"""
-        """quito los corchetes y hago una lista solo string de par de coordenadas separados por una coma.
+        """comiteo primero la zona para que le quede asignado un id para luego pasarselo a cada par de coordenadas
+        quito los corchetes y hago una lista solo string de par de coordenadas separados por una coma.
         por ejemplo '-35.12234124,-43.34235256"""
         coordinate_list = (
             zona_inundada["area"]
@@ -60,10 +61,12 @@ def upload_file():
             new_coordinate = ZoneCoordinate()
             new_coordinate.latitude = coordinate_para[0]
             new_coordinate.longitude = coordinate_para[1]
+            """si la zona ya está registrada le hago un append, sino lo hago en la zona nueva"""
             if zone_is_registered:
                 zone_is_registered.coordinates.append(new_coordinate)
             else:
                 new_zona.coordinates.append(new_coordinate)
+        """si la zona no está registrada la añade a la db, sino solo hace el commit ya que la zona ya estaría registrada"""
         if not zone_is_registered:
             db.session.add(new_zona)
         db.session.commit()

@@ -48,6 +48,12 @@ export class Map {
         }
     };
 
+    //Esta función se agregó para poder editar los distintos elementos de la aplicación 
+    //ya que al traerlos de la base de datos la instancia del mapa no los reconocía como
+    //elementos dibujados en la variable drawnItems, por ende, fallaban las validaciones
+    //lo que hace simplemente es agregar el elemento a la variable, eliminar los controles de 
+    //creación y agregar los de edición
+
     addElement(element) {
         this.#drawnItems.addLayer(element);
         this.createControls.remove();

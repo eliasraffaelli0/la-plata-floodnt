@@ -7,7 +7,7 @@ from app.db import db
 class Zone(db.Model):
     tablename = "zone"
     id = Column(Integer, primary_key=True)
-    zone_code = Column(Integer, unique=True)
+    zone_code = Column(String(100), unique=True)
     name = Column(String(50), unique=True)
     color = Column(String(50))
     state = Column(Integer)

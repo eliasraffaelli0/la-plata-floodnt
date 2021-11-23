@@ -29,7 +29,7 @@ def upload_file():
     errors = {}
     """valido que tenga los campos correctos"""
     if not "name" in zone_list[0] or not "area" in zone_list[0]:
-        errors["file"] = "Ingrese un archivo con el formato de area|coordenadas"
+        errors["file"] = "Ingrese un archivo con el formato de name|area"
         return render_template("zonas/index.html", errors=errors)
 
     for zona_inundada in zone_list:

@@ -19,6 +19,9 @@
       </div>
     </form>
     {% endif %}
+    {% if errors["file"] %}
+    <p style="color:red"> {{errors["file"]}} </p>
+    {% endif %}
   </div>
   <a href="{{ url_for('home') }}" class="btn btn-primary mb-2">Volver</a>
   <a href="#" class="btn btn-primary mb-2">Nuevo</a>

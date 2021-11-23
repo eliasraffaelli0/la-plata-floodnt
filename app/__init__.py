@@ -119,18 +119,18 @@ def create_app(environment="development"):
         evacuationRoute.filter,
         methods=["POST"],
     )
-    # app.add_url_rule(
-    #     "/evacuationRoute/edit/<int:id>",
-    #     "evacuationRoute_edit",
-    #     evacuationRoute.edit,
-    #     methods=["GET"],
-    # )
-    # app.add_url_rule(
-    #     "/evacuationRoute/edit/<int:id>",
-    #     "puntos_edit_info",
-    #     evacuationRoute.editInfo,
-    #     methods=["GET", "POST"],
-    # )
+    app.add_url_rule(
+        "/evacuationRoute/edit/<int:id>",
+        "evacuationRoute_edit",
+        evacuationRoute.edit,
+        methods=["GET"],
+    )
+    app.add_url_rule(
+        "/evacuationRoute/edit/<int:id>",
+        "evacuationRoute_edit_info",
+        evacuationRoute.editInfo,
+        methods=["GET", "POST"],
+    )
     app.add_url_rule(
         "/evacuationRoute/<int:id>", "evacuationRoute_delete", evacuationRoute.delete
     )

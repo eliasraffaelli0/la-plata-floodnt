@@ -47,7 +47,6 @@ def create():
      mandarlo al punto nuevo"""
 
     latLng = json.loads(request.form["coordinates"])
-    import pdb
 
     new_evacuationRoute = EvacuationRoute()
     new_evacuationRoute.name = request.form["name"]
@@ -58,16 +57,17 @@ def create():
         return render_template(
             "evacuationRoute/new.html", errors=errors, fieldsInfo=new_evacuationRoute
         )
-    db.session.add(new_evacuationRoute)
-    db.session.commit()
     for coor in latLng:
         new_punto = EvacuationRouteCoordinate()
         new_punto.latitude = coor["lat"]
         new_punto.longitude = coor["lng"]
-        new_punto.evacuation_route_id = new_evacuationRoute.id
-        db.session.add(new_punto)
-        db.session.commit()
+        import pdb
 
+        pdb.set_trace()
+        new_punto.evacuation_route_id = new_evacuationRoute.id
+        new_evacuationRoute.coordinates.append(new_punto)
+    db.session.add(new_evacuationRoute)
+    db.session.commit()
     return redirect(url_for("evacuationRoute_index"))
 
 
@@ -100,44 +100,61 @@ def filter():
     return render_template("evacuarionRoute/index.html", routes=routes)
 
 
-# def edit(id):
-#     if not authenticated(session):
-#         abort(401)
+def edit(id):
+    if not authenticated(session):
+        abort(401)
 
-#     route = EvacuationRoute.query.filter(EvacuationRoute.id == id).first()
-#     errors = {}
-#     return render_template(
-#         "evacuationRoute/edit.html", id=route.id, errors=errors, fieldsInfo=route
-#     )
+    route = EvacuationRoute.query.filter(EvacuationRoute.id == id).first()
+    # coordis = dict()
+    # for point in route.coordinates:
+    #     entrada = dict()
+    #     entrada["lat"] = point.latitude
+    #     entrada["lng"] = point.longitude
+    import pdb
+
+    pdb.set_trace()
+    errors = {}
+    return render_template(
+        "evacuationRoute/edit.html",
+        id=route.id,
+        errors=errors,
+        fieldsInfo=route,
+    )
 
 
-# def editInfo(id):
-#     if not authenticated(session):
-#         abort(401)
+def editInfo(id):
+    if not authenticated(session):
+        abort(401)
 
-#     latLng = json.loads(request.form["coordinates"])
-#     params = request.form.to_dict()
-#     del params["coordinates"]
-#     params["latitude"] = latLng["lat"]
-#     params["longitude"] = latLng["lng"]
-#     punto = Punto.query.filter(Punto.id == id).first()
-#     new_punto = Punto(**params)
-#     errors = PuntoValidator(new_punto, punto).validate_update()
+    latLng = json.loads(request.form["coordinates"])
+    route = EvacuationRoute.query.filter(EvacuationRoute.id == id).first()
+    new_evacuationRoute = EvacuationRoute()
+    new_evacuationRoute.name = request.form["name"]
+    new_evacuationRoute.description = request.form["description"]
+    new_evacuationRoute.state = request.form["state"]
+    errors = EvacuationRouteValidator(new_evacuationRoute, route).validate_update()
 
-#     if errors:
-#         return render_template(
-#             "puntos/edit.html",
-#             errors=errors,
-#             id=punto.id,
-#             fieldsInfo=new_punto,
-#         )
-#     punto.email = new_punto.email
-#     punto.name = new_punto.name
-#     punto.address = new_punto.address
-#     punto.state = new_punto.state
-#     punto.telephone = new_punto.telephone
-#     db.session.commit()
-#     return redirect(url_for("puntos_index"))
+    if errors:
+        return render_template(
+            "evacuationRoute/edit.html",
+            errors=errors,
+            id=route.id,
+            fieldsInfo=new_evacuationRoute,
+        )
+    EvacuationRouteCoordinate.query.filter(
+        EvacuationRouteCoordinate.evacuation_route_id == route.id
+    ).delete()
+    for coor in latLng:
+        new_punto = EvacuationRouteCoordinate()
+        new_punto.latitude = coor["lat"]
+        new_punto.longitude = coor["lng"]
+        new_punto.evacuation_route_id = new_evacuationRoute.id
+        new_evacuationRoute.coordinates.append(new_punto)
+    route.name = new_evacuationRoute.name
+    route.description = new_evacuationRoute.description
+    route.state = new_evacuationRoute.state
+    db.session.commit()
+    return redirect(url_for("puntos_index"))
 
 
 def delete(id):

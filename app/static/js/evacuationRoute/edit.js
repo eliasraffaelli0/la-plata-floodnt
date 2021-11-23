@@ -33,6 +33,11 @@ window.onload = () => {
     const form = document.querySelector('#create-evacuationRoute-form');
     coordinates = document.querySelector('#coordinates').getAttribute("data-coordinates");
 
+    var pointList = kk.map(c => new L.LatLng(c.lat, c.lng))
+
+
+    var firstpolyline = new L.Polyline(pointList);
+    mapita.addElement(firstpolyline);
 
     form.addEventListener('submit', (event) => submitHandler(event, mapita));
 }

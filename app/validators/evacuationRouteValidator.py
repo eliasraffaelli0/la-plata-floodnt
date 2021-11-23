@@ -40,7 +40,7 @@ class EvacuationRouteValidator:
     def __validate_name_update(self):
         name_is_registered = (
             EvacuationRoute.query.filter(EvacuationRoute.name == self.params.name)
-            .filter(EvacuationRoute.name != self.punto.name)
+            .filter(EvacuationRoute.name != self.params.name)
             .first()
         )
 

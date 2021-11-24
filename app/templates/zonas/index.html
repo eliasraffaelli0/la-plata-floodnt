@@ -7,7 +7,66 @@
 <div class="container text-center">
   <div class="container mb-2">
     <h1>Zonas inundables</h1>
+    <p>Filtrar por nombre y/o publicado/oculto:</p>
+    <form action="{{ url_for('evacuationRoute_search') }}" method="post">
+      <input type="search" placeholder="Nombre" name="name">
+      <select class="form-select-sm" name='state'>
+        <option value="">Estado</option>
+        <option value='1'>Publicado</option>
+        <option value='0'>Oculto</option>
+        zone_code = Column(String(100), unique=True)
+        name = Column(String(50), unique=True)
+        color = Column(String(50))
+        state = Column(Integer)
+      </select>
+      <button class="btn btn-outline-primary btn-sm" type="submit">Filtrar</button>
+      <a href="{{ url_for ('evacuationRoute_index') }}" class="btn btn-outline-primary btn-sm">Limpiar filtros</a>
+    </form>
+  </div>
+  <div class="table-responsive">
 
+    <table class="table table-striped table-border table-sm table-hover">
+      <tr class="table-light">
+        <th>Nombre</th>
+        <th>Codigo de zona</th>
+        <th>Color</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+      {% for zone in zones.items %}
+      <tr class="table-info">
+        <td class="table-info">{{ zone.name }}</td>
+        <td class="table-info">{{ zone.description }}</td>
+        <td class="table-info">
+          {% if zone.state %}
+          Publicado
+          {% else %}
+          Oculto
+          {% endif %}
+        </td>
+        <td class="table-info">
+          <a href="{{ url_for('evacuationRoute_edit', id=route.id) }}"><img src="static/images/pencil.png"
+              class="fotito"><a href=" {{ url_for('evacuationRoute_delete', id=route.id) }}"
+              onclick="return confirm('Desea eliminar la zona: {{ zone.name }}? Esta acción no podrá deshacerse');"><img
+                src="static/images/delete.png" class="fotito"></a>
+        </td>
+      </tr>
+      {% endfor %}
+
+    </table>
+  </div>
+  <div>
+    <nav>
+      <ul class="pagination justify-content-center">
+        {% for page_num in routes.iter_pages() %}
+        {% if page_num %}
+        <li class="pag-item">
+          <a class="page-link" href="{{ url_for('evacuationRoute_index',page=page_num) }}">{{ page_num }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </nav>
     {% if has_permission(session, 'zone_upload_file') %}
     <form enctype="multipart/form-data" action="{{ url_for('zonas_upload') }}" class="needs-validation" method="POST">
       <div>

@@ -92,7 +92,7 @@ def filter():
             .paginate(per_page=g.config.elementos_por_pagina)
         )
 
-    return render_template("evacuarionRoute/index.html", routes=routes)
+    return render_template("evacuationRoute/index.html", routes=routes)
 
 
 def edit(id):

@@ -41,7 +41,6 @@ def new():
 def create():
     if not authenticated(session):
         abort(401)
-    # para el controlador de zona hay que hacer el load para transformarlo a un arreglo de diccionarios
     """ Se transforma el diccionario inmutable en el que vienen almacenadas las coordenadas
      a un diccionario mutable y se guardan por separados en los campos de longitud y latitud para
      mandarlo al punto nuevo"""
@@ -101,26 +100,30 @@ def edit(id):
         abort(401)
 
     route = EvacuationRoute.query.filter(EvacuationRoute.id == id).first()
-    coordis = list()
+    coords = list()
+    """Creo una lista de diccionarios que tienen los pares de coordenadas de cada punto del recorrido
+    que se pasa por parámetro a la vista """
     for point in route.coordinates:
-        entrada = dict()
-        entrada["lat"] = point.latitude
-        entrada["lng"] = point.longitude
-        coordis.append(entrada)
+        coordinatePair = dict()
+        coordinatePair["lat"] = point.latitude
+        coordinatePair["lng"] = point.longitude
+        coords.append(coordinatePair)
     errors = {}
     return render_template(
         "evacuationRoute/edit.html",
         id=route.id,
         errors=errors,
         fieldsInfo=route,
-        routeCoordinates=coordis,
+        routeCoordinates=coords,
     )
 
 
 def editInfo(id):
     if not authenticated(session):
         abort(401)
-
+    """Transformo el campo coordinates a una lista, creo un nuevo recorrido, le asigno los valores 
+    traídos del formulario y chequeo si son válidos, si son válidos, borro las coordenadas anteriores
+    de la base de datos, creo las nuevas y las asigno al recorrido."""
     latLng = json.loads(request.form["coordinates"])
     route = EvacuationRoute.query.filter(EvacuationRoute.id == id).first()
     new_evacuationRoute = EvacuationRoute()
@@ -154,6 +157,9 @@ def editInfo(id):
 def delete(id):
     if not authenticated(session):
         abort(401)
+
+    """Elimino primero todas las coordenadas y después el recorrido"""
+
     route = EvacuationRoute.query.filter(EvacuationRoute.id == id).first()
     coordinates = EvacuationRouteCoordinate.query.filter(
         EvacuationRouteCoordinate.evacuation_route_id == id

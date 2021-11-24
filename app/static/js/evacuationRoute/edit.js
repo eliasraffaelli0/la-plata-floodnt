@@ -31,13 +31,10 @@ window.onload = () => {
         geometricFigures: evacuationRoute_geometric_figures
     });
     const form = document.querySelector('#create-evacuationRoute-form');
-    coordinates = document.querySelector('#coordinates').getAttribute("data-coordinates");
 
-    var pointList = kk.map(c => new L.LatLng(c.lat, c.lng))
-
-
-    var firstpolyline = new L.Polyline(pointList);
-    mapita.addElement(firstpolyline);
+    var pointList = routeCoordinates.map(coor => new L.LatLng(coor.lat, coor.lng))
+    var polyline = new L.Polyline(pointList);
+    mapita.addElement(polyline);
 
     form.addEventListener('submit', (event) => submitHandler(event, mapita));
 }

@@ -20,11 +20,17 @@
 
 
 <script type="module" src="{{ url_for('static', filename='js/evacuationRoute/edit.js') }}"></script>
+
+<!-- Este script declara la variable routeCoordinates con el valor de routeCoordinates pasado por 
+parámetro a la vista desde el controlador. Javascript puede acceder a esta variable y con ella se
+obtienen las coordenadas del recorrido traído desde la BD -->
+<script>
+    var routeCoordinates = {{ routeCoordinates| safe }};
+</script>
+
 {% endblock %}
 {% block content %}
-<script>
-    var kk = {{ routeCoordinates| safe }};
-</script>
+
 <div class="container mb-2 text-center rounded-3" style="background-color: rgba(0, 0, 0, 0.1)">
     <h1>Crear un recorrido de evacuación</h1>
     <form id="create-evacuationRoute-form" class="needs-validation" method="post">
@@ -51,11 +57,13 @@
                 {% endif %}
             </p>
 
-            <input name="coordinates" type="text" id="coordinates" data-coordinates="{{routeCoordinates}}" />
-            <input name="newCoordinates" type="text" id="newCoordinates" />
+            <input name="coordinates" type="text" id="coordinates" hidden>
+
+
             <div id="map">
                 <div id="mapid"></div>
             </div>
+
             <p>
                 <label>Estado</label></br>
                 {% if fieldsInfo.state %}
@@ -70,6 +78,7 @@
                 </select>
                 {% endif %}
             </p>
+
             <p>
                 <input class="btn btn-outline-dark btn-sm" type="submit" value="Actualizar" />
             </p>

@@ -88,12 +88,25 @@ def create_app(environment="development"):
 
     # Rutas de Zonas inundables
     app.add_url_rule("/flood_zones", "zones_index", zones.index)
+    app.add_url_rule("/flood_zones", "zones_search", zones.filter, methods=["POST"])
     app.add_url_rule(
         "/flood_zones", "zonas_upload", zones.upload_file, methods=["POST"]
     )
     app.add_url_rule("/flood_zones/new", "zones_new", zones.new)
     app.add_url_rule("/flood_zones/new", "zones_create", zones.create, methods=["POST"])
     app.add_url_rule("/flood_zones/<int:id>", "zones_delete", zones.delete)
+    app.add_url_rule(
+        "/flood_zones/edit/<int:id>",
+        "zones_edit",
+        zones.edit,
+        methods=["GET"],
+    )
+    app.add_url_rule(
+        "/flood_zones/edit/<int:id>",
+        "zones_edit_info",
+        zones.editInfo,
+        methods=["GET", "POST"],
+    )
     # Rutas de Puntos de encuentro
     app.add_url_rule("/puntos_de_encuentro", "puntos_index", punto.index)
     app.add_url_rule(

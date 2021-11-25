@@ -5,6 +5,7 @@ from app.models.zone import Zone
 from app.models.zone_coordinate import ZoneCoordinate
 from app.validators.zoneValidator import ZoneValidator
 from app.db import db
+from sqlalchemy.sql import text, and_
 import csv, uuid
 import json
 
@@ -33,6 +34,35 @@ def new():
         abort(401)
     errors = {}
     return render_template("floodZone/new.html", errors=errors)
+
+
+def filter():
+    params = Zone(**request.form)
+    if params.name and not params.state:
+        zones = (
+            Zone.query.filter(Zone.name == params.name)
+            .order_by(text(f"created_at {g.config.criterio_de_ordenacion}"))
+            .paginate(per_page=g.config.elementos_por_pagina)
+        )
+    elif params.state and not params.name:
+        zones = (
+            Zone.query.filter(Zone.state == params.state)
+            .order_by(text(f"created_at {g.config.criterio_de_ordenacion}"))
+            .paginate(per_page=g.config.elementos_por_pagina)
+        )
+    else:
+        zones = (
+            Zone.query.filter(
+                and_(
+                    Zone.name == params.name,
+                    Zone.state == params.state,
+                )
+            )
+            .order_by(text(f"created_at {g.config.criterio_de_ordenacion}"))
+            .paginate(per_page=g.config.elementos_por_pagina)
+        )
+    errors = {}
+    return render_template("floodZone/index.html", zones=zones, errors=errors)
 
 
 def create():
@@ -122,6 +152,65 @@ def upload_file():
     # es una chanchada pero tiempos desesperados requieren medidas desesperadas
 
     return render_template("flood_zones/index.html", errors=errors)
+
+
+def edit(id):
+    if not authenticated(session):
+        abort(401)
+
+    zone = Zone.query.filter(Zone.id == id).first()
+    coords = list()
+    """Creo una lista de diccionarios que tienen los pares de coordenadas de cada punto del recorrido
+    que se pasa por parámetro a la vista """
+    for point in zone.coordinates:
+        coordinatePair = dict()
+        coordinatePair["lat"] = point.latitude
+        coordinatePair["lng"] = point.longitude
+        coords.append(coordinatePair)
+    errors = {}
+    return render_template(
+        "floodZone/edit.html",
+        id=zone.id,
+        errors=errors,
+        fieldsInfo=zone,
+        zoneCoordinates=coords,
+    )
+
+
+def editInfo(id):
+    if not authenticated(session):
+        abort(401)
+    """Transformo el campo coordinates a una lista, creo un nuevo recorrido, le asigno los valores 
+    traídos del formulario y chequeo si son válidos, si son válidos, borro las coordenadas anteriores
+    de la base de datos, creo las nuevas y las asigno al recorrido."""
+    latLng = json.loads(request.form["coordinates"])
+    zone = Zone.query.filter(Zone.id == id).first()
+    new_zone = Zone()
+    new_zone.name = request.form["name"]
+    new_zone.zone_code = request.form["zone_code"]
+    new_zone.color = request.form["color"]
+    new_zone.state = request.form["state"]
+    errors = ZoneValidator(new_zone, zone).validate_update()
+    if errors:
+        return render_template(
+            "floodZone/edit.html",
+            errors=errors,
+            id=zone.id,
+            fieldsInfo=new_zone,
+        )
+    ZoneCoordinate.query.filter(ZoneCoordinate.zone_id == zone.id).delete()
+    for coor in latLng:
+        new_punto = ZoneCoordinate()
+        new_punto.latitude = coor["lat"]
+        new_punto.longitude = coor["lng"]
+        new_punto.zone_id = zone.id
+        zone.coordinates.append(new_punto)
+    zone.name = new_zone.name
+    zone.zone_code = new_zone.zone_code
+    zone.color = new_zone.color
+    zone.state = new_zone.state
+    db.session.commit()
+    return redirect(url_for("zones_index"))
 
 
 def delete(id):

@@ -3,7 +3,7 @@ from flask import Flask, render_template, g
 from flask_session import Session
 from config import config
 from app import db
-from app.resources import evacuationRoute, user, auth, punto, zonas, configuracion
+from app.resources import evacuationRoute, user, auth, punto, zones, configuracion
 from app.models.configuracion import Configuracion
 from app.helpers import handler
 from app.helpers import auth as helper_auth
@@ -87,11 +87,13 @@ def create_app(environment="development"):
         return render_template("home.html")
 
     # Rutas de Zonas inundables
-    app.add_url_rule("/zonas_inundables", "zonas_index", zonas.index)
+    app.add_url_rule("/flood_zones", "zones_index", zones.index)
     app.add_url_rule(
-        "/zonas_inundables", "zonas_upload", zonas.upload_file, methods=["POST"]
+        "/flood_zones", "zonas_upload", zones.upload_file, methods=["POST"]
     )
-
+    app.add_url_rule("/flood_zones/new", "zones_new", zones.new)
+    app.add_url_rule("/flood_zones/new", "zones_create", zones.create, methods=["POST"])
+    app.add_url_rule("/flood_zones/<int:id>", "zones_delete", zones.delete)
     # Rutas de Puntos de encuentro
     app.add_url_rule("/puntos_de_encuentro", "puntos_index", punto.index)
     app.add_url_rule(

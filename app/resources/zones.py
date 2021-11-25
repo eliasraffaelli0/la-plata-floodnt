@@ -1,17 +1,65 @@
-import csv, uuid
-from flask import render_template, request, session, abort
+from flask import redirect, render_template, request, session, abort, g, url_for
 from app.helpers.auth import authenticated
+from app.helpers.permisoValidator import permisoChecker
 from app.models.zone import Zone
 from app.models.zone_coordinate import ZoneCoordinate
+from app.validators.zoneValidator import ZoneValidator
 from app.db import db
+import csv, uuid
+import json
 
 
 def index():
     if not authenticated(session):
         abort(401)
+    if g.config.criterio_de_ordenacion == "asc":
 
+        zones = Zone.query.order_by(Zone.created_at.asc()).paginate(
+            per_page=g.config.elementos_por_pagina
+        )
+
+    elif g.config.criterio_de_ordenacion == "desc":
+        zones = Zone.query.order_by(Zone.created_at.desc()).paginate(
+            per_page=g.config.elementos_por_pagina
+        )
     errors = {}
-    return render_template("zonas/index.html", errors=errors)
+    return render_template("floodZone/index.html", errors=errors, zones=zones)
+
+
+def new():
+    if not authenticated(session):
+        abort(401)
+    if not permisoChecker(session, "user_index"):
+        abort(401)
+    errors = {}
+    return render_template("floodZone/new.html", errors=errors)
+
+
+def create():
+    if not authenticated(session):
+        abort(401)
+    """ Se transforma el diccionario inmutable en el que vienen almacenadas las coordenadas
+     a un diccionario mutable y se guardan por separados en los campos de longitud y latitud para
+     mandarlo al punto nuevo"""
+
+    latLng = json.loads(request.form["coordinates"])
+    new_zone = Zone()
+    new_zone.name = request.form["name"]
+    new_zone.zone_code = request.form["zone_code"]
+    new_zone.state = request.form["state"]
+    new_zone.color = request.form["color"]
+    errors = ZoneValidator(new_zone).validate_create()
+    if errors:
+        return render_template("floodZone/new.html", errors=errors, fieldsInfo=new_zone)
+    for coor in latLng:
+        new_punto = ZoneCoordinate()
+        new_punto.latitude = coor["lat"]
+        new_punto.longitude = coor["lng"]
+        new_punto.zone_id = new_zone.id
+        new_zone.coordinates.append(new_punto)
+    db.session.add(new_zone)
+    db.session.commit()
+    return redirect(url_for("zones_index"))
 
 
 def upload_file():
@@ -30,7 +78,7 @@ def upload_file():
     """valido que tenga los campos correctos"""
     if not "name" in zone_list[0] or not "area" in zone_list[0]:
         errors["file"] = "Ingrese un archivo con el formato de name|area"
-        return render_template("zonas/index.html", errors=errors)
+        return render_template("flood_zones/index.html", errors=errors)
 
     for zona_inundada in zone_list:
         new_zona = Zone()
@@ -73,4 +121,19 @@ def upload_file():
         db.session.commit()
     # es una chanchada pero tiempos desesperados requieren medidas desesperadas
 
-    return render_template("zonas/index.html", errors=errors)
+    return render_template("flood_zones/index.html", errors=errors)
+
+
+def delete(id):
+    if not authenticated(session):
+        abort(401)
+
+    """Elimino primero todas las coordenadas y después el recorrido"""
+
+    zone = Zone.query.filter(Zone.id == id).first()
+    coordinates = ZoneCoordinate.query.filter(ZoneCoordinate.zone_id == id).all()
+    for coor in coordinates:
+        db.session.delete(coor)
+    db.session.delete(zone)
+    db.session.commit()
+    return redirect(url_for("zones_index"))

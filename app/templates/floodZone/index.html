@@ -14,10 +14,6 @@
         <option value="">Estado</option>
         <option value='1'>Publicado</option>
         <option value='0'>Oculto</option>
-        zone_code = Column(String(100), unique=True)
-        name = Column(String(50), unique=True)
-        color = Column(String(50))
-        state = Column(Integer)
       </select>
       <button class="btn btn-outline-primary btn-sm" type="submit">Filtrar</button>
       <a href="{{ url_for ('evacuationRoute_index') }}" class="btn btn-outline-primary btn-sm">Limpiar filtros</a>
@@ -36,7 +32,8 @@
       {% for zone in zones.items %}
       <tr class="table-info">
         <td class="table-info">{{ zone.name }}</td>
-        <td class="table-info">{{ zone.description }}</td>
+        <td class="table-info">{{ zone.zone_code }}</td>
+        <td class="table-info">{{ zone.color }}</td>
         <td class="table-info">
           {% if zone.state %}
           Publicado
@@ -45,10 +42,9 @@
           {% endif %}
         </td>
         <td class="table-info">
-          <a href="{{ url_for('evacuationRoute_edit', id=route.id) }}"><img src="static/images/pencil.png"
-              class="fotito"><a href=" {{ url_for('evacuationRoute_delete', id=route.id) }}"
-              onclick="return confirm('Desea eliminar la zona: {{ zone.name }}? Esta acción no podrá deshacerse');"><img
-                src="static/images/delete.png" class="fotito"></a>
+          <a href=" {{ url_for('zones_delete', id=zone.id) }}"
+            onclick="return confirm('Desea eliminar la zona: {{ zone.name }}? Esta acción no podrá deshacerse');"><img
+              src="static/images/delete.png" class="fotito"></a>
         </td>
       </tr>
       {% endfor %}
@@ -58,10 +54,10 @@
   <div>
     <nav>
       <ul class="pagination justify-content-center">
-        {% for page_num in routes.iter_pages() %}
+        {% for page_num in zones.iter_pages() %}
         {% if page_num %}
         <li class="pag-item">
-          <a class="page-link" href="{{ url_for('evacuationRoute_index',page=page_num) }}">{{ page_num }}</a>
+          <a class="page-link" href="{{ url_for('zones_index',page=page_num) }}">{{ page_num }}</a>
         </li>
         {% endif %}
         {% endfor %}
@@ -83,6 +79,6 @@
     {% endif %}
   </div>
   <a href="{{ url_for('home') }}" class="btn btn-primary mb-2">Volver</a>
-  <a href="#" class="btn btn-primary mb-2">Nuevo</a>
+  <a href="{{ url_for('zones_new') }}" class="btn btn-primary mb-2">Nuevo</a>
 </div>
 {% endblock %}

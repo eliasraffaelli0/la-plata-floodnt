@@ -13,14 +13,22 @@ import json
 def index():
     if not authenticated(session):
         abort(401)
+    params = request.args
+    zones = Zone.query
+    if params.get("name", False):
+        zones = zones.filter(Zone.name == params["name"])
+
+    if params.get("state", False):
+        zones = zones.filter(Zone.state == params["state"])
+    print(params)
+
     if g.config.criterio_de_ordenacion == "asc":
 
-        zones = Zone.query.order_by(Zone.created_at.asc()).paginate(
+        zones = zones.order_by(Zone.created_at.asc()).paginate(
             per_page=g.config.elementos_por_pagina
         )
-
     elif g.config.criterio_de_ordenacion == "desc":
-        zones = Zone.query.order_by(Zone.created_at.desc()).paginate(
+        zones = zones.order_by(Zone.created_at.desc()).paginate(
             per_page=g.config.elementos_por_pagina
         )
     errors = {}

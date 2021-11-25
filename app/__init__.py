@@ -88,7 +88,6 @@ def create_app(environment="development"):
 
     # Rutas de Zonas inundables
     app.add_url_rule("/flood_zones", "zones_index", zones.index)
-    app.add_url_rule("/flood_zones", "zones_search", zones.filter, methods=["POST"])
     app.add_url_rule(
         "/flood_zones", "zonas_upload", zones.upload_file, methods=["POST"]
     )

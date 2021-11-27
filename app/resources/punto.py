@@ -9,8 +9,8 @@ import json
 
 
 def index():
-    # Accedo a la variable de configuracion del g object, pagino por la cantidad de
-    # elementos que tenga almacenada en esa variable y ordeno por el criterio
+    """Accedo a la variable de configuracion del g object, pagino por la cantidad de
+    elementos que tenga almacenada en esa variable y ordeno por el criterio"""
     if g.config.criterio_de_ordenacion == "asc":
 
         puntos = Punto.query.order_by(Punto.created_at.asc()).paginate(
@@ -84,7 +84,6 @@ def filter():
 def edit(id):
     if not authenticated(session):
         abort(401)
-
     punto = Punto.query.filter(Punto.id == id).first()
     errors = {}
     return render_template(
@@ -101,8 +100,8 @@ def editInfo(id):
     del params["coordinates"]
     params["latitude"] = latLng["lat"]
     params["longitude"] = latLng["lng"]
-    punto = Punto.query.filter(Punto.id == id).first()
     new_punto = Punto(**params)
+    punto = Punto.query.filter(Punto.id == id).first()
     errors = PuntoValidator(new_punto, punto).validate_update()
 
     if errors:
@@ -115,6 +114,8 @@ def editInfo(id):
     punto.email = new_punto.email
     punto.name = new_punto.name
     punto.address = new_punto.address
+    punto.latitude = new_punto.latitude
+    punto.longitude = new_punto.longitude
     punto.state = new_punto.state
     punto.telephone = new_punto.telephone
     db.session.commit()

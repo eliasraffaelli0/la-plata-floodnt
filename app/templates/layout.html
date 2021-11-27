@@ -52,12 +52,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navmenu">
           <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link" href="{{ url_for('zonas_index') }}">Administrar zonas
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('zones_index') }}">Administrar zonas
                 inundables</a>
             </li>
             <li class="nav-item"><a class="nav-link" href="{{ url_for('puntos_index') }}">Administrar puntos de
                 encuentro</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ url_for('recorridos_index') }}">Administrar recorridos de
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('evacuationRoute_index') }}">Administrar
+                recorridos de
                 evacuación</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Administrar eventos</a></li>
             {% if has_permission(session, 'user_index') %}

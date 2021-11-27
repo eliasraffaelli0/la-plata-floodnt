@@ -29,6 +29,11 @@ window.onload = () => {
         geometricFigures: punto_geometric_figures
     });
     const form = document.querySelector('#create-punto-form');
+    const latitude = document.querySelector('#latitude').getAttribute("data-latitude");
+    const longitude = document.querySelector('#longitude').getAttribute("data-longitude");
+
+    var marker = L.marker([parseFloat(latitude), parseFloat(longitude)]);
+    mapita.addElement(marker);
 
     form.addEventListener('submit', (event) => submitHandler(event, mapita));
 }

@@ -30,19 +30,15 @@ class EvacuationRouteValidator:
             self.errors["name"] = "Ya existe un recorrido con este nombre"
 
     def __validate_input_field(self):
-        if (
-            self.params.name == ""
-            or self.params.description == ""
-            # or self.params.coordinates == ""
-        ):
+        if self.params.name == "" or self.params.description == "":
             self.errors["emptyField"] = "Debe completar todos los campos"
 
     def __validate_name_update(self):
         name_is_registered = (
             EvacuationRoute.query.filter(EvacuationRoute.name == self.params.name)
-            .filter(EvacuationRoute.name != self.params.name)
+            .filter(EvacuationRoute.name != self.route.name)
             .first()
         )
 
         if name_is_registered:
-            self.errors["name"] = "Ya existe un punto con este nombre"
+            self.errors["name"] = "Ya existe un recorrido con este nombre"

@@ -51,12 +51,30 @@
             <div id="map">
                 <div id="mapid"></div>
             </div>
-            <p>
+            <!-- <p>
                 <label class="form-label">Color</label></br>
                 {% if errors %}
                 <input id="color" value="{{fieldsInfo.color}}" name="color" required />
                 {% else %}
                 <input id="color" name="color" placeholder="Color" required />
+                {% endif %} -->
+            </p>
+            <p>
+                <label>Color</label><br>
+                {% if errors %}
+                <select class="form-select-sm" name='color' >
+                    <option value="blue" {% if fieldsInfo.color=="blue" %} selected="selected" {% endif %}>Azul
+                    </option>
+                    <option value="red" {% if fieldsInfo.color=="red" %} selected="selected" {% endif %}>Rojo</option>
+                    <option value="green" {% if fieldsInfo.color=="green" %} selected="selected" {% endif %}>Verde
+                    </option>
+                </select>
+                {% else %}
+                <select class="form-select-sm" name='color' >
+                    <option value="blue" >Azul </option>
+                    <option value="red" >Rojo</option>
+                    <option value="green" >Verde</option>
+                </select>
                 {% endif %}
             </p>
             <p>

@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}Recorridos de evacuación{% endblock %}
+{% block title %}Zonas inundables{% endblock %}
 {% block head %}
 {{ super() }}
 
@@ -21,10 +21,11 @@
 
 <script type="module" src="{{ url_for('static', filename='js/floodZone/edit.js') }}"></script>
 
-<!-- Este script declara la variable routeCoordinates con el valor de routeCoordinates pasado por 
+<!-- Este script declara la variable zoneCoordinates con el valor de zoneCoordinates pasado por 
 parámetro a la vista desde el controlador. Javascript puede acceder a esta variable y con ella se
 obtienen las coordenadas del recorrido traído desde la BD -->
-<script>
+<script >
+    var zoneColor = {{ fieldsInfo.color|tojson|safe }};
     var zoneCoordinates = {{ zoneCoordinates| safe }};
 </script>
 
@@ -65,12 +66,15 @@ obtienen las coordenadas del recorrido traído desde la BD -->
             </div>
 
             <p>
-                <label class="form-label">Color</label></br>
-                {% if errors %}
-                <input id="color" value="{{fieldsInfo.color}}" name="color" required />
-                {% else %}
-                <input id="color" value="{{fieldsInfo.color}}" name="color" placeholder="Color" required />
-                {% endif %}
+                <label>Color</label><br>
+                <select class="form-select-sm" name='color' >
+                    <option value="blue" {% if fieldsInfo.color=="blue" %} selected="selected" {% endif %}>Azul
+                    </option>
+                    <option value="red" {% if fieldsInfo.color=="red" %} selected="selected" {% endif %}>Rojo</option>
+                    <option value="green" {% if fieldsInfo.color=="green" %} selected="selected" {% endif %}>Verde
+                    </option>
+                </select>
+
             </p>
 
             <p>

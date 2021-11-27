@@ -20,19 +20,14 @@ def index():
 
     if params.get("state", False):
         zones = zones.filter(Zone.state == params["state"])
-    print(params)
 
-    if g.config.criterio_de_ordenacion == "asc":
-
-        zones = zones.order_by(Zone.created_at.asc()).paginate(
-            per_page=g.config.elementos_por_pagina
-        )
-    elif g.config.criterio_de_ordenacion == "desc":
-        zones = zones.order_by(Zone.created_at.desc()).paginate(
-            per_page=g.config.elementos_por_pagina
-        )
+    zones = zones.order_by(
+        text(f"created_at {g.config.criterio_de_ordenacion}")
+    ).paginate(per_page=g.config.elementos_por_pagina)
     errors = {}
-    return render_template("floodZone/index.html", errors=errors, zones=zones)
+    return render_template(
+        "floodZone/index.html", errors=errors, zones=zones, fieldsInfo=params
+    )
 
 
 def new():
@@ -199,6 +194,9 @@ def editInfo(id):
     new_zone.color = request.form["color"]
     new_zone.state = request.form["state"]
     errors = ZoneValidator(new_zone, zone).validate_update()
+    # import pdb
+
+    # pdb.set_trace()
     if errors:
         return render_template(
             "floodZone/edit.html",

@@ -8,14 +8,14 @@ class ZoneValidator:
         self.params = params
         self.zone = zone
 
-    # Validaciones a efectuar a la hora de crear un usuario
+    # Validaciones a efectuar a la hora de crear una zona
     def validate_create(self):
         self.__validate_name()
         self.__validate_input_field()
 
         return self.errors
 
-    # Validaciones a afectuar a la hora de actualizar la info de un usuario tercero
+    # Validaciones a efectuar a la hora de actualizar la info de una zona
     def validate_update(self):
         self.__validate_name_update()
         self.__validate_input_field()
@@ -38,7 +38,7 @@ class ZoneValidator:
     def __validate_name_update(self):
         name_is_registered = (
             Zone.query.filter(Zone.name == self.params.name)
-            .filter(Zone.name != self.params.name)
+            .filter(Zone.name != self.zone.name)
             .first()
         )
 

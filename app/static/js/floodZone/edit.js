@@ -32,7 +32,7 @@ window.onload = () => {
     const form = document.querySelector('#create-evacuationRoute-form');
 
     var pointList = zoneCoordinates.map(coor => new L.LatLng(coor.lat, coor.lng))
-    var polygon = new L.Polygon(pointList);
+    var polygon = new L.Polygon(pointList, {color: zoneColor});
     mapita.addElement(polygon);
 
     form.addEventListener('submit', (event) => submitHandler(event, mapita));

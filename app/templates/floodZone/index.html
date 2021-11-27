@@ -9,11 +9,11 @@
     <h1>Zonas inundables</h1>
     <p>Filtrar por nombre y/o publicado/oculto:</p>
     <form action="{{ url_for('zones_index') }}">
-      <input type="search" placeholder="Nombre" name="name">
+      <input type="search" placeholder="Nombre" name="name" value="{{fieldsInfo['name']}}">
       <select class="form-select-sm" name='state'>
         <option value="">Estado</option>
-        <option value='1'>Publicado</option>
-        <option value='0'>Oculto</option>
+        <option value='1' {% if fieldsInfo['state']=="1" %} selected="selected" {% endif %}>Publicado</option>
+        <option value='0' {% if fieldsInfo['state']=="0" %} selected="selected" {% endif %}>Oculto</option>
       </select>
       <button class="btn btn-outline-primary btn-sm" type="submit">Filtrar</button>
       <a href="{{ url_for ('zones_index') }}" class="btn btn-outline-primary btn-sm">Limpiar filtros</a>
@@ -25,7 +25,6 @@
       <tr class="table-light">
         <th>Nombre</th>
         <th>Codigo de zona</th>
-        <th>Color</th>
         <th>Estado</th>
         <th>Acciones</th>
       </tr>
@@ -33,7 +32,6 @@
       <tr class="table-info">
         <td class="table-info">{{ zone.name }}</td>
         <td class="table-info">{{ zone.zone_code }}</td>
-        <td class="table-info">{{ zone.color }}</td>
         <td class="table-info">
           {% if zone.state %}
           Publicado

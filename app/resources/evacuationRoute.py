@@ -15,18 +15,21 @@ def index():
 
     """Accedo a la variable de configuracion del g object, pagino por la cantidad de
     elementos que tenga almacenada en esa variable y ordeno por el criterio"""
-    if g.config.criterio_de_ordenacion == "asc":
+    params = request.args
+    routes = EvacuationRoute.query
+    if params.get("name", False):
+        routes = routes.filter(EvacuationRoute.name == params["name"])
 
-        routes = EvacuationRoute.query.order_by(
-            EvacuationRoute.created_at.asc()
-        ).paginate(per_page=g.config.elementos_por_pagina)
+    if params.get("state", False):
+        routes = routes.filter(EvacuationRoute.state == params["state"])
 
-    elif g.config.criterio_de_ordenacion == "desc":
-        routes = EvacuationRoute.query.order_by(
-            EvacuationRoute.created_at.desc()
-        ).paginate(per_page=g.config.elementos_por_pagina)
-
-    return render_template("evacuationRoute/index.html", routes=routes)
+    routes = routes.order_by(
+        text(f"created_at {g.config.criterio_de_ordenacion}")
+    ).paginate(per_page=g.config.elementos_por_pagina)
+    errors = {}
+    return render_template(
+        "evacuationRoute/index.html", errors=errors, fieldsInfo=params, routes=routes
+    )
 
 
 def new():
@@ -64,35 +67,6 @@ def create():
     db.session.add(new_evacuationRoute)
     db.session.commit()
     return redirect(url_for("evacuationRoute_index"))
-
-
-def filter():
-    params = EvacuationRoute(**request.form)
-    if params.name and not params.state:
-        routes = (
-            EvacuationRoute.query.filter(EvacuationRoute.name == params.name)
-            .order_by(text(f"created_at {g.config.criterio_de_ordenacion}"))
-            .paginate(per_page=g.config.elementos_por_pagina)
-        )
-    elif params.state and not params.name:
-        routes = (
-            EvacuationRoute.query.filter(EvacuationRoute.state == params.state)
-            .order_by(text(f"created_at {g.config.criterio_de_ordenacion}"))
-            .paginate(per_page=g.config.elementos_por_pagina)
-        )
-    else:
-        routes = (
-            EvacuationRoute.query.filter(
-                and_(
-                    EvacuationRoute.name == params.name,
-                    EvacuationRoute.state == params.state,
-                )
-            )
-            .order_by(text(f"created_at {g.config.criterio_de_ordenacion}"))
-            .paginate(per_page=g.config.elementos_por_pagina)
-        )
-
-    return render_template("evacuationRoute/index.html", routes=routes)
 
 
 def edit(id):

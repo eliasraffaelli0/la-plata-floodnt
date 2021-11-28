@@ -53,7 +53,6 @@ def create_app(environment="development"):
     app.add_url_rule("/usuarios", "user_index", user.index)
     app.add_url_rule("/usuarios/nuevo", "user_create", user.create, methods=["POST"])
     app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
-    app.add_url_rule("/usuarios", "user_search", user.filter, methods=["POST"])
     app.add_url_rule(
         "/usuarios/<string:username>",
         "user_edit_estado",
@@ -113,9 +112,6 @@ def create_app(environment="development"):
     )
     app.add_url_rule("/puntos_de_encuentro/nuevo", "puntos_new", punto.new)
     app.add_url_rule(
-        "/puntos_de_encuentro", "puntos_search", punto.filter, methods=["POST"]
-    )
-    app.add_url_rule(
         "/puntos_de_encuentro/edit/<int:id>",
         "puntos_edit",
         punto.edit,
@@ -139,12 +135,6 @@ def create_app(environment="development"):
     )
     app.add_url_rule(
         "/evacuationRoute/nuevo", "evacuationRoute_new", evacuationRoute.new
-    )
-    app.add_url_rule(
-        "/evacuationRoute",
-        "evacuationRoute_search",
-        evacuationRoute.filter,
-        methods=["POST"],
     )
     app.add_url_rule(
         "/evacuationRoute/edit/<int:id>",

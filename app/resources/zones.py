@@ -39,35 +39,6 @@ def new():
     return render_template("floodZone/new.html", errors=errors)
 
 
-def filter():
-    params = Zone(**request.form)
-    if params.name and not params.state:
-        zones = (
-            Zone.query.filter(Zone.name == params.name)
-            .order_by(text(f"created_at {g.config.criterio_de_ordenacion}"))
-            .paginate(per_page=g.config.elementos_por_pagina)
-        )
-    elif params.state and not params.name:
-        zones = (
-            Zone.query.filter(Zone.state == params.state)
-            .order_by(text(f"created_at {g.config.criterio_de_ordenacion}"))
-            .paginate(per_page=g.config.elementos_por_pagina)
-        )
-    else:
-        zones = (
-            Zone.query.filter(
-                and_(
-                    Zone.name == params.name,
-                    Zone.state == params.state,
-                )
-            )
-            .order_by(text(f"created_at {g.config.criterio_de_ordenacion}"))
-            .paginate(per_page=g.config.elementos_por_pagina)
-        )
-    errors = {}
-    return render_template("floodZone/index.html", zones=zones, errors=errors)
-
-
 def create():
     if not authenticated(session):
         abort(401)

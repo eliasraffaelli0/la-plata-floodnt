@@ -22,12 +22,24 @@ def index():
 
     kk = Zone.query.all()
     kk1 = ZoneCoordinate.query.all()
-    users = User.query.order_by(
+    kk3 = EvacuationRoute.query.all()
+    kk2 = EvacuationRouteCoordinate.query.all()
+    params = request.args
+    users = User.query
+    if params.get("first_name", False):
+        users = users.filter(User.first_name == params["first_name"])
+
+    if params.get("activo", False):
+        users = users.filter(User.activo == params["activo"])
+
+    users = users.order_by(
         text(f"created_at {g.config.criterio_de_ordenacion}")
     ).paginate(per_page=g.config.elementos_por_pagina)
-    kk = EvacuationRoute.query.all()
-    kk2 = EvacuationRouteCoordinate.query.all()
-    return render_template("user/index.html", users=users)
+    errors = {}
+
+    return render_template(
+        "user/index.html", users=users, errors=errors, fieldsInfo=params
+    )
 
 
 def new():

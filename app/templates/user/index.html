@@ -8,12 +8,12 @@
   <div class="container mb-2">
     <h1>usuarios</h1>
     <p>Filtrar por nombre y/o activo/desactivado:</p>
-    <form action="{{ url_for('user_search') }}" method="post">
-      <input type="search" placeholder="Nombre" name="first_name">
+    <form action="{{ url_for('user_index') }}" >
+      <input type="search" placeholder="Nombre" name="first_name" value="{{fieldsInfo['first_name']}}"/>
       <select class="form-select-sm" name='activo'>
         <option value="">Estado</option>
-        <option value='1'>Activado</option>
-        <option value='0'>Desactivado</option>
+        <option value='1' {% if fieldsInfo['activo']=="1" %} selected="selected" {% endif %}>Activado</option>
+        <option value='0' {% if fieldsInfo['activo']=="0" %} selected="selected" {% endif %}>Desactivado</option>
       </select>
       <button class="btn btn-outline-primary btn-sm" type="submit">Filtrar</button>
       <a href="{{ url_for ('user_index') }}" class="btn btn-outline-primary btn-sm">Limpiar filtros</a>
@@ -28,7 +28,7 @@
         <th>Email</th>
         <th>Username</th>
         <th>Nombre</th>
-        <th>apellido</th>
+        <th>Apellido</th>
         <th>Estado</th>
         {% if has_permission(session, 'user_edit') %}
         <th>Acciones</th>

@@ -14,3 +14,6 @@ class Zone(db.Model):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     coordinates = relationship("ZoneCoordinate", back_populates="point")
+
+    def as_dict(self):
+        return {attr.name: getattr(self, attr.name) for attr in self.__table__.columns}

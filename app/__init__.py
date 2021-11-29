@@ -13,6 +13,7 @@ from app.models.configuracion import Configuracion
 from app.helpers import handler
 from app.helpers import auth as helper_auth
 from app.helpers import permisoValidator as helper_permisos
+from app.resources.api.zone import zone_api
 import logging
 
 # Sentencias que muestran el log de las querys que ejecuta la aplicación
@@ -127,6 +128,12 @@ def create_app(environment="development"):
     app.add_url_rule(
         "/configuracion", "configuracion_update", configuracion.update, methods=["POST"]
     )
+
+    # Rutas de API-REST (usando Blueprints)
+    api = Blueprint("api", __name__, url_prefix="/api")
+    api.register_blueprint(zone_api)
+
+    app.register_blueprint(api)
 
     # Handlers
     app.register_error_handler(404, handler.not_found_error)

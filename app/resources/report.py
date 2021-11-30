@@ -1,7 +1,6 @@
 from flask import redirect, render_template, request, url_for, session, abort, g
 from app.helpers.auth import authenticated
 from app.models.report import Report
-from app.models.evacuationRoute import EvacuationRoute
 from app.db import db
 from app.helpers.permisoValidator import permisoChecker
 from app.validators.reportValidator import ReportValidator
@@ -17,6 +16,9 @@ def index():
     elementos que tenga almacenada en esa variable y ordeno por el criterio"""
     params = request.args
     reports = Report.query
+    # import pdb
+
+    # pdb.set_trace()
     if params.get("name", False):
         reports = reports.filter(Report.name == params["name"])
 
@@ -50,6 +52,7 @@ def create():
     latLng = json.loads(request.form["coordinates"])
     params = request.form.to_dict()
     del params["coordinates"]
+
     params["latitude"] = latLng["lat"]
     params["longitude"] = latLng["lng"]
     new_report = Report(**params)

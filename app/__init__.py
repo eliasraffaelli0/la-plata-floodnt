@@ -164,12 +164,12 @@ def create_app(environment="development"):
 
     app.add_url_rule("/reports", "reports_index", report.index)
     app.add_url_rule("/reports/new", "reports_new", report.new)
-    # app.add_url_rule(
-    #     "/reports/new",
-    #     "reports_create",
-    #     report.create,
-    #     methods=["POST"],
-    # )
+    app.add_url_rule(
+        "/reports/new",
+        "reports_create",
+        report.create,
+        methods=["POST"],
+    )
     # Rutas del Modulo de Configuración
     app.add_url_rule("/configuracion", "configuracion_index", configuracion.index)
     app.add_url_rule(

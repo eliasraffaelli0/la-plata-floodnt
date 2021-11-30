@@ -10,7 +10,6 @@ class ReportValidator:
 
     # Validaciones a efectuar a la hora de crear un usuario
     def validate_create(self):
-        self.__validate_name()
         self.__validate_input_field()
         self.__validate_email_format()
 
@@ -27,7 +26,7 @@ class ReportValidator:
     def __validate_email_format(self):
         # raw string utilizado para validar que se trate de un mail
         regex = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
-        if not (re.fullmatch(regex, self.params.email)):
+        if not (re.fullmatch(regex, self.params.complainant_email)):
             self.errors["email"] = "Ingrese un email válido"
 
     def __validate_input_field(self):

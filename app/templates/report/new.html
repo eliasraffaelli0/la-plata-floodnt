@@ -35,12 +35,13 @@
       {% endif %}
       </p>
       <p>
-        <label class="form-label">Descripción</label></br>
-        {% if errors %}
-        <input type="text" id="description" value="{{fieldsInfo.description}}" name="description" required />
-        {% else %}
-        <input type="text"  id="description" name="description" placeholder="Descripción" required />
-        {% endif %}
+        <label>Categoría</label></br>
+        <select id="category" class="form-select-sm" name='category'>
+          <option value='cat1'>Categoría 1</option>
+          <option value='cat2'>Categoría 2</option>
+          <option value='cat3'>Categoría 3</option>
+          <option value='cat4'>Categoría 4</option>
+        </select>
       </p>
       <p>
         <label class="form-label">Descripción</label></br>
@@ -48,7 +49,7 @@
         <textarea name="description" id="description" value="{{fieldsInfo.description}}" placeholder="Descripción" cols="50" rows="5"></textarea>
         {% else %}
         <textarea name="description" id="description" placeholder="Descripción" cols="50" rows="5"></textarea>
-
+        {% endif %}
       </p>
       <input name="coordinates" type="text" id="coordinates" />
       <div id="map">
@@ -74,9 +75,9 @@
       <p>
         <label class="form-label">Email del denunciante</label></br>
         {% if errors %}
-        <input id="complainant_mail" value="{{fieldsInfo.complainant_mail}}" name="complainant_mail" required />
+        <input id="complainant_email" value="{{fieldsInfo.complainant_email}}" name="complainant_email" required />
         {% else %}
-        <input id="telephone" name="telephone" placeholder="Mail del denunciante" required />
+        <input id="complainant_email" name="complainant_email" placeholder="Email del denunciante" required />
         {% endif %}
       </p>
       <p>

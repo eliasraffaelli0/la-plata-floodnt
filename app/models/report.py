@@ -12,7 +12,7 @@ class Report(db.Model):
     description = Column(String(500))
     latitude = Column(String(50), unique=True)
     longitude = Column(String(50), unique=True)
-    state = Column(Integer)
+    state = Column(String(50))
     complainant_telephone = Column(String(50))
     complainant_email = Column(String(50))
     complainant_name = Column(String(50))

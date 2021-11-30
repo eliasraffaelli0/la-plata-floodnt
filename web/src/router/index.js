@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Form from '../views/Form.vue'
+import prueba from '../views/prueba.vue'
 const routes = [
   {
     path: '/',
@@ -19,6 +20,21 @@ const routes = [
     path: '/formulario',
     name: 'Form',
     component: Form
+  },
+  {
+    path: '/recorridos_y_puntos',
+    name: 'recorridosYPuntos',
+    component: Form
+  },
+  {
+    path: '/zonas',
+    name: 'zonas',
+    component: Form
+  },
+  {
+    path: '/prueba',
+    name: 'prueba',
+    component: prueba
   },
 ]
 

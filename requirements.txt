@@ -7,3 +7,4 @@ SQLAlchemy==1.4.25
 Flask-SQLAlchemy==2.5.1
 bcrypt==3.2.0
 marshmallow==3.14.0
+flask-cors==3.0.10

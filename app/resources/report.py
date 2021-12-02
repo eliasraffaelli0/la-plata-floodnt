@@ -19,12 +19,14 @@ def index():
     # import pdb
 
     # pdb.set_trace()
-    if params.get("name", False):
-        reports = reports.filter(Report.name == params["name"])
+    if params.get("title", False):
+        reports = reports.filter(Report.title == params["title"])
 
     if params.get("state", False):
         reports = reports.filter(Report.state == params["state"])
 
+    if params.get("date", False):
+        report = reports.filter(Report.created_at == params["created_at"])
     reports = reports.order_by(
         text(f"created_at {g.config.criterio_de_ordenacion}")
     ).paginate(per_page=g.config.elementos_por_pagina)

@@ -7,8 +7,8 @@
     <router-link to="/recorridos_y_puntos"
       >Recorridos de evacuación y puntos de encuentro</router-link
     > | <router-link to="/prueba">Prueba</router-link>
-  </div>
   <router-view />
+  </div>
 </template>
 
 <style>

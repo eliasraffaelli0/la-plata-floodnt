@@ -1,6 +1,6 @@
-from flask import jsonify, Blueprint
+from flask import jsonify, Blueprint, request
 from app.models.zone import Zone
-from app.models.user import User
+from app.schema.zone import ZoneSchema
 
 zone_api = Blueprint("consultas", __name__, url_prefix="/consultas")
 
@@ -12,3 +12,9 @@ def index():
     zones = [zone.as_dict() for zone in zone_rows]
 
     return jsonify(zones=zones)
+
+
+@zone_api.post("/")
+def create():
+    data = request.get_json(force=True)
+    return jsonify(ZoneSchema.dump(data))

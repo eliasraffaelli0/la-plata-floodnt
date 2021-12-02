@@ -83,17 +83,17 @@ export default {
     kk() {
       const axios = require("axios");
       axios
-        .get("http://127.0.0.1:5000/api/puntos/", { crossDomain: true })
+        .get("http://127.0.0.1:5000/api/puntos/?page=2", { crossDomain: true })
         .then((res) => {
           console.log(res);
         });
-      axios({
-        method: "GET",
-        url: "http://127.0.0.1:5000/api/puntos/",
-        crossDomain: true,
-      }).then((res) => {
-        console.log(res);
-      });
+      // axios({
+      //   method: "GET",
+      //   url: "http://127.0.0.1:5000/api/puntos/",
+      //   crossDomain: true,
+      // }).then((res) => {
+      //   console.log(res);
+      // });
     },
     // onReady() {
     //   this.$refs.mapa.locate();

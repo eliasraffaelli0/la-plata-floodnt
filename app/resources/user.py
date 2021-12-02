@@ -18,8 +18,6 @@ def index():
     if not permisoChecker(session, "user_index"):
         abort(401)
 
-    kk = Zone.query.all()
-    kk1 = ZoneCoordinate.query.all()
     users = User.query.order_by(
         text(f"created_at {g.config.criterio_de_ordenacion}")
     ).paginate(per_page=g.config.elementos_por_pagina)

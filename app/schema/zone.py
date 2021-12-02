@@ -1,5 +1,7 @@
-class ZoneSchema(object):
-    @classmethod
+from marshmallow import Schema, fields
+
+
+class ZoneSchema(Schema):
     def dump(cls, obj):
         return cls._serialize(obj)
 

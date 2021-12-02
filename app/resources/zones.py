@@ -1,6 +1,8 @@
 from flask import redirect, render_template, request, session, abort, g, url_for
 from app.helpers.auth import authenticated
 from app.helpers.permisoValidator import permisoChecker
+from app.models.user import User
+from app.models.report import Report
 from app.models.zone import Zone
 from app.models.zone_coordinate import ZoneCoordinate
 from app.validators.zoneValidator import ZoneValidator
@@ -11,6 +13,8 @@ import json
 
 
 def index():
+    kk3 = User.query.all()
+    kk2 = Report.query.all()
     if not authenticated(session):
         abort(401)
     params = request.args

@@ -13,12 +13,3 @@ class EvacuationRoute(db.Model):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     coordinates = relationship("EvacuationRouteCoordinate", back_populates="point")
-
-
-# ● Nombre*: nombre de recorrido de evacuación (text).
-# ● Descripción de recorrido: información adicional sobre el recorrido (text).
-# ● Coordenadas
-# 2
-# : coordenadas geográficas de los diferentes puntos del recorrido (text).
-# Deberán ingresar al menos tres puntos que representen el recorrido de evacuación.
-# ● Estado: publicado o despublicado.

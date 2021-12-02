@@ -3,7 +3,15 @@ from flask import Flask, render_template, g
 from flask_session import Session
 from config import config
 from app import db
-from app.resources import evacuationRoute, user, auth, punto, zones, configuracion
+from app.resources import (
+    evacuationRoute,
+    user,
+    auth,
+    punto,
+    zones,
+    configuracion,
+    report,
+)
 from app.models.configuracion import Configuracion
 from app.helpers import handler
 from app.helpers import auth as helper_auth
@@ -153,6 +161,16 @@ def create_app(environment="development"):
         "/evacuationRoute/<int:id>", "evacuationRoute_delete", evacuationRoute.delete
     )
 
+    # Rutas del Modulo de Denuncias
+
+    app.add_url_rule("/reports", "reports_index", report.index)
+    app.add_url_rule("/reports/new", "reports_new", report.new)
+    app.add_url_rule(
+        "/reports/new",
+        "reports_create",
+        report.create,
+        methods=["POST"],
+    )
     # Rutas del Modulo de Configuración
     app.add_url_rule("/configuracion", "configuracion_index", configuracion.index)
     app.add_url_rule(

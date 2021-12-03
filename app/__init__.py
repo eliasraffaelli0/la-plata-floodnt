@@ -1,6 +1,8 @@
 from os import path, environ
 from flask import Flask, render_template, g, Blueprint
 from flask_session import Session
+from flask_cors import CORS
+from app import resources
 from config import config
 from app import db
 from app.resources import (
@@ -30,6 +32,7 @@ from app.resources.api.evacuationRoute import evacuationRoute_api
 def create_app(environment="development"):
     # Configuración inicial de la app
     app = Flask(__name__)
+    CORS(app)
 
     # Carga de la configuración
     env = environ.get("FLASK_ENV", environment)

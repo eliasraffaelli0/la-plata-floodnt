@@ -9,8 +9,10 @@
       @click="onClick"
     >
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-      <div v-for="(punto, index) in points" :key="`punto-${index}`">
-        <l-marker :lat-lng="[punto.latitude, punto.longitude]"></l-marker>
+      <div v-for="(pos, index) in points" :key="`pos-${index}`">
+        <div v-for="(point, index) in pos" :key="`point-${index}`">
+          <l-marker :lat-lng="[point.latitude, point.longitude]"></l-marker>
+        </div>
       </div>
     </l-map>
   </div>
@@ -19,7 +21,7 @@
 
 <script >
 import { LMap, LTileLayer, LMarker } from "@vue-leaflet/vue-leaflet";
-
+import axios from "axios";
 export default {
   components: {
     LMap,
@@ -61,12 +63,21 @@ export default {
       }
       console.log(e);
     },
-    onReady() {
-      const axios = require("axios");
-      axios.get("http://127.0.0.1:5000/api/puntos/").then((res) => {
-        this.points = res.data.Points;
-        console.log(res);
-      });
+    async onReady() {
+      const pages = await this.fetchPoints(1);
+
+      if (pages > 1) {
+        for (let i = 2; i <= pages; i++) {
+          this.fetchPoints(i);
+        }
+      }
+    },
+    async fetchPoints(page) {
+      const response = await axios.get(
+        `http://127.0.0.1:5000/api/puntos/?page=${page}`
+      );
+      this.points.push(response.data.Points);
+      return response.data.pages;
     },
   },
 };

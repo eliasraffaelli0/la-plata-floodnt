@@ -1,5 +1,6 @@
 <template>
   <div>
+    <p>{{ points }}</p>
     <l-map
       ref="mapa"
       @ready="onReady"

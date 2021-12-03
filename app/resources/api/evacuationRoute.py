@@ -16,18 +16,3 @@ def index():
     points = evacuation_routes_pagination_schema.dump(route_page)
 
     return jsonify(points)
-
-
-# @point_api.post("/")
-# def create():
-#     new_point = Punto(**request.get_json(force=True))
-#     errors = PuntoValidator(new_point).validate_create()
-
-#     if errors:
-#         response = errors
-#     else:
-#         db.session.add(new_point)
-#         db.session.commit()
-#         response = point_schema.dump(new_point)
-
-#     return jsonify(response)

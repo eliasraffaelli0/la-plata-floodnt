@@ -1,5 +1,5 @@
 from os import path, environ
-from flask import Flask, render_template, g
+from flask import Flask, render_template, g, Blueprint
 from flask_session import Session
 from config import config
 from app import db
@@ -17,6 +17,7 @@ from app.helpers import handler
 from app.helpers import auth as helper_auth
 from app.helpers import permisoValidator as helper_permisos
 from app.resources.api.point import point_api
+from app.resources.api.evacuationRoute import evacuationRoute_api
 
 
 # import logging
@@ -180,6 +181,7 @@ def create_app(environment="development"):
     # Rutas de API-REST (usando Blueprints)
     api = Blueprint("api", __name__, url_prefix="/api")
     api.register_blueprint(point_api)
+    api.register_blueprint(evacuationRoute_api)
 
     app.register_blueprint(api)
 

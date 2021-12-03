@@ -1,29 +1,25 @@
 from marshmallow import Schema, fields
 
-from app.models.evacuationRoute import EvacuationRoute
 
-
-# class EvacuationRouteCoordinateSchema(Schema):
-#     id = fields.Int()
-#     latitude = fields.Str()
-#     longitude = fields.Str()
+class EvacuationRouteCoordinateSchema(Schema):
+    latitude = fields.String()
+    longitude = fields.String()
 
 
 class EvacuationRouteSchema(Schema):
-    id = fields.Int()
-    name = fields.Str()
-    description = fields.Str()
+    name = fields.String()
+    description = fields.String()
     state = fields.Int()
-    # coordinates = fields.Nested(
-    #     EvacuationRouteCoordinateSchema, many=True, data_key="coordenadas"
-    # )
+
+    coordinates = fields.Nested(EvacuationRouteCoordinateSchema, many=True)
 
 
 class EvacuationRoutePaginationSchema(Schema):
     page = fields.Int()
     per_page = fields.Int()
+    pages = fields.Int()
     total = fields.Int()
-    items = fields.Nested(EvacuationRouteSchema, many=True, data_key="Points")
+    items = fields.Nested(EvacuationRouteSchema, many=True, data_key="recorridos")
 
 
 evacuation_routes_schema = EvacuationRouteSchema(many=True)

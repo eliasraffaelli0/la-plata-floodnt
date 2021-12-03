@@ -13,8 +13,6 @@ import json
 
 
 def index():
-    kk3 = User.query.all()
-    kk2 = Report.query.all()
     if not authenticated(session):
         abort(401)
     params = request.args

@@ -15,6 +15,7 @@ class PointSchema(Schema):
 class PointPaginationSchema(Schema):
     page = fields.Int()
     per_page = fields.Int()
+    pages = fields.Int()
     total = fields.Int()
     items = fields.Nested(PointSchema, many=True, data_key="Points")
 

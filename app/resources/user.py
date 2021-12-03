@@ -20,11 +20,6 @@ def index():
     if not permisoChecker(session, "user_index"):
         abort(401)
 
-<<<<<<< HEAD
-    kk = Zone.query.all()
-    kk1 = ZoneCoordinate.query.all()
-    kk3 = EvacuationRoute.query.all()
-    kk2 = EvacuationRouteCoordinate.query.all()
     params = request.args
     users = User.query
     if params.get("first_name", False):
@@ -34,9 +29,6 @@ def index():
         users = users.filter(User.activo == params["activo"])
 
     users = users.order_by(
-=======
-    users = User.query.order_by(
->>>>>>> feature/APIZonasInundables
         text(f"created_at {g.config.criterio_de_ordenacion}")
     ).paginate(per_page=g.config.elementos_por_pagina)
     errors = {}

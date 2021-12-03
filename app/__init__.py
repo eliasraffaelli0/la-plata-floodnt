@@ -1,13 +1,25 @@
 from os import path, environ
-from flask import Flask, render_template, g
+from flask import Flask, render_template, g, Blueprint
 from flask_session import Session
+from flask_cors import CORS
+from app import resources
 from config import config
 from app import db
-from app.resources import evacuationRoute, user, auth, punto, zones, configuracion
+from app.resources import (
+    evacuationRoute,
+    user,
+    auth,
+    punto,
+    zones,
+    configuracion,
+    report,
+)
 from app.models.configuracion import Configuracion
 from app.helpers import handler
 from app.helpers import auth as helper_auth
 from app.helpers import permisoValidator as helper_permisos
+from app.resources.api.point import point_api
+from app.resources.api.evacuationRoute import evacuationRoute_api
 
 
 # import logging
@@ -20,6 +32,7 @@ from app.helpers import permisoValidator as helper_permisos
 def create_app(environment="development"):
     # Configuración inicial de la app
     app = Flask(__name__)
+    CORS(app)
 
     # Carga de la configuración
     env = environ.get("FLASK_ENV", environment)
@@ -53,7 +66,6 @@ def create_app(environment="development"):
     app.add_url_rule("/usuarios", "user_index", user.index)
     app.add_url_rule("/usuarios/nuevo", "user_create", user.create, methods=["POST"])
     app.add_url_rule("/usuarios/nuevo", "user_new", user.new)
-    app.add_url_rule("/usuarios", "user_search", user.filter, methods=["POST"])
     app.add_url_rule(
         "/usuarios/<string:username>",
         "user_edit_estado",
@@ -113,9 +125,6 @@ def create_app(environment="development"):
     )
     app.add_url_rule("/puntos_de_encuentro/nuevo", "puntos_new", punto.new)
     app.add_url_rule(
-        "/puntos_de_encuentro", "puntos_search", punto.filter, methods=["POST"]
-    )
-    app.add_url_rule(
         "/puntos_de_encuentro/edit/<int:id>",
         "puntos_edit",
         punto.edit,
@@ -141,12 +150,6 @@ def create_app(environment="development"):
         "/evacuationRoute/nuevo", "evacuationRoute_new", evacuationRoute.new
     )
     app.add_url_rule(
-        "/evacuationRoute",
-        "evacuationRoute_search",
-        evacuationRoute.filter,
-        methods=["POST"],
-    )
-    app.add_url_rule(
         "/evacuationRoute/edit/<int:id>",
         "evacuationRoute_edit",
         evacuationRoute.edit,
@@ -162,11 +165,28 @@ def create_app(environment="development"):
         "/evacuationRoute/<int:id>", "evacuationRoute_delete", evacuationRoute.delete
     )
 
+    # Rutas del Modulo de Denuncias
+
+    app.add_url_rule("/reports", "reports_index", report.index)
+    app.add_url_rule("/reports/new", "reports_new", report.new)
+    app.add_url_rule(
+        "/reports/new",
+        "reports_create",
+        report.create,
+        methods=["POST"],
+    )
     # Rutas del Modulo de Configuración
     app.add_url_rule("/configuracion", "configuracion_index", configuracion.index)
     app.add_url_rule(
         "/configuracion", "configuracion_update", configuracion.update, methods=["POST"]
     )
+
+    # Rutas de API-REST (usando Blueprints)
+    api = Blueprint("api", __name__, url_prefix="/api")
+    api.register_blueprint(point_api)
+    api.register_blueprint(evacuationRoute_api)
+
+    app.register_blueprint(api)
 
     # Handlers
     app.register_error_handler(404, handler.not_found_error)

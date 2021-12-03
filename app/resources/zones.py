@@ -1,6 +1,8 @@
 from flask import redirect, render_template, request, session, abort, g, url_for
 from app.helpers.auth import authenticated
 from app.helpers.permisoValidator import permisoChecker
+from app.models.user import User
+from app.models.report import Report
 from app.models.zone import Zone
 from app.models.zone_coordinate import ZoneCoordinate
 from app.validators.zoneValidator import ZoneValidator
@@ -20,19 +22,14 @@ def index():
 
     if params.get("state", False):
         zones = zones.filter(Zone.state == params["state"])
-    print(params)
 
-    if g.config.criterio_de_ordenacion == "asc":
-
-        zones = zones.order_by(Zone.created_at.asc()).paginate(
-            per_page=g.config.elementos_por_pagina
-        )
-    elif g.config.criterio_de_ordenacion == "desc":
-        zones = zones.order_by(Zone.created_at.desc()).paginate(
-            per_page=g.config.elementos_por_pagina
-        )
+    zones = zones.order_by(
+        text(f"created_at {g.config.criterio_de_ordenacion}")
+    ).paginate(per_page=g.config.elementos_por_pagina)
     errors = {}
-    return render_template("floodZone/index.html", errors=errors, zones=zones)
+    return render_template(
+        "floodZone/index.html", errors=errors, zones=zones, fieldsInfo=params
+    )
 
 
 def new():
@@ -42,35 +39,6 @@ def new():
         abort(401)
     errors = {}
     return render_template("floodZone/new.html", errors=errors)
-
-
-def filter():
-    params = Zone(**request.form)
-    if params.name and not params.state:
-        zones = (
-            Zone.query.filter(Zone.name == params.name)
-            .order_by(text(f"created_at {g.config.criterio_de_ordenacion}"))
-            .paginate(per_page=g.config.elementos_por_pagina)
-        )
-    elif params.state and not params.name:
-        zones = (
-            Zone.query.filter(Zone.state == params.state)
-            .order_by(text(f"created_at {g.config.criterio_de_ordenacion}"))
-            .paginate(per_page=g.config.elementos_por_pagina)
-        )
-    else:
-        zones = (
-            Zone.query.filter(
-                and_(
-                    Zone.name == params.name,
-                    Zone.state == params.state,
-                )
-            )
-            .order_by(text(f"created_at {g.config.criterio_de_ordenacion}"))
-            .paginate(per_page=g.config.elementos_por_pagina)
-        )
-    errors = {}
-    return render_template("floodZone/index.html", zones=zones, errors=errors)
 
 
 def create():
@@ -199,6 +167,9 @@ def editInfo(id):
     new_zone.color = request.form["color"]
     new_zone.state = request.form["state"]
     errors = ZoneValidator(new_zone, zone).validate_update()
+    # import pdb
+
+    # pdb.set_trace()
     if errors:
         return render_template(
             "floodZone/edit.html",

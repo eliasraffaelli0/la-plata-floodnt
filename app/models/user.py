@@ -26,7 +26,7 @@ class User(db.Model):
     first_name = Column(String(30))
     last_name = Column(String(30))
     roles = relationship(Rol, secondary=association_table, backref="usuarios")
-
+    reports = relationship("Report", back_populates="assigned_to")
     # esto no va a quedar así eh, voy a volver vos
     def permisos(self):
         userRoles = []

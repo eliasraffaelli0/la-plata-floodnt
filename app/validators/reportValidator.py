@@ -8,17 +8,17 @@ class ReportValidator:
         self.params = params
         self.report = report
 
-    # Validaciones a efectuar a la hora de crear un usuario
+    # Validaciones a efectuar a la hora de crear una denuncia
     def validate_create(self):
         self.__validate_input_field()
         self.__validate_email_format()
 
         return self.errors
 
-    # Validaciones a afectuar a la hora de actualizar la info de un usuario tercero
+    # Validaciones a afectuar a la hora de actualizar la info de una denuncia
     def validate_update(self):
         self.__validate_email_format()
-        self.__validate_name_update()
+        self.__validate_title_update()
         self.__validate_input_field()
 
         return self.errors
@@ -41,3 +41,10 @@ class ReportValidator:
             or self.params.complainant_last_name == ""
         ):
             self.errors["emptyField"] = "Debe completar todos los campos"
+
+    def __validate_title_update(self):
+        title_is_registered = (
+            Report.query.filter(Report.title == self.params.title)
+            .filter(Report.title != self.report.title)
+            .first()
+        )

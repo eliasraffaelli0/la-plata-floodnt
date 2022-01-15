@@ -1,0 +1,111 @@
+{% extends "layout.html" %}
+{% block title %}Denuncias{% endblock %}
+{% block head %}
+{{ super() }}
+
+<!-- leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+  crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""></script>
+
+
+<!-- leaflet draw -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.10/leaflet.draw.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.10/leaflet.draw.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+
+<script type="module" src="{{ url_for('static', filename='js/punto/edit.js') }}"></script>
+{% endblock %}
+{% block content %}
+<div class="container mb-2 text-center rounded-3" style="background-color: rgba(0, 0, 0, 0.1)">
+  <h1>Editar denuncia</h1>
+  <form id="create-punto-form" class="needs-validation" method="post">
+    <div class="row">
+      <p>
+        <label class="form-label">Título</label></br>
+        {% if errors %}
+        <input id="title" value="{{fieldsInfo.title}}" name="title" placeholder="Título" required/>
+      {% else %}
+      <input id="title" name="title" placeholder="Título" value="{{fieldsInfo.title}}" required />
+      {% endif %}
+      </p>
+      <p>
+        <label>Categoría</label></br>
+        <select id="category" class="form-select-sm" name='category'>
+          <option value='cat1' {% if fieldsInfo.category=="cat1" %} selected="selected" {% endif %}>Categoría 1</option>
+          <option value='cat2' {% if fieldsInfo.category=="cat2" %} selected="selected" {% endif %}>Categoría 2</option>
+          <option value='cat3' {% if fieldsInfo.category=="cat3" %} selected="selected" {% endif %}>Categoría 3</option>
+          <option value='cat4' {% if fieldsInfo.category=="cat4" %} selected="selected" {% endif %}>Categoría 4</option>
+        </select>
+      </p>
+      <p>
+        <label class="form-label">Descripción</label></br>
+        {% if errors %}
+        <textarea name="description" id="description" value="{{fieldsInfo.description}}" placeholder="{{fieldsInfo.description}}" cols="50" rows="5"></textarea>
+        {% else %}
+        <textarea name="description" id="description"  placeholder="{{fieldsInfo.description}}"  cols="50" rows="5"></textarea>
+        {% endif %}
+      </p>
+      <input name="latitude" type="text" id="latitude" data-latitude="{{fieldsInfo.latitude}}" hidden />
+      <input name="longitude" type="text" id="longitude" data-longitude="{{fieldsInfo.longitude}}" hidden />
+      <input name="coordinates" type="text" id="coordinates" />
+      <div id="map">
+        <div id="mapid"></div>
+      </div>
+      <p>
+        <label>Estado</label></br>
+        <select id="state" class="form-select-sm" name='state'>
+          <option value='unconfirmed' {% if fieldsInfo.state=="unconfirmed" %} selected="selected" {% endif %}>Sin confirmar</option>
+          <option value='in_progress' {% if fieldsInfo.state=="in_progress" %} selected="selected" {% endif %}>En curso</option>
+          <option value='solved' {% if fieldsInfo.state=="solved" %} selected="selected" {% endif %}>Resuelta</option>
+          <option value='closed' {% if fieldsInfo.state=="closed" %} selected="selected" {% endif %}>Cerrada</option>
+        </select>
+      </p>
+      <p>
+        <label class="form-label">Telefono del denunciante</label></br>
+        {% if errors %}
+        <input id="complainant_telephone" value="{{fieldsInfo.complainant_telephone}}" name="complainant_telephone" required />
+        {% else %}
+        <input id="complainant_telephone" name="complainant_telephone" placeholder="Telefono del denunciante" value="{{fieldsInfo.complainant_telephone}}" required />
+        {% endif %}
+      </p>
+      <p>
+        <label class="form-label">Email del denunciante</label></br>
+        {% if errors %}
+        <input id="complainant_email" value="{{fieldsInfo.complainant_email}}" name="complainant_email"  required />
+        {% else %}
+        <input id="complainant_email" name="complainant_email" placeholder="Email del denunciante" value="{{fieldsInfo.complainant_email}}" required />
+        {% endif %}
+      </p>
+      <p>
+        <label class="form-label">Nombres del denunciante</label></br>
+        {% if errors %}
+        <input id="complainant_name" value="{{fieldsInfo.complainant_name}}" name="complainant_name" required />
+        {% else %}
+        <input id="complainant_name" name="complainant_name" placeholder="Nombres del denunciante" value="{{fieldsInfo.complainant_name}}" required />
+        {% endif %}
+      </p>
+      <p>
+        <label class="form-label">Apellidos del denunciante</label></br>
+        {% if errors %}
+        <input id="complainant_last_name" value="{{fieldsInfo.complainant_last_name}}" name="complainant_last_name" required />
+        {% else %}
+        <input id="complainant_last_name" name="complainant_last_name" placeholder="Apellidos del denunciante" value="{{fieldsInfo.complainant_last_name}}"required />
+        {% endif %}
+      </p>
+      
+      <p>
+        <input class="btn btn-outline-dark btn-sm" type="submit" value="Crear" />
+      </p>
+    </div>
+  </form>
+  <a href="{{ url_for('reports_index') }}" class="btn btn-primary mb-2">Volver</a>
+</div>
+{% endblock %}
+
+<!-- class="btn btn-outline-dark btn-sm" -->

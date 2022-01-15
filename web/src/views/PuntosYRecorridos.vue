@@ -8,6 +8,8 @@
       :center="center"
       @click="onClick"
     >
+      <!-- El doble for es porque de la api obtenemos una lista de diccionarios y estos diccionarios 
+      tienen la cantidad de elementos por página, definida en la aplicación privada, de puntos.-->
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
       <div v-for="(pos, index) in points" :key="`pos-${index}`">
         <div v-for="(point, index) in pos" :key="`point-${index}`">
@@ -61,7 +63,8 @@ export default {
     },
     async fetchPoints(page) {
       const response = await axios.get(
-        `https://admin-grupo5.proyecto2021.linti.unlp.edu.ar/?page=${page}`
+        //`https://admin-grupo5.proyecto2021.linti.unlp.edu.ar/api/puntos/?page=${page}`
+        `http://127.0.0.1:5000/api/puntos/?page=${page}`
       );
       this.points.push(response.data.Points);
       return response.data.pages;

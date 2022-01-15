@@ -64,3 +64,57 @@ def create():
     db.session.add(new_report)
     db.session.commit()
     return redirect(url_for("reports_index"))
+
+
+def edit(id):
+    if not authenticated(session):
+        abort(401)
+    report = Report.query.filter(Report.id == id).first()
+    errors = {}
+    return render_template(
+        "report/edit.html", id=report.id, errors=errors, fieldsInfo=report
+    )
+
+
+def editInfo(id):
+    if not authenticated(session):
+        abort(401)
+
+    latLng = json.loads(request.form["coordinates"])
+    params = request.form.to_dict()
+    del params["coordinates"]
+    params["latitude"] = latLng["lat"]
+    params["longitude"] = latLng["lng"]
+    new_report = Report(**params)
+    report = Report.query.filter(Report.id == id).first()
+    errors = ReportValidator(new_report, report).validate_update()
+
+    if errors:
+        return render_template(
+            "report/edit.html",
+            errors=errors,
+            id=report.id,
+            fieldsInfo=new_report,
+        )
+    report.title = new_report.title
+    report.category = new_report.category
+    report.description = new_report.description
+    report.latitude = new_report.latitude
+    report.longitude = new_report.longitude
+    report.state = new_report.state
+    report.complainant_telephone = new_report.complainant_telephone
+    report.complainant_name = new_report.complainant_name
+    report.complainant_last_name = new_report.complainant_last_name
+    report.complainant_email = new_report.complainant_email
+
+    db.session.commit()
+    return redirect(url_for("reports_index"))
+
+
+def delete(id):
+    if not authenticated(session):
+        abort(401)
+    report = Report.query.filter(Report.id == id).first()
+    db.session.delete(report)
+    db.session.commit()
+    return redirect(url_for("report_index"))

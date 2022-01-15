@@ -46,9 +46,9 @@
       <p>
         <label class="form-label">Descripción</label></br>
         {% if errors %}
-        <textarea name="description" id="description" value="{{fieldsInfo.description}}" placeholder="Descripción" cols="50" rows="5"></textarea>
+        <textarea name="description" id="description" value="{{fieldsInfo.description}}" placeholder="{{fieldsInfo.description}}" cols="50" rows="5"></textarea>
         {% else %}
-        <textarea name="description" id="description" placeholder="Descripción" value="{{fieldsInfo.description}}" cols="50" rows="5"></textarea>
+        <textarea name="description" id="description"  placeholder="{{fieldsInfo.description}}"  cols="50" rows="5"></textarea>
         {% endif %}
       </p>
       <input name="latitude" type="text" id="latitude" data-latitude="{{fieldsInfo.latitude}}" hidden />

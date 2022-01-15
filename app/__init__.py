@@ -170,6 +170,20 @@ def create_app(environment="development"):
         report.create,
         methods=["POST"],
     )
+    app.add_url_rule(
+        "/reports/edit/<int:id>",
+        "reports_edit",
+        report.edit,
+        methods=["GET"],
+    )
+    app.add_url_rule(
+        "/reports/edit/<int:id>",
+        "reports_edit_info",
+        report.editInfo,
+        methods=["GET", "POST"],
+    )
+    app.add_url_rule("/reports/<int:id>", "reports_delete", report.delete)
+
     # Rutas del Modulo de Configuración
     app.add_url_rule("/configuracion", "configuracion_index", configuracion.index)
     app.add_url_rule(

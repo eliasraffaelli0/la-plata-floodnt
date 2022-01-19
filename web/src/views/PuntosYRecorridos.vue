@@ -13,22 +13,38 @@
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
       <div v-for="(pos, index) in points" :key="`pos-${index}`">
         <div v-for="(point, index) in pos" :key="`point-${index}`">
-          <l-marker :lat-lng="[point.latitude, point.longitude]"></l-marker>
+          <l-marker :lat-lng="[point.latitude, point.longitude]">
+            <l-popup>
+              {{ point.name }}<br />
+              Dirección: {{ point.address }} <br />
+              Teléfono: {{ point.telephone }} <br />
+              Mail: {{ point.email }}
+            </l-popup>
+          </l-marker>
         </div>
       </div>
     </l-map>
+    <div>
+      <table>
+        <tr>
+          <th>Rutas de evacuación</th>
+          <th>Puntos de encuentro</th>
+        </tr>
+      </table>
+    </div>
   </div>
 </template>
 
 
 <script >
-import { LMap, LTileLayer, LMarker } from "@vue-leaflet/vue-leaflet";
+import { LMap, LTileLayer, LMarker, LPopup } from "@vue-leaflet/vue-leaflet";
 import axios from "axios";
 export default {
   components: {
     LMap,
     LTileLayer,
     LMarker,
+    LPopup,
   },
   data() {
     let initialLat = -34.9187;
@@ -72,3 +88,22 @@ export default {
   },
 };
 </script>
+
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>

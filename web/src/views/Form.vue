@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>{{ points }}</div>
+    <div>{{ routes[4] }}</div>
     <l-map
       ref="mapa"
       @ready="onReady"
@@ -16,21 +16,42 @@
         <l-marker :lat-lng="[point.latitude, point.longitude]"></l-marker>
       </div>
       <div v-for="(route, index) in routes" :key="`route-${index}`">
-        <l-polyline :lat-lngs="route"></l-polyline>
+        <l-polyline :lat-lngs="route.coordinates"></l-polyline>
       </div>
-      <!-- <div v-for="(pos, index) in routes" :key="`pos-${index}`">
-        <div v-for="(route, index) in pos" :key="`route-${index}`">
-          <l-polyline: lat-lngs="[route.latitude, route.longitude]"></l-polyline>
-          <l-polyline :lat-lngs="polyline.latlngs" :color="polyline.color"></l-polyline>
-        </div>
-      </div> -->
     </l-map>
+    <table>
+      <tr>
+        <th>Puntos de encuentro</th>
+      </tr>
+      <div v-for="(point, index) in points" :key="`point-${index}`">
+        <tr>
+          <td>
+            {{ point.name }} <br />
+            Dirección:{{ point.address }} <br />
+            Teléfono:{{ point.telephone }} <br />
+            Mail:{{ point.email }}
+          </td>
+        </tr>
+      </div>
+    </table>
+    <table>
+      <tr>
+        <th>Recorridos de evacuación</th>
+      </tr>
+      <div v-for="(route, index) in routes" :key="`route-${index}`">
+        <tr>
+          <td>
+            {{ route.name }} <br />
+            Descripción:{{ route.description }} <br />
+          </td>
+        </tr>
+      </div>
+    </table>
   </div>
 </template>
 
 
 <script >
-// import L from "leaflet";
 import { LMap, LTileLayer, LMarker, LPolyline } from "@vue-leaflet/vue-leaflet";
 import axios from "axios";
 export default {
@@ -84,7 +105,6 @@ export default {
         `http://127.0.0.1:5000/api/puntos/?page=${page}`
       );
       this.points = this.points.concat(response.data.Points);
-      // this.points.push(response.data.Points);
       return response.data.pages;
     },
 
@@ -93,19 +113,18 @@ export default {
         //`https://admin-grupo5.proyecto2021.linti.unlp.edu.ar/api/puntos/?page=${page}`
         `http://127.0.0.1:5000/api/recorridos/?page=${page}`
       );
-      // let pointList = [];
-
-      //response.data.recorridos.map((coor) => new L.LatLng(coor["coordinates"]["latitude"], coor["coordinates"]["longitude"]))
-      //response.data.recorridos.map((coor) => console.log(coor["coordinates"][0]["longitude"]))
-      // hacer un doble for each o hay alguna manera mas eficiente/facil
-      // debugger;
       response.data.recorridos.forEach((recorrido) => {
         let coordenadas = recorrido.coordinates.map((coor) => [
           parseFloat(coor.latitude),
           parseFloat(coor.longitude),
         ]);
-        // let recorridoParseado = {};
-        this.routes.push(coordenadas);
+        let recorridoParseado = {
+          name: recorrido.name,
+          description: recorrido.description,
+          coordinates: coordenadas,
+        };
+        this.routes = this.routes.concat(recorridoParseado);
+        // this.routes.push(recorridoParseado);
       });
       return response.data.pages;
     },

@@ -13,6 +13,7 @@ from app.resources import (
     zones,
     configuracion,
     report,
+    tracing,
 )
 from app.models.configuracion import Configuracion
 from app.helpers import handler
@@ -188,6 +189,17 @@ def create_app(environment="development"):
         methods=["GET", "POST"],
     )
     app.add_url_rule("/reports/<int:id>", "reports_delete", report.delete)
+
+    # Rutas de los seguimientos
+    app.add_url_rule(
+        "/tracing/new/<int:id>", "tracing_new", tracing.new, methods=["GET"]
+    )
+    app.add_url_rule(
+        "/tracing/new/<int:id>",
+        "tracing_create",
+        tracing.create,
+        methods=["GET", "POST"],
+    )
 
     # Rutas del Modulo de Configuración
     app.add_url_rule("/configuracion", "configuracion_index", configuracion.index)

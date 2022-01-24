@@ -49,6 +49,7 @@
         <td class="table-info">{{ report.assigned_to.username }}</td>
         <td class="table-info">
           <a href="{{ url_for('reports_edit', id=report.id) }}"><img src="static/images/pencil.png" class="fotito"></a>
+          <a href="{{ url_for('tracing_new', id=report.id) }}"><img src="static/images/add3.png" class="fotito"></a>
           <a href=" {{ url_for('reports_delete', id=report.id) }}"
             onclick="return confirm('Desea eliminar la denuncia : {{ report.title }}? Esta acción no podrá deshacerse');"
             title="Delete Merchant"><img src="static/images/delete.png" class="fotito"></a>

@@ -2,6 +2,7 @@ from flask import redirect, render_template, request, url_for, session, abort, g
 from app.helpers.auth import authenticated
 from app.models.report import Report
 from app.models.user import User
+from app.models.tracing import Tracing
 from app.db import db
 from app.helpers.permisoValidator import permisoChecker
 from app.validators.reportValidator import ReportValidator
@@ -15,6 +16,7 @@ def index():
 
     """Accedo a la variable de configuracion del g object, pagino por la cantidad de
     elementos que tenga almacenada en esa variable y ordeno por el criterio"""
+    kk = Tracing.query
     params = request.args
     reports = Report.query
     if params.get("title", False):

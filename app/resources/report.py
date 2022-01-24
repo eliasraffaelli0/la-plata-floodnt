@@ -1,6 +1,7 @@
 from flask import redirect, render_template, request, url_for, session, abort, g
 from app.helpers.auth import authenticated
 from app.models.report import Report
+from app.models.user import User
 from app.db import db
 from app.helpers.permisoValidator import permisoChecker
 from app.validators.reportValidator import ReportValidator
@@ -16,17 +17,21 @@ def index():
     elementos que tenga almacenada en esa variable y ordeno por el criterio"""
     params = request.args
     reports = Report.query
-    # import pdb
-
-    # pdb.set_trace()
     if params.get("title", False):
         reports = reports.filter(Report.title == params["title"])
 
     if params.get("state", False):
         reports = reports.filter(Report.state == params["state"])
 
-    # if params.get("date", False):
-    #     report = reports.filter(Report.created_at == params["created_at"])
+    if params.get("start", False) and params.get("finish", False):
+        report = reports.filter(
+            Report.created_at.between(params["start"], params["finish"])
+        )
+    # import pdb
+
+    # pdb.set_trace()
+    # Orders.query.filter(Report.created_at.between(params["start"], params["finish"]))
+
     reports = reports.order_by(
         text(f"created_at {g.config.criterio_de_ordenacion}")
     ).paginate(per_page=g.config.elementos_por_pagina)
@@ -42,7 +47,11 @@ def new():
     if not permisoChecker(session, "user_index"):
         abort(401)
     errors = {}
-    return render_template("report/new.html", errors=errors)
+    users = User.query
+    # import pdb
+
+    # pdb.set_trace()
+    return render_template("report/new.html", errors=errors, users=users)
 
 
 def create():
@@ -61,6 +70,8 @@ def create():
     errors = ReportValidator(new_report).validate_create()
     if errors:
         return render_template("report/new.html", errors=errors, fieldsInfo=new_report)
+    user = User.query.filter(User.id == new_report.user_id).first()
+    new_report.assigned_to = user
     db.session.add(new_report)
     db.session.commit()
     return redirect(url_for("reports_index"))

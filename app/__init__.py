@@ -119,6 +119,13 @@ def create_app(environment="development"):
         zones.editInfo,
         methods=["GET", "POST"],
     )
+    app.add_url_rule(
+        "/flood_zones/show/<int:id>",
+        "zones_show_info",
+        zones.showInfo,
+        methods=["GET", "POST"],
+    )
+
     # Rutas de Puntos de encuentro
     app.add_url_rule("/puntos_de_encuentro", "puntos_index", punto.index)
     app.add_url_rule(

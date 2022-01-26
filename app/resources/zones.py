@@ -68,6 +68,30 @@ def create():
     return redirect(url_for("zones_index"))
 
 
+def showInfo(id):
+
+    if not authenticated(session):
+        abort(401)
+
+    zone = Zone.query.filter(Zone.id == id).first()
+    coords = list()
+    """Creo una lista de diccionarios que tienen los pares de coordenadas de cada punto del recorrido
+    que se pasa por parámetro a la vista """
+    for point in zone.coordinates:
+        coordinatePair = dict()
+        coordinatePair["lat"] = point.latitude
+        coordinatePair["lng"] = point.longitude
+        coords.append(coordinatePair)
+    errors = {}
+    return render_template(
+        "floodZone/show.html",
+        id=zone.id,
+        errors=errors,
+        fieldsInfo=zone,
+        zoneCoordinates=coords,
+    )
+
+
 def upload_file():
     zone_file = request.files["zone_file"]
     zone_string = zone_file.read().decode("utf-8")

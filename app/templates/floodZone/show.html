@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+{% block title %}Zonas inundables{% endblock %}
+{% block head %}
+{{ super() }}
+
+<!-- leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+
+
+<!-- leaflet draw -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.10/leaflet.draw.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.10/leaflet.draw.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+
+<script type="module" src="{{ url_for('static', filename='js/floodZone/show.js') }}"></script>
+
+<!-- Este script declara la variable zoneCoordinates con el valor de zoneCoordinates pasado por 
+parámetro a la vista desde el controlador. Javascript puede acceder a esta variable y con ella se
+obtienen las coordenadas del recorrido traído desde la BD -->
+<script >
+    var zoneColor = {{ fieldsInfo.color|tojson|safe }};
+    var zoneCoordinates = {{ zoneCoordinates| safe }};
+</script>
+
+{% endblock %}
+{% block content %}
+
+<div class="container mb-2 text-center rounded-3" style="background-color: rgba(0, 0, 0, 0.1)">
+        <div class="row">
+            <p>
+                <label class="form-label">Nombre: {{fieldsInfo.name}}</label></br>
+            </p>
+            <p>
+                <label class="form-label">Código de zona: {{fieldsInfo.zone_code}}</label></br>
+            </p>
+            <input name="coordinates" type="text" id="coordinates" hidden>
+            <p>
+                {% if fieldsInfo.state %}
+                <label>Publicado: Si</label></br>
+                {% else %}
+                <label>Publicado: No</label></br>
+
+                {% endif %}
+            </p>
+
+            <div id="map">
+                <div id="mapid"></div>
+            </div>
+        </div>
+    <a href="{{ url_for('zones_index') }}" class="btn btn-primary mb-2">Volver</a>
+</div>
+{% endblock %}
+
+<!-- class="btn btn-outline-dark btn-sm" -->

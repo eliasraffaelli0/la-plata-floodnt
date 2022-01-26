@@ -13,7 +13,14 @@
       tienen la cantidad de elementos por página, definida en la aplicación privada, de puntos.-->
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
       <div v-for="(point, index) in points" :key="`point-${index}`">
-        <l-marker :lat-lng="[point.latitude, point.longitude]"></l-marker>
+        <l-marker :lat-lng="[point.latitude, point.longitude]">
+          <l-popup>
+            {{ point.name }}<br />
+            Dirección: {{ point.address }} <br />
+            Teléfono: {{ point.telephone }} <br />
+            Mail: {{ point.email }}
+          </l-popup>
+        </l-marker>
       </div>
       <div v-for="(route, index) in routes" :key="`route-${index}`">
         <l-polyline :lat-lngs="route.coordinates"></l-polyline>
@@ -52,7 +59,13 @@
 
 
 <script >
-import { LMap, LTileLayer, LMarker, LPolyline } from "@vue-leaflet/vue-leaflet";
+import {
+  LMap,
+  LTileLayer,
+  LMarker,
+  LPolyline,
+  LPopup,
+} from "@vue-leaflet/vue-leaflet";
 import axios from "axios";
 export default {
   components: {
@@ -60,6 +73,7 @@ export default {
     LTileLayer,
     LMarker,
     LPolyline,
+    LPopup,
   },
   data() {
     let initialLat = -34.9187;

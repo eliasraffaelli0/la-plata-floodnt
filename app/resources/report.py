@@ -8,6 +8,7 @@ from app.helpers.permisoValidator import permisoChecker
 from app.validators.reportValidator import ReportValidator
 from sqlalchemy.sql import text, and_
 import json
+from datetime import datetime
 
 
 def index():
@@ -26,8 +27,12 @@ def index():
         reports = reports.filter(Report.state == params["state"])
 
     if params.get("start", False) and params.get("finish", False):
-        report = reports.filter(
-            Report.created_at.between(params["start"], params["finish"])
+
+        reports = reports.filter(
+            Report.created_at.between(
+                datetime.fromisoformat(params["start"]),
+                datetime.fromisoformat(params["finish"]),
+            )
         )
     # import pdb
 

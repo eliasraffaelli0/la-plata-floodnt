@@ -1,0 +1,77 @@
+<template>
+  <div>
+    <div>{{ zone }}</div>
+    <l-map
+      ref="mapa"
+      @ready="onReady"
+      style="height: 700px"
+      :zoom="zoom"
+      :center="center"
+    >
+      <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+      <l-polygon
+        :lat-lngs="zone.coordinates"
+        :color="zone.color"
+        :fillColor="zone.color"
+        :fill="true"
+        :weight="3"
+        :opacity="1.0"
+      ></l-polygon>
+    </l-map>
+  </div>
+</template>
+
+
+<script >
+import { LMap, LTileLayer, LPolygon } from "@vue-leaflet/vue-leaflet";
+import axios from "axios";
+export default {
+  components: {
+    LMap,
+    LTileLayer,
+    LPolygon,
+  },
+  data() {
+    let initialLat = -34.9187;
+    let initialLng = -57.956;
+
+    navigator.geolocation.getCurrentPosition((position) => {
+      initialLat = position.coords.latitude;
+      initialLng = position.coords.longitude;
+    });
+    return {
+      url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      zoom: 13,
+      center: [initialLat, initialLng],
+      id: 6,
+      zone: {},
+    };
+  },
+  methods: {
+    async onReady() {
+      await this.fetchZone(this.id);
+    },
+
+    async fetchZone(id) {
+      const response = await axios.get(
+        //`https://admin-grupo5.proyecto2021.linti.unlp.edu.ar/api/puntos/?id=${id}`
+        `http://127.0.0.1:5000/api/zonas/id/?id=${id}`
+      );
+      let coordenadasParseadas = response.data.coordinates.map((coor) => [
+        parseFloat(coor.latitude),
+        parseFloat(coor.longitude),
+      ]);
+      let zonaParseada = {
+        name: response.data.name,
+        coordinates: coordenadasParseadas,
+        color: response.data.color,
+        zone_code: response.data.zone_code,
+        state: response.data.state,
+        id: response.data.id,
+      };
+      this.zone = zonaParseada;
+      //   this.zone.push(zonaParseada);
+    },
+  },
+};
+</script>

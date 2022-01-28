@@ -7,6 +7,7 @@ class ZoneCoordinateSchema(Schema):
 
 
 class ZoneSchema(Schema):
+    id = fields.Int()
     name = fields.String()
     color = fields.String()
     zone_code = fields.String()

@@ -150,8 +150,7 @@ def upload_file():
             db.session.add(new_zona)
         db.session.commit()
     # es una chanchada pero tiempos desesperados requieren medidas desesperadas
-
-    return render_template("flood_zones/index.html", errors=errors)
+    return redirect(url_for("zones_index"))
 
 
 def edit(id):

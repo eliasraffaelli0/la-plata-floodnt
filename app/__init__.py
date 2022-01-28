@@ -21,6 +21,7 @@ from app.helpers import auth as helper_auth
 from app.helpers import permisoValidator as helper_permisos
 from app.resources.api.point import point_api
 from app.resources.api.evacuationRoute import evacuationRoute_api
+from app.resources.api.zone import zone_api
 
 
 # import logging
@@ -218,6 +219,7 @@ def create_app(environment="development"):
     api = Blueprint("api", __name__, url_prefix="/api")
     api.register_blueprint(point_api)
     api.register_blueprint(evacuationRoute_api)
+    api.register_blueprint(zone_api)
 
     app.register_blueprint(api)
 

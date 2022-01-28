@@ -23,6 +23,6 @@ class ZonePaginationSchema(Schema):
     items = fields.Nested(ZoneSchema, many=True, data_key="zonas")
 
 
-zone_schema = EvacuationRouteSchema(many=True)
-zone_schema = EvacuationRouteSchema()
-zone_pagination_schema = EvacuationRoutePaginationSchema()
+zones_schema = ZoneSchema(many=True)
+zone_schema = ZoneSchema()
+zone_pagination_schema = ZonePaginationSchema()

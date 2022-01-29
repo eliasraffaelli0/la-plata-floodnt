@@ -24,14 +24,25 @@ def index():
 
 @report_api.post("/")
 def create():
+<<<<<<< HEAD
     new_point = Punto(**request.get_json(force=True))
     errors = PuntoValidator(new_point).validate_create()
+=======
+    new_report = Report(**request.get_json(force=True))
+    errors = ReportValidator(new_report).validate_create()
+>>>>>>> feature/APIDenuncias
 
     if errors:
         response = errors
     else:
+<<<<<<< HEAD
         db.session.add(new_point)
         db.session.commit()
         response = point_schema.dump(new_point)
 
+=======
+        db.session.add(new_report)
+        db.session.commit()
+        response = report_schema.dump(new_report)
+>>>>>>> feature/APIDenuncias
     return jsonify(response)

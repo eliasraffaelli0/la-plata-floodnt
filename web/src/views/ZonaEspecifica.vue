@@ -50,7 +50,8 @@ export default {
     async onReady() {
       await this.fetchZone(this.$route.params.id);
     },
-
+    // this.$route.params.id con esto se accede al parametro dinámico que se envía por la ruta,
+    // en nuestro caso es el id, que se utiliza para obtener la zona desde la API
     async fetchZone() {
       const response = await axios.get(
         //`https://admin-grupo5.proyecto2021.linti.unlp.edu.ar/api/puntos/?id=${id}`

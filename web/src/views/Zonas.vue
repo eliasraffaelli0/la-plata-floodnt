@@ -25,6 +25,7 @@
       </tr>
       <div v-for="(zone, index) in zones" :key="`zone-${index}`">
         <tr>
+          <!-- Se crean los links a las diferentes rutas dinamicas de las zonas específicas -->
           <router-link class="linkardo" :to="`/zonaEspecifica/${zone.id}`">
             {{ zone.name }}
           </router-link>

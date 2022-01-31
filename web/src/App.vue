@@ -3,7 +3,6 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> |
     <router-link to="/zonas">Zonas inundables</router-link> |
-    <router-link to="/zonaEspecifica">kk</router-link> |
     <router-link to="/formulario">Form</router-link> |
     <router-link to="/recorridos_y_puntos"
       >Recorridos de evacuación y puntos de encuentro</router-link

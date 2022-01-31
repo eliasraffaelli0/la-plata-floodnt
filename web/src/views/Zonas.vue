@@ -25,7 +25,10 @@
       </tr>
       <div v-for="(zone, index) in zones" :key="`zone-${index}`">
         <tr>
-          <td @click="onClick(zone)">{{ zone.name }} <br /></td>
+          <router-link class="linkardo" :to="`/zonaEspecifica/${zone.id}`">
+            {{ zone.name }}
+          </router-link>
+          <br />
         </tr>
       </div>
     </table>
@@ -59,9 +62,6 @@ export default {
     };
   },
   methods: {
-    onClick(zone) {
-      console.log(zone.id);
-    },
     async onReady() {
       const pages = await this.fetchZones(1);
 
@@ -97,3 +97,9 @@ export default {
   },
 };
 </script>
+
+<style >
+.linkardo {
+  text-decoration: none;
+}
+</style>

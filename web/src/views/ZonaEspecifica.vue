@@ -43,19 +43,18 @@ export default {
       url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       zoom: 13,
       center: [initialLat, initialLng],
-      id: 6,
       zone: {},
     };
   },
   methods: {
     async onReady() {
-      await this.fetchZone(this.id);
+      await this.fetchZone(this.$route.params.id);
     },
 
-    async fetchZone(id) {
+    async fetchZone() {
       const response = await axios.get(
         //`https://admin-grupo5.proyecto2021.linti.unlp.edu.ar/api/puntos/?id=${id}`
-        `http://127.0.0.1:5000/api/zonas/id/?id=${id}`
+        `http://127.0.0.1:5000/api/zonas/id/?id=${this.$route.params.id}`
       );
       let coordenadasParseadas = response.data.coordinates.map((coor) => [
         parseFloat(coor.latitude),

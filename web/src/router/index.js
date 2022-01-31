@@ -34,8 +34,8 @@ const routes = [
     component: Zonas
   },
   {
-    path: '/zonaEspecifica',
-    name: 'zonasEspecifica',
+    path: '/zonaEspecifica/:id',
+    name: 'zonaEspecifica',
     component: ZonaEspecifica
   },
 

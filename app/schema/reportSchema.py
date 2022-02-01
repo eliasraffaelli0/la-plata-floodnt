@@ -9,6 +9,7 @@ class ReportSchema(Schema):
     complainant_name = fields.String()
     complainant_last_name = fields.String()
     complainant_email = fields.String()
+    complainant_telephone = fields.String()
     description = fields.String()
 
 
@@ -17,7 +18,7 @@ class ReportPaginationSchema(Schema):
     per_page = fields.Int()
     pages = fields.Int()
     total = fields.Int()
-    items = fields.Nested(ReportSchema, many=True, data_key="reports")
+    items = fields.Nested(ReportSchema, many=True, data_key="Reports")
 
 
 reportss_schema = ReportSchema(many=True)

@@ -5,6 +5,7 @@ import PuntosYRecorridos from '../views/PuntosYRecorridos.vue'
 import Zonas from '../views/Zonas.vue'
 import ZonaEspecifica from '../views/ZonaEspecifica.vue'
 import Reports from '../views/Reports.vue'
+import ReportsMap from '../views/ReportsMap.vue'
 const routes = [
   {
     path: '/',
@@ -28,6 +29,11 @@ const routes = [
     path: '/reports',
     name: 'Denuncias',
     component: Reports
+  },
+  {
+    path: '/reportsMap',
+    name: 'DenunciasMapa',
+    component: ReportsMap
   },
   {
     path: '/recorridos_y_puntos',

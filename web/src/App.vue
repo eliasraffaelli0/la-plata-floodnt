@@ -3,6 +3,7 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> |
     <router-link to="/reports">Denuncias</router-link> |
+    <router-link to="/reportsMap">Mapa de denuncias</router-link> |
     <router-link to="/zonas">Zonas inundables</router-link> |
     <router-link to="/formulario">Form</router-link> |
     <router-link to="/recorridos_y_puntos"

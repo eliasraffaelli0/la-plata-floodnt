@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div>{{ zone }}</div>
     <l-map
       ref="mapa"
       @ready="onReady"

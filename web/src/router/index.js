@@ -4,6 +4,7 @@ import Form from '../views/Form.vue'
 import PuntosYRecorridos from '../views/PuntosYRecorridos.vue'
 import Zonas from '../views/Zonas.vue'
 import ZonaEspecifica from '../views/ZonaEspecifica.vue'
+import Reports from '../views/Reports.vue'
 const routes = [
   {
     path: '/',
@@ -22,6 +23,11 @@ const routes = [
     path: '/formulario',
     name: 'Form',
     component: Form
+  },
+  {
+    path: '/reports',
+    name: 'Denuncias',
+    component: Reports
   },
   {
     path: '/recorridos_y_puntos',

@@ -190,9 +190,7 @@ def editInfo(id):
     new_zone.color = request.form["color"]
     new_zone.state = request.form["state"]
     errors = ZoneValidator(new_zone, zone).validate_update()
-    # import pdb
 
-    # pdb.set_trace()
     if errors:
         return render_template(
             "floodZone/edit.html",

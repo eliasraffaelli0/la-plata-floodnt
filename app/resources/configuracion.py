@@ -4,7 +4,6 @@ from app.db import db
 from app.helpers.auth import authenticated
 from app.helpers.permisoValidator import permisoChecker
 from app.models.configuracion import Configuracion
-import pdb
 
 
 def index():

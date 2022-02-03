@@ -34,10 +34,6 @@ def index():
                 datetime.fromisoformat(params["finish"]),
             )
         )
-    # import pdb
-
-    # pdb.set_trace()
-    # Orders.query.filter(Report.created_at.between(params["start"], params["finish"]))
 
     reports = reports.order_by(
         text(f"created_at {g.config.criterio_de_ordenacion}")
@@ -55,9 +51,7 @@ def new():
         abort(401)
     errors = {}
     users = User.query
-    # import pdb
 
-    # pdb.set_trace()
     return render_template("report/new.html", errors=errors, users=users)
 
 

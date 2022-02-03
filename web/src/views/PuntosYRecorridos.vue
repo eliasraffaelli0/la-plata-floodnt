@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{ routes }}
     <l-map
       ref="mapa"
       @ready="onReady"
@@ -10,7 +11,10 @@
     >
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
       <div v-for="(point, index) in points" :key="`point-${index}`">
-        <l-marker :lat-lng="[point.latitude, point.longitude]">
+        <l-marker
+          :lat-lng="[point.latitude, point.longitude]"
+          v-if="point.state != 0"
+        >
           <l-popup>
             {{ point.name }}<br />
             Dirección: {{ point.address }} <br />
@@ -20,7 +24,10 @@
         </l-marker>
       </div>
       <div v-for="(route, index) in routes" :key="`route-${index}`">
-        <l-polyline :lat-lngs="route.coordinates"></l-polyline>
+        <l-polyline
+          :lat-lngs="route.coordinates"
+          v-if="route.state != 0"
+        ></l-polyline>
       </div>
     </l-map>
     <table>
@@ -133,9 +140,9 @@ export default {
           name: recorrido.name,
           description: recorrido.description,
           coordinates: coordenadas,
+          state: recorrido.state,
         };
         this.routes = this.routes.concat(recorridoParseado);
-        // this.routes.push(recorridoParseado);
       });
       return response.data.pages;
     },

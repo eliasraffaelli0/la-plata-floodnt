@@ -1,15 +1,21 @@
 <template>
   <div>
-    <form v-on:submit.prevent="submitForm">
-      <input type="text" hidden v-model="form.latitude" />
-      <input type="text" hidden v-model="form.longitude" />
+    <form @submit.prevent="submitForm">
+      <input type="text" hidden v-model="form.latitude" required />
+      <input type="text" hidden v-model="form.longitude" required />
       <p>
         <label>Titulo</label> <br />
-        <input type="text" name="title" v-model="form.title" />
+        <input type="text" name="title" v-model="form.title" required />
       </p>
       <p>
         <label>Categoría</label> <br />
-        <select id="category" class="" name="category" v-model="form.category">
+        <select
+          id="category"
+          class=""
+          name="category"
+          v-model="form.category"
+          required
+        >
           <option value="cat1">Categoría 1</option>
           <option value="cat2">Categoría 2</option>
           <option value="cat3">Categoría 3</option>
@@ -36,6 +42,7 @@
           cols="50"
           rows="5"
           v-model="form.description"
+          required
         ></textarea>
       </p>
       <p>
@@ -44,14 +51,16 @@
           type="text"
           name="complainant_telephone"
           v-model="form.complainant_telephone"
+          required
         />
       </p>
       <p>
         <label>Email del denunciante</label> <br />
         <input
-          type="text"
+          type="email"
           name="complainant_email"
           v-model="form.complainant_email"
+          required
         />
       </p>
       <p>
@@ -60,6 +69,7 @@
           type="text"
           name="complainant_name"
           v-model="form.complainant_name"
+          required
         />
       </p>
       <p>
@@ -68,12 +78,11 @@
           type="text"
           name="complainant_last_name"
           v-model="form.complainant_last_name"
+          required
         />
       </p>
-      <p>
-        <button>Crear denuncia</button>
-        <input type="submit" value="Crear denuncia" />
-      </p>
+
+      <input type="submit" value="Crear denuncia" />
     </form>
   </div>
 </template>
@@ -119,30 +128,20 @@ export default {
         console.log(e.latlng);
       }
     },
-  },
-  submitForm() {
-    debugger;
-    axios.post("http://127.0.0.1:5000/api/reports/", this.form).then((res) => {
-      return confirm(`Denuncia creada ${res.status}`);
-    });
+    submitForm() {
+      axios
+        .post("http://127.0.0.1:5000/api/reports/", this.form)
+        .then((res) => {
+          // debugger;
+          return confirm(`Denuncia creada ${res.status}`);
+        })
+        .catch((error) => {
+          console.log(error.response.status);
+        })
+        .finally(() => {
+          console.log("finally buenardium");
+        });
+    },
   },
 };
-// form.addEventListener('submit', (event) => submitHandler(event, mapita));
-//     const form = document.querySelector('#kk');
-
-// const submitHandler = (event, mapita) => {
-
-//     if (!mapita.hasValidMarker()) {
-//         event.preventDefault();
-//         alert('Debes dibujar una zona válida en el mapa.\nPara que sea válida debe contener al menos 3 puntos');
-//     }
-//     else {
-
-//         const coordinates = document.querySelector('#coordinates');
-//         const coorr = mapita.drawnlayers[0].getLatLngs().flat().map(coordinate => {
-//             return { lat: coordinate.lat, lng: coordinate.lng }
-//         });
-//         coordinates.setAttribute('value', JSON.stringify(coorr));
-//     }
-// }
 </script>

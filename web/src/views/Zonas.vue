@@ -16,6 +16,7 @@
           :fill="true"
           :weight="3"
           :opacity="1.0"
+          v-if="zone.state != 0"
         ></l-polygon>
       </div>
     </l-map>
@@ -26,7 +27,11 @@
       <div v-for="(zone, index) in zones" :key="`zone-${index}`">
         <tr>
           <!-- Se crean los links a las diferentes rutas dinamicas de las zonas específicas -->
-          <router-link class="linkardo" :to="`/zonaEspecifica/${zone.id}`">
+          <router-link
+            class="linkardo"
+            :to="`/zonaEspecifica/${zone.id}`"
+            v-if="zone.state != 0"
+          >
             {{ zone.name }}
           </router-link>
           <br />

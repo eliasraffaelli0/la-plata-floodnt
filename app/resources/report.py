@@ -14,6 +14,8 @@ from datetime import datetime
 def index():
     if not authenticated(session):
         abort(401)
+    if not permisoChecker(session, "report_index"):
+        abort(401)
 
     """Accedo a la variable de configuracion del g object, pagino por la cantidad de
     elementos que tenga almacenada en esa variable y ordeno por el criterio"""
@@ -47,7 +49,7 @@ def index():
 def new():
     if not authenticated(session):
         abort(401)
-    if not permisoChecker(session, "user_index"):
+    if not permisoChecker(session, "report_new"):
         abort(401)
     errors = {}
     users = User.query
@@ -80,6 +82,8 @@ def create():
 
 def edit(id):
     if not authenticated(session):
+        abort(401)
+    if not permisoChecker(session, "report_edit"):
         abort(401)
     report = Report.query.filter(Report.id == id).first()
     errors = {}
@@ -125,6 +129,8 @@ def editInfo(id):
 
 def delete(id):
     if not authenticated(session):
+        abort(401)
+    if not permisoChecker(session, "report_delete"):
         abort(401)
     report = Report.query.filter(Report.id == id).first()
     db.session.delete(report)

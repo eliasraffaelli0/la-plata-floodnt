@@ -13,6 +13,8 @@ def index():
     elementos que tenga almacenada en esa variable y ordeno por el criterio"""
     if not authenticated(session):
         abort(401)
+    if not permisoChecker(session, "punto_index"):
+        abort(401)
     params = request.args
     puntos = Punto.query
     if params.get("name", False):
@@ -34,7 +36,7 @@ def index():
 def new():
     if not authenticated(session):
         abort(401)
-    if not permisoChecker(session, "user_index"):
+    if not permisoChecker(session, "punto_new"):
         abort(401)
     errors = {}
     return render_template("puntos/new.html", errors=errors)
@@ -43,6 +45,8 @@ def new():
 def create():
     if not authenticated(session):
         abort(401)
+    # if not permisoChecker(session, "punto_create"):
+    #     abort(401)
     # para el controlador de zona hay que hacer el load para transformarlo a un arreglo de diccionarios
     """ Se transforma el diccionario inmutable en el que vienen almacenadas las coordenadas
      a un diccionario mutable y se guardan por separados en los campos de longitud y latitud para
@@ -63,6 +67,8 @@ def create():
 
 def edit(id):
     if not authenticated(session):
+        abort(401)
+    if not permisoChecker(session, "punto_edit"):
         abort(401)
     punto = Punto.query.filter(Punto.id == id).first()
     errors = {}
@@ -104,6 +110,8 @@ def editInfo(id):
 
 def delete(id):
     if not authenticated(session):
+        abort(401)
+    if not permisoChecker(session, "punto_delete"):
         abort(401)
     punto = Punto.query.filter(Punto.id == id).first()
     db.session.delete(punto)

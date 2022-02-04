@@ -15,6 +15,9 @@ import json
 def index():
     if not authenticated(session):
         abort(401)
+    if not permisoChecker(session, "zone_index"):
+        abort(401)
+
     params = request.args
     zones = Zone.query
     if params.get("name", False):
@@ -35,7 +38,7 @@ def index():
 def new():
     if not authenticated(session):
         abort(401)
-    if not permisoChecker(session, "user_index"):
+    if not permisoChecker(session, "zone_new"):
         abort(401)
     errors = {}
     return render_template("floodZone/new.html", errors=errors)
@@ -71,6 +74,8 @@ def create():
 def showInfo(id):
 
     if not authenticated(session):
+        abort(401)
+    if not permisoChecker(session, "zone_show"):
         abort(401)
 
     zone = Zone.query.filter(Zone.id == id).first()
@@ -156,6 +161,8 @@ def upload_file():
 def edit(id):
     if not authenticated(session):
         abort(401)
+    if not permisoChecker(session, "zone_edit"):
+        abort(401)
 
     zone = Zone.query.filter(Zone.id == id).first()
     coords = list()
@@ -215,6 +222,8 @@ def editInfo(id):
 
 def delete(id):
     if not authenticated(session):
+        abort(401)
+    if not permisoChecker(session, "zone_delete"):
         abort(401)
 
     """Elimino primero todas las coordenadas y después el recorrido"""

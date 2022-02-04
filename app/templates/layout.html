@@ -32,7 +32,7 @@
         <div class="dropdown">
           <button class="dropbtn {{g.config.tema_privado}}">{{session["username"]}}</button>
           <div class="dropdown-content">
-            <a href="#">Perfil</a>
+            <a href="{{ url_for('user_edit_info', id=session['userId']) }}">Perfil</a>
             <a href="{{ url_for('auth_logout') }}">Cerrar sesión</a>
           </div>
         </div>

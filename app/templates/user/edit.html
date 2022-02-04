@@ -7,7 +7,7 @@
 <div class="container mb-2 text-center rounded-3" style="background-color: rgba(0, 0, 0, 0.1)">
     <h1>Editar información del usuario</h1>
     <div class="row g-5">
-        {% if has_permission(session, 'user_edit_rol')%}
+        {% if has_permission(session, 'user_edit')%}
         <div class="col-md-5 col-lg-4 order-md-last">
             <h4 class="d-flex justify-content-between align-items-center mb-3">
                 <span class="text">Roles asignados</span>
@@ -82,17 +82,19 @@
                     {% endif %}
                     </p>
                     <p>
-                        <label>Cambiar estado de usuario</label></br>
-                        {% if fieldsInfo.activo %}
-                        <select class="form-select-sm" name='activo'>
-                            <option value='1'>Activado</option>
-                            <option value='0'>Desactivado</option>
-                        </select>
-                        {% else %}
-                        <select class="form-select-sm" name='activo'>
-                            <option value='0'>Desactivado</option>
-                            <option value='1'>Activado</option>
-                        </select>
+                        {% if not rolInfo|selectattr("name", "equalto", "Administrador")| list %}
+                            <label>Cambiar estado de usuario</label></br>
+                            {% if fieldsInfo.activo %}
+                                <select class="form-select-sm" name='activo'>
+                                    <option value='1'>Activado</option>
+                                    <option value='0'>Desactivado</option>
+                                </select>
+                            {% else %}
+                                <select class="form-select-sm" name='activo'>
+                                    <option value='0'>Desactivado</option>
+                                    <option value='1'>Activado</option>
+                                </select>
+                            {% endif %}
                         {% endif %}
                     </p>
                     <p>

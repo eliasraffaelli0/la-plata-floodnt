@@ -9,7 +9,7 @@ from app.models.configuracion import Configuracion
 def index():
     if not authenticated(session):
         abort(401)
-    if not permisoChecker(session, "user_index"):
+    if not permisoChecker(session, "config_index"):
         abort(401)
     return render_template("configuracion/configuracion.html")
 

@@ -13,7 +13,7 @@ import json
 def new(id):
     if not authenticated(session):
         abort(401)
-    if not permisoChecker(session, "user_index"):
+    if not permisoChecker(session, "tracing_new"):
         abort(401)
     errors = {}
     users = User.query

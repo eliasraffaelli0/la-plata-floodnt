@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700');
-@import url('https://fonts.googleapis.com/css?family=Catamaran:400,800');
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,600,700");
+@import url("https://fonts.googleapis.com/css?family=Catamaran:400,800");
 body {
-  font-family: 'Montserrat', Helvetica, sans-serif;
+  font-family: "Montserrat", Helvetica, sans-serif;
   font-size: 14px;
   /* esto es para lograr que el footer se pegue al pie de la pagina usando flexbox */
   display: flex;
@@ -9,26 +9,25 @@ body {
   min-height: 100vh;
 }
 
-.header{
+.header {
   width: 100%;
   margin: 0 auto;
   display: inline-block;
 }
 
-.boton-usuario{
+.boton-usuario {
   float: right;
 }
 
-#bienvenida{
+#bienvenida {
   font-size: 25px;
   text-align: center;
   color: #ffffff;
 }
 
-
-#logo{
-  height:100px;
-  width:100px;
+#logo {
+  height: 100px;
+  width: 100px;
   margin: 5px;
   display: inline-block;
 }
@@ -46,7 +45,7 @@ body {
   text-decoration: white;
   margin-top: auto;
 }
-.footer p{
+.footer p {
   color: white;
   /* position: fixed;
   left: 0;
@@ -56,7 +55,7 @@ body {
 #container {
   width: 75%;
   margin: 0 auto;
-  background-color: #FFF;
+  background-color: #fff;
   padding: 20px 40px;
   border: solid 1px black;
   margin-top: 20px;
@@ -79,42 +78,41 @@ a.link {
   letter-spacing: 1px;
 }
 
-
 /* Estilo del Navbar */
 
-#navbar{
+#navbar {
   margin-bottom: 10px;
 }
-#navbar ul { 
-	margin: 0; 
-	padding: 5px; 
-	list-style-type: none; 
-	text-align: center; 
-	} 
- 
-#navbar ul li {  
-	display: inline; 
-	} 
- 
-#navbar ul li a { 
-	text-decoration: none; 
-	padding: .2em 1em; 
-	color: #fff; 
-	} 
- 
-#navbar ul li a:hover { 
-	color: #000; 
-	background-color: #fff; 
-	} 
+#navbar ul {
+  margin: 0;
+  padding: 5px;
+  list-style-type: none;
+  text-align: center;
+}
 
-.usuario-listado, .usuario-listado:visited {
+#navbar ul li {
+  display: inline;
+}
+
+#navbar ul li a {
+  text-decoration: none;
+  padding: 0.2em 1em;
+  color: #fff;
+}
+
+#navbar ul li a:hover {
+  color: #000;
+  background-color: #fff;
+}
+
+.usuario-listado,
+.usuario-listado:visited {
   text-decoration: none;
   color: black;
 }
 
-
- /* Dropdown Button */
- .dropbtn {
+/* Dropdown Button */
+.dropbtn {
   display: inline-block;
   color: white;
   padding: 16px;
@@ -136,7 +134,7 @@ a.link {
   position: absolute;
   background-color: #f1f1f1;
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 
@@ -149,24 +147,28 @@ a.link {
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #ddd;}
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
 
 /* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {background-color: #ffffff;
-color: #000;} 
-
-
+.dropdown:hover .dropbtn {
+  background-color: #ffffff;
+  color: #000;
+}
 
 /* Estilo del modulo de configuración*/
 
-#container-configuracion{
-  display: flex;  
+#container-configuracion {
+  display: flex;
 }
 
-#formulario-configuracion{
+#formulario-configuracion {
   margin: 10px auto 10px auto;
   width: 300px;
   border-radius: 10%;
@@ -174,12 +176,12 @@ color: #000;}
   color: white;
 }
 
-.listaConfiguracion{
-  margin: 0; 
-	padding: 5px; 
-	text-align: center; 
+.listaConfiguracion {
+  margin: 0;
+  padding: 5px;
+  text-align: center;
 }
-.colores{
+.colores {
   display: inline-block;
   list-style: none;
   width: 30px;
@@ -190,29 +192,27 @@ color: #000;}
   cursor: pointer;
 }
 
-.blue{
-  background: #78AED3;
+.blue {
+  background: #78aed3;
 }
-.red{
-  background: #FF8FAB;
+.red {
+  background: #ff8fab;
 }
-.green{
-  background: #52B2CF;
+.green {
+  background: #52b2cf;
 }
 
 .background-red {
-  background-color: #E27396;
+  background-color: #e27396;
 }
 
 .background-blue {
-  background-color: #4F77AA;
+  background-color: #4f77aa;
 }
 
 .background-green {
-  background-color: #7EC4CF;
+  background-color: #7ec4cf;
 }
-
-
 
 .culo {
   list-style-type: none;
@@ -223,9 +223,8 @@ color: #000;}
   float: left;
 }
 
-.li-boton{
-  float: right  !important;
-  
+.li-boton {
+  float: right !important;
 }
 
 input:invalid,
@@ -233,23 +232,41 @@ textarea:invalid {
   border-color: red;
 }
 
-
-.fotito{
+.fotito {
   width: 20px;
   height: 20px;
 }
 
-
-#coordinates{
+#coordinates {
   display: none;
 }
 
-#map{
+#map {
   height: 400px;
   width: 100%;
   display: inline-block;
 }
-#mapid{
+#mapid {
   height: 399px;
   width: 100%;
+}
+.google_login_button {
+  background-color: white;
+  display: inline-block;
+  width: 14.56rem;
+  height: 2.5rem;
+  border-radius: 10px;
+  float: right;
+  margin: 0.5rem;
+}
+.google_login_img {
+  width: 14.56rem;
+  height: 2.5rem;
+}
+.login_form {
+  margin-right: 1rem;
+}
+.login_form > input {
+  border: none;
+  border-radius: 5px;
 }

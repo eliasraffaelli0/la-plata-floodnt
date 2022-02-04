@@ -1,5 +1,7 @@
-from flask import Flask, redirect, url_for, session, current_app as app
+from flask import redirect, url_for, flash, session, current_app as app
 from authlib.integrations.flask_client import OAuth
+from app.models.user import User
+from app.db import db
 
 
 # oAuth Setup
@@ -18,11 +20,6 @@ google = oauth.register(
 )
 
 
-def hello_world():
-    email = dict(session)["profile"]["email"]
-    return f"Hello, you are logge in as {email}!"
-
-
 def login():
     google = oauth.create_client("google")  # create the google oauth client
     redirect_uri = url_for("authorize", _external=True)
@@ -35,15 +32,24 @@ def authorize():
     token = (
         google.authorize_access_token()
     )  # Access token from google (needed to get user info)
-    resp = google.get("userinfo")  # userinfo contains stuff u specificed in the scrope
+    resp = google.get("userinfo")  # userinfo contains stuff u specificed in the scope
     user_info = resp.json()
-    user = oauth.google.userinfo()  # uses openid endpoint to fetch user info
-    # Here you use the profile/user data that you got and query your database find/register the user
-    # and set ur own data in the session not the profile from google
-    # session["profile"] = user_info
-    session["user"] = user_info["email"]
-    session["username"] = user_info["name"]
-    import pdb
-
-    pdb.set_trace()
-    return redirect("/")
+    user = User.query.filter(User.email == user_info["email"]).first()
+    if user:
+        if user.activo:
+            session["user"] = user_info["email"]
+            session["username"] = user_info["name"]
+            return redirect(url_for("home"))
+        else:
+            flash("Clave incorrecta o usuario inactivo")
+            return redirect(url_for("home"))
+    else:
+        new_user = User()
+        new_user.name = user_info["given_name"]
+        new_user.last_name = user_info["family_name"]
+        new_user.username = user_info["name"]
+        new_user.email = user_info["email"]
+        new_user.activo = 0
+        db.session.add(new_user)
+        db.session.commit()
+        return redirect(url_for("home"))

@@ -139,6 +139,7 @@ def editInfo(id):
     user.username = new_user.username
     user.first_name = new_user.first_name
     user.last_name = new_user.last_name
+    user.activo = new_user.activo
     db.session.commit()
     return redirect(url_for("user_index"))
 

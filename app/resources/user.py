@@ -107,10 +107,6 @@ def update_estado(username):
 def edit(id):
     if not authenticated(session):
         abort(401)
-    if not permisoChecker(session, "user_edit") and not permisoChecker(
-        session, "user_edit_own"
-    ):
-        abort(401)
 
     user = User.query.filter(User.id == id).first()
     errors = {}
@@ -122,10 +118,6 @@ def edit(id):
 
 def editInfo(id):
     if not authenticated(session):
-        abort(401)
-    if not permisoChecker(session, "user_edit") and not permisoChecker(
-        session, "user_edit_own"
-    ):
         abort(401)
 
     user = User.query.filter(User.id == id).first()
@@ -144,6 +136,7 @@ def editInfo(id):
     user.username = new_user.username
     user.first_name = new_user.first_name
     user.last_name = new_user.last_name
+    user.activo = new_user.activo
     db.session.commit()
     return redirect(url_for("user_index"))
 

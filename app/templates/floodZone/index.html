@@ -40,9 +40,9 @@
           {% endif %}
         </td>
         <td class="table-info">
-          <a href="{{ url_for('zones_show_info', id=zone.id) }}"><img src="static/images/mostrar.png" class="fotito"></a>
-          <a href="{{ url_for('zones_edit', id=zone.id) }}"><img src="static/images/pencil.png" class="fotito"></a>
-          <a href=" {{ url_for('zones_delete', id=zone.id) }}" onclick="return confirm('Desea eliminar la zona: {{ zone.name }}? Esta acción no podrá deshacerse');"><img src="static/images/delete.png" class="fotito"></a>
+          {% if has_permission(session, 'zone_show') %}<a href="{{ url_for('zones_show_info', id=zone.id) }}"><img src="static/images/mostrar.png" class="fotito"></a>{% endif %}
+          {% if has_permission(session, 'zone_edit') %}<a href="{{ url_for('zones_edit', id=zone.id) }}"><img src="static/images/pencil.png" class="fotito"></a>{% endif %}
+          {% if has_permission(session, 'zone_delete') %}<a href=" {{ url_for('zones_delete', id=zone.id) }}" onclick="return confirm('Desea eliminar la zona: {{ zone.name }}? Esta acción no podrá deshacerse');"><img src="static/images/delete.png" class="fotito"></a>{% endif %}
         </td>
       </tr>
       {% endfor %}
@@ -61,7 +61,7 @@
         {% endfor %}
       </ul>
     </nav>
-    {% if has_permission(session, 'zone_upload_file') %}
+    {% if has_permission(session, 'zone_import') %}
     <form enctype="multipart/form-data" action="{{ url_for('zonas_upload') }}" class="needs-validation" method="POST">
       <div>
         <label class="form-label" for="zone_file">Seleccione un archivo con zonas</label>

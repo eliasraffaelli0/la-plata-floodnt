@@ -45,7 +45,7 @@ def authorize():
             return redirect(url_for("home"))
     else:
         new_user = User()
-        new_user.name = user_info["given_name"]
+        new_user.first_name = user_info["given_name"]
         new_user.last_name = user_info["family_name"]
         new_user.username = user_info["name"]
         new_user.email = user_info["email"]

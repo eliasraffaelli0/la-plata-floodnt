@@ -21,11 +21,14 @@
       </li>
       {% if not is_authenticated(session) %}
       <li class="li-boton">
-        <form action="{{ url_for('auth_authenticate') }}" method="POST">
+        <form class="login_form" action="{{ url_for('auth_authenticate') }}" method="POST">
           <input name="email" placeholder="Correo" required />
           <input type="password" name="password" placeholder="Clave" required />
-          <input type="submit" value="Login">
+          <input class="btn btn-primary btn-sm mt-1 mb-1" type="submit" value="Login">
         </form>
+        <a class="google_login_button" href="{{ url_for('auth_login_google') }}">
+          <img class="google_login_img" src="{{ url_for('static', filename='images/google_login.svg') }}" />
+        </a>
       </li>
       {% else %}
       <li class="li-boton">
@@ -60,7 +63,8 @@
             <li class="nav-item"><a class="nav-link" href="{{ url_for('evacuationRoute_index') }}">Administrar
                 recorridos de
                 evacuación</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ url_for('reports_index') }}">Administrar denuncias</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('reports_index') }}">Administrar denuncias</a>
+            </li>
             {% if has_permission(session, 'user_index') %}
             <li class="nav-item"><a class="nav-link" href="{{ url_for('user_index') }}">Usuarios</a></li>
             {% endif %}

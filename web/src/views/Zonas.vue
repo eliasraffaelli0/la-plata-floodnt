@@ -20,24 +20,16 @@
         ></l-polygon>
       </div>
     </l-map>
-    <table>
-      <tr>
-        <th>Zonas inundables</th>
-      </tr>
+    <ul class="list-group bg-primary">
       <div v-for="(zone, index) in zones" :key="`zone-${index}`">
-        <tr>
+        <li class="list-group-item bg-info" v-if="zone.state != 0">
           <!-- Se crean los links a las diferentes rutas dinamicas de las zonas específicas -->
-          <router-link
-            class="linkardo"
-            :to="`/zonaEspecifica/${zone.id}`"
-            v-if="zone.state != 0"
-          >
+          <router-link class="linkardo" :to="`/zonaEspecifica/${zone.id}`">
             {{ zone.name }}
           </router-link>
-          <br />
-        </tr>
+        </li>
       </div>
-    </table>
+    </ul>
   </div>
 </template>
 

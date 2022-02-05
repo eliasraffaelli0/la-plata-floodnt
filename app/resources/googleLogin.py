@@ -39,6 +39,7 @@ def authorize():
         if user.activo:
             session["user"] = user_info["email"]
             session["username"] = user_info["name"]
+            session["userId"] = user.id
             return redirect(url_for("home"))
         else:
             flash("Clave incorrecta o usuario inactivo")

@@ -60,10 +60,10 @@
       <p>
         <label>Estado</label></br>
         <select id="state" class="form-select-sm" name='state'>
-          <option value='unconfirmed' {% if fieldsInfo.state=="unconfirmed" %} selected="selected" {% endif %}>Sin confirmar</option>
-          <option value='in_progress' {% if fieldsInfo.state=="in_progress" %} selected="selected" {% endif %}>En curso</option>
-          <option value='solved' {% if fieldsInfo.state=="solved" %} selected="selected" {% endif %}>Resuelta</option>
-          <option value='closed' {% if fieldsInfo.state=="closed" %} selected="selected" {% endif %}>Cerrada</option>
+          <option value='Sin confirmar' {% if fieldsInfo.state=="Sin confirmar" %} selected="selected" {% endif %}>Sin confirmar</option>
+          <option value='En progreso' {% if fieldsInfo.state=="En progreso" %} selected="selected" {% endif %}>En curso</option>
+          <option value='Resuelta' {% if fieldsInfo.state=="Resuelta" %} selected="selected" {% endif %}>Resuelta</option>
+          <option value='Cerrada' {% if fieldsInfo.state=="Cerrada" %} selected="selected" {% endif %}>Cerrada</option>
         </select>
       </p>
       <p>

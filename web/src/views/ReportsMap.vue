@@ -11,7 +11,10 @@
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
       <div v-for="(report, index) in reports" :key="`report-${index}`">
         <l-marker :lat-lng="[report.latitude, report.longitude]">
-          <l-popup> {{ report.title }}<br /> </l-popup>
+          <l-popup>
+            {{ report.title }}<br />
+            {{ report.state }}
+          </l-popup>
         </l-marker>
       </div>
       <!-- <div v-for="(route, index) in routes" :key="`route-${index}`">

@@ -11,6 +11,7 @@ class ReportSchema(Schema):
     complainant_email = fields.String()
     complainant_telephone = fields.String()
     description = fields.String()
+    state = fields.String()
 
 
 class ReportPaginationSchema(Schema):

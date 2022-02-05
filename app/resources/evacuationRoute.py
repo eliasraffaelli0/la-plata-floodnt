@@ -47,8 +47,8 @@ def create():
     if not authenticated(session):
         abort(401)
     """ Se transforma el diccionario inmutable en el que vienen almacenadas las coordenadas
-     a un diccionario mutable y se guardan por separados en los campos de longitud y latitud para
-     mandarlo al punto nuevo"""
+    a un diccionario mutable y se guardan por separados en los campos de longitud y latitud para
+    mandarlo al punto nuevo"""
 
     latLng = json.loads(request.form["coordinates"])
     new_evacuationRoute = EvacuationRoute()

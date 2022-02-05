@@ -1,7 +1,7 @@
 <template>
   <div id="nav">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
+  <nav class="navbar navbar-expand-lg navbar-light  bg-light">
+  <div class=" container-fluid">
     <div class="collapse navbar-collapse d-flex justify-content-evenly" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">

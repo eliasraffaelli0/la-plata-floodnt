@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{ routes }}
     <l-map
       ref="mapa"
       @ready="onReady"
@@ -30,34 +29,48 @@
         ></l-polyline>
       </div>
     </l-map>
-    <table>
-      <tr>
-        <th>Puntos de encuentro</th>
-      </tr>
-      <div v-for="(point, index) in points" :key="`point-${index}`">
-        <tr>
-          <td>
-            {{ point.name }} <br />
-            Dirección:{{ point.address }} <br />
-            Teléfono:{{ point.telephone }} <br />
-            Mail:{{ point.email }}
-          </td>
-        </tr>
-      </div>
-    </table>
-    <table>
-      <tr>
-        <th>Recorridos de evacuación</th>
-      </tr>
-      <div v-for="(route, index) in routes" :key="`route-${index}`">
-        <tr>
-          <td>
-            {{ route.name }} <br />
-            Descripción:{{ route.description }} <br />
-          </td>
-        </tr>
-      </div>
-    </table>
+      <h2>puntos de encuentro</h2>
+    <div class="table-responsive">
+      <table class="table table-striped table-border table-sm table-hover">
+        <thead>
+          <tr class="table-light">
+            <th>Nombre</th>
+            <th>Direccion</th>
+            <th>Teléfono</th>
+            <th>Mail</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-info" v-for="(point, index) in points" :key="`point-${index}`">
+            <td class="table-info">{{ point.name }}</td>
+            <td class="table-info">{{ point.address }}</td>
+            <td class="table-info">{{ point.telephone }}</td>
+            <td class="table-info">{{ point.email }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <h2>Recooridos de evacuación</h2>
+    <div class="table-responsive">
+      <table class="table table-striped table-border table-sm table-hover"> 
+        <thead>
+          <tr class="table-light">
+            <th>nombre</th>
+            <th>descripcion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-info" v-for="(route, index) in routes" :key="`route-${index}`">
+              <td class="table-info">
+                {{ route.name }}
+              </td>
+              <td class="table-info">
+                {{ route.description }} <br />
+              </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 

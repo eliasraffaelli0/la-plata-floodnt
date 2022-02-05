@@ -87,8 +87,9 @@ def edit(id):
         abort(401)
     report = Report.query.filter(Report.id == id).first()
     errors = {}
+    users = User.query
     return render_template(
-        "report/edit.html", id=report.id, errors=errors, fieldsInfo=report
+        "report/edit.html", id=report.id, errors=errors, fieldsInfo=report, users=users
     )
 
 

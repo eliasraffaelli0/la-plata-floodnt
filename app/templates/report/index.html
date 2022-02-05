@@ -38,11 +38,11 @@
         <td class="table-info">{{ report.title }}</td>
         <td class="table-info">{{ report.category }}</td>
         <td class="table-info">
-          {% if report.state == "unconfirmed" %}
+          {% if report.state == "Sin confirmar" %}
           Sin confirmar
-          {% elif report.state == "in_progress" %}
+          {% elif report.state == "En progreso" %}
           En progreso
-          {% elif report.state == "solved" %}
+          {% elif report.state == "Resuelta" %}
           Resuelta
           {% else %}
           Cerrada

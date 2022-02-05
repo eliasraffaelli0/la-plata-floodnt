@@ -48,7 +48,7 @@
           {% if has_permission(session, 'punto_edit') %}<a href="{{ url_for('puntos_edit', id=punto.id) }}"><img src="static/images/pencil.png" class="fotito"></a>{% endif %}
           {% if has_permission(session, 'punto_delete') %}<a href=" {{ url_for('puntos_delete', id=punto.id) }}"
             onclick="return confirm('Desea eliminar el punto: {{ punto.name }}? Esta acción no podrá deshacerse');"
-            title="Delete Merchant"><img src="static/images/delete.png" class="fotito"></a>{% endif %}
+            title="Borrar punto"><img src="static/images/delete.png" class="fotito"></a>{% endif %}
         </td>
       </tr>
       {% endfor %}

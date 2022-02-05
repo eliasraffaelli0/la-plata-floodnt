@@ -49,3 +49,14 @@ def create(id):
     db.session.add(new_tracing)
     db.session.commit()
     return redirect(url_for("reports_index"))
+
+
+def show(id):
+    if not authenticated(session):
+        abort(401)
+    if not permisoChecker(session, "tracing_show"):
+        abort(401)
+    errors = {}
+    report = Report.query.filter(Report.id == id).first()
+
+    return render_template("tracing/show.html", errors=errors, report=report)

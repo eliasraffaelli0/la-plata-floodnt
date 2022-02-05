@@ -209,6 +209,12 @@ def create_app(environment="development"):
         tracing.create,
         methods=["GET", "POST"],
     )
+    app.add_url_rule(
+        "/tracing/show/<int:id>",
+        "tracing_show",
+        tracing.show,
+        methods=["GET"],
+    )
 
     # Rutas del Modulo de Configuración
     app.add_url_rule("/configuracion", "configuracion_index", configuracion.index)

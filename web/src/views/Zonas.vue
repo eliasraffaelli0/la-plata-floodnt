@@ -1,6 +1,7 @@
 <template>
   <div>
     <l-map
+      class="marco"
       ref="mapa"
       @ready="onReady"
       style="height: 700px"

@@ -1,6 +1,7 @@
 <template>
   <div>
     <l-map
+      class="marco"
       ref="mapa"
       @ready="onReady"
       style="height: 700px"
@@ -17,6 +18,22 @@
         :opacity="1.0"
       ></l-polygon>
     </l-map>
+    <div class="table-responsive">
+      <table class="table table-striped table-border table-sm table-hover">
+        <thead>
+          <tr class="table-light">
+            <th>Nombre</th>
+            <th>Código</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-info">
+            <td class="table-info">{{ zone.name }}</td>
+            <td class="table-info">{{ zone.zone_code }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 

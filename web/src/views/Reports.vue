@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="marco">
     <form @submit.prevent="submitForm">
       <input type="text" hidden v-model="form.latitude" required />
       <input type="text" hidden v-model="form.longitude" required />
@@ -82,7 +82,11 @@
         />
       </p>
 
-      <input type="submit" value="Crear denuncia" />
+      <input
+        class="btn btn-primary mb-2"
+        type="submit"
+        value="Crear denuncia"
+      />
     </form>
   </div>
 </template>

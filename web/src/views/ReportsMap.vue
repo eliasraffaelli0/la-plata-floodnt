@@ -1,6 +1,7 @@
 <template>
   <div>
     <l-map
+      class="marco"
       ref="mapa"
       @ready="onReady"
       style="height: 700px"
@@ -17,38 +18,7 @@
           </l-popup>
         </l-marker>
       </div>
-      <!-- <div v-for="(route, index) in routes" :key="`route-${index}`">
-        <l-polyline :lat-lngs="route.coordinates"></l-polyline>
-      </div> -->
     </l-map>
-    <!-- <table>
-      <tr>
-        <th>Puntos de encuentro</th>
-      </tr>
-      <div v-for="(point, index) in points" :key="`point-${index}`">
-        <tr>
-          <td>
-            {{ point.name }} <br />
-            Dirección:{{ point.address }} <br />
-            Teléfono:{{ point.telephone }} <br />
-            Mail:{{ point.email }}
-          </td>
-        </tr>
-      </div>
-    </table>
-    <table>
-      <tr>
-        <th>Recorridos de evacuación</th>
-      </tr>
-      <div v-for="(route, index) in routes" :key="`route-${index}`">
-        <tr>
-          <td>
-            {{ route.name }} <br />
-            Descripción:{{ route.description }} <br />
-          </td>
-        </tr>
-      </div>
-    </table> -->
   </div>
 </template>
 

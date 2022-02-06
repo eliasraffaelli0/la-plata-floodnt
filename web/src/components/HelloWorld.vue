@@ -1,26 +1,25 @@
 <template>
-  <div class="hello">
+  <div class="hello blanco">
     <h1>{{ msg }}</h1>
-    <p>
+    <p class="contorno">
       En este sitio web usted podrá recibir y brindar información relacionada
       <br />
       a inundaciones en la ciudad de La Plata
     </p>
-    <h3></h3>
     <dl>
-      <dt>Denuncias</dt>
+      <dt><h3>Denuncias</h3></dt>
       <dd>
         Apartado que presenta un formulario para el alerta de eventos que puedan
         causar inundaciones
       </dd>
-      <dt>Mapa de denuncias</dt>
+      <dt><h3>Mapa de denuncias</h3></dt>
       <dd>
         Mapa que visualiza los eventos que ya han sido denunciados y confirmados
         por nuestros operadores
       </dd>
-      <dt>Zonas inundables</dt>
+      <dt><h3>Zonas inundables</h3></dt>
       <dd>En este mapa se visualizarán las zonas con riesgo de inundación</dd>
-      <dt>Recorridos de evacuación y puntos de encuentro</dt>
+      <dt><h3>Recorridos de evacuación y puntos de encuentro</h3></dt>
       <dd>
         En este mapa se visualizarán los recorridos de evacuación y puntos de
         encuentro que se encuentran <br />

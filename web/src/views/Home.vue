@@ -1,5 +1,5 @@
 <template>
-  <div class="home marco">
+  <div class="home marco fondo">
     <img id="logo" alt="Vue logo" src="../assets/Logo.png" />
     <HelloWorld msg="Bienvenidos a La Plata Floodn't" />
   </div>

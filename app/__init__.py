@@ -91,6 +91,12 @@ def create_app(environment="development"):
         methods=["GET"],
     )
     app.add_url_rule(
+        "/usuarios/show/<int:id>/info",
+        "user_show",
+        user.show,
+        methods=["GET"],
+    )
+    app.add_url_rule(
         "/usuarios/edit/<int:id>/rol",
         "user_edit_rol",
         user.editRol,

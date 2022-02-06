@@ -165,3 +165,14 @@ def editRol(id):
 
     db.session.commit()
     return redirect(url_for("user_index"))
+
+
+def show(id):
+    if not authenticated(session):
+        abort(401)
+
+    user = User.query.filter(User.id == id).first()
+
+    return render_template(
+        "user/show.html", id=user.id, fieldsInfo=user, rolInfo=user.roles
+    )

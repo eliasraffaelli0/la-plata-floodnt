@@ -15,7 +15,7 @@
   <header class="header {{g.config.tema_privado}}">
 
     <ul class="culo">
-      <li><img id="logo" src="{{ url_for('static', filename='images/Logo.jpeg') }}" /></li>
+      <li><img id="logo" src="{{ url_for('static', filename='images/Logo.png') }}" /></li>
       <li>
         <p id="bienvenida">Bienvenidos a La Plata Floodn't</p>
       </li>
@@ -35,7 +35,7 @@
         <div class="dropdown">
           <button class="dropbtn {{g.config.tema_privado}}">{{session["username"]}}</button>
           <div class="dropdown-content">
-            <a href="{{ url_for('user_edit_info', id=session['userId']) }}">Perfil</a>
+            <a href="{{ url_for('user_show', id=session['userId']) }}">Perfil</a>
             <a href="{{ url_for('auth_logout') }}">Cerrar sesión</a>
           </div>
         </div>

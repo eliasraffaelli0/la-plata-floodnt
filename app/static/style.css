@@ -23,6 +23,8 @@ body {
   font-size: 25px;
   text-align: center;
   color: #ffffff;
+  padding-top: 35px;
+  padding-left: 10px;
 }
 
 #logo {
@@ -269,4 +271,9 @@ textarea:invalid {
 .login_form > input {
   border: none;
   border-radius: 5px;
+}
+
+
+.campo{
+  color: aliceblue;
 }

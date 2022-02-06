@@ -1,6 +1,6 @@
 <template>
   <div class="home marco fondo">
-    <img id="logo" alt="Vue logo" src="../assets/Logo.png" />
+    <img id="logo" alt="Vue logo" src="../assets/LogoLP.png" />
     <HelloWorld msg="Bienvenidos a La Plata Floodn't" />
   </div>
 </template>

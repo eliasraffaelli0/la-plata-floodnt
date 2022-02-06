@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block title %}Usuarios{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<div class="container mb-2 text-center rounded-3" style="background-color: rgba(0, 0, 0, 0.1)">
+    <h1>Información del usuario</h1>
+    <div class="row g-5">
+        <form class="need-validation">
+            <div class="row">
+                <p>
+                    <h4 class="campo">Email:</h4>
+                    <h5 >{{fieldsInfo.email}}</h5>
+                    <!-- <input id="email" value="{{fieldsInfo.email}}" type="email" name="email" placeholder="Correo"
+                        required /> -->
+                </p>
+                <p>
+                    <h4 class="campo">Usuario:</h4>
+                    <h5 >{{fieldsInfo.username}}</h5>
+                    <!-- <input value="{{fieldsInfo.username}}" name="username" placeholder="username" required /> -->
+                </p>
+                <p>
+                    <h4 class="campo">Nombre: </h4>
+                    <h5 >{{fieldsInfo.first_name}}</h5>
+                    <!-- <input value="{{fieldsInfo.first_name}}" name="first_name" placeholder="Nombre" required /> -->
+                </p>
+                <p>
+                    <h4 class="campo">Apellido: </h4></br>
+                    <h5 >{{fieldsInfo.last_name}}</h5>
+                    <!-- <input value="{{fieldsInfo.last_name}}" name="last_name" placeholder="Apellido" required /> -->
+                </p>
+                </div>
+                <a href="{{ url_for('user_index') }}" class="btn btn-primary btn-sm mb-2">Volver</a>
+            </form>
+    </div>
+</div>
+{% endblock %}

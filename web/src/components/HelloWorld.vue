@@ -1,43 +1,41 @@
 <template>
-  <div class="hello">
+  <div class="hello blanco">
     <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
+    <p class="contorno">
+      En este sitio web usted podrá recibir y brindar información relacionada
+      <br />
+      a inundaciones en la ciudad de La Plata
     </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-router" target="_blank" rel="noopener">router</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+    <dl>
+      <dt><h3>Denuncias</h3></dt>
+      <dd>
+        Apartado que presenta un formulario para el alerta de eventos que puedan
+        causar inundaciones
+      </dd>
+      <dt><h3>Mapa de denuncias</h3></dt>
+      <dd>
+        Mapa que visualiza los eventos que ya han sido denunciados y confirmados
+        por nuestros operadores
+      </dd>
+      <dt><h3>Zonas inundables</h3></dt>
+      <dd>En este mapa se visualizarán las zonas con riesgo de inundación</dd>
+      <dt><h3>Recorridos de evacuación y puntos de encuentro</h3></dt>
+      <dd>
+        En este mapa se visualizarán los recorridos de evacuación y puntos de
+        encuentro que se encuentran <br />
+        disponibles en caso de una inundación
+      </dd>
+    </dl>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: "HelloWorld",
   props: {
-    msg: String
-  }
-}
+    msg: String,
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

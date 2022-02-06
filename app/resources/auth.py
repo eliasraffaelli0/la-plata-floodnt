@@ -26,6 +26,7 @@ def authenticate():
         return redirect(url_for("home"))
     session["user"] = user.email
     session["username"] = user.username
+    session["userId"] = user.id
     flash("La sesión se inició correctamente.")
     return redirect(url_for("home"))
 

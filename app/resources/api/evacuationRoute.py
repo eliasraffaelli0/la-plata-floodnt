@@ -1,7 +1,6 @@
 from flask import jsonify, Blueprint, request, g
 from app.models.evacuationRoute import EvacuationRoute
 from app.schema.evacuationRouteSchema import evacuation_routes_pagination_schema
-from app.db import db
 
 evacuationRoute_api = Blueprint("recorridos", __name__, url_prefix="/recorridos")
 

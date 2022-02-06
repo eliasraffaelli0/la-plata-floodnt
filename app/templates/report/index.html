@@ -7,13 +7,17 @@
 <div class="container text-center">
   <div class="container mb-2">
     <h1>Denuncias</h1>
-    <p>Filtrar por nombre y/o publicado/oculto:</p>
+    <p>Filtrar por título, fecha y/o estado:</p>
     <form action="{{ url_for('reports_index') }}">
-      <input type="search" placeholder="Nombre" name="name" value="{{fieldsInfo['name']}}">
+      <input type="search" placeholder="Título" name="title" value="{{fieldsInfo['title']}}">
+      <input type="date" name="start" value="{{fieldsInfo['start']}}">
+      <input type="date" name="finish" value="{{fieldsInfo['finish']}}">
       <select class="form-select-sm" name='state'>
         <option value="">Estado</option>
-        <option value='1' {% if fieldsInfo['state']=="1" %} selected="selected" {% endif %}>Publicado</option>
-        <option value='0' {% if fieldsInfo['state']=="0" %} selected="selected" {% endif %}>Oculto</option>
+        <option value='unconfirmed' {% if fieldsInfo['state']=="unconfirmed" %} selected="selected" {% endif %}>Sin confirmar</option>
+        <option value='in_progress' {% if fieldsInfo['state']=="in_progress" %} selected="selected" {% endif %}>En curso</option>
+        <option value='solved' {% if fieldsInfo['state']=="solved" %} selected="selected" {% endif %}>Resuelta</option>
+        <option value='closed' {% if fieldsInfo['state']=="closed" %} selected="selected" {% endif %}>Cerrada</option>
       </select>
       <button class="btn btn-outline-primary btn-sm" type="submit">Filtrar</button>
       <a href="{{ url_for ('reports_index') }}" class="btn btn-outline-primary btn-sm">Limpiar filtros</a>
@@ -26,6 +30,7 @@
         <th>Título</th>
         <th>Categoría</th>
         <th>Estado</th>
+        <th>Usuario asignado</th>
         <th>Acciones</th>
       </tr>
       {% for report in reports.items %}
@@ -33,15 +38,24 @@
         <td class="table-info">{{ report.title }}</td>
         <td class="table-info">{{ report.category }}</td>
         <td class="table-info">
-          {% if report.state == "unconfirmed" %}
+          {% if report.state == "Sin confirmar" %}
           Sin confirmar
-          {% elif report.state == "in_progress" %}
+          {% elif report.state == "En progreso" %}
           En progreso
-          {% elif report.state == "solved" %}
+          {% elif report.state == "Resuelta" %}
           Resuelta
           {% else %}
           Cerrada
           {% endif %}
+        </td>
+        <td class="table-info">{{ report.assigned_to.username }}</td>
+        <td class="table-info">
+          {% if has_permission(session, 'report_edit') %}<a href="{{ url_for('reports_edit', id=report.id) }}"><img src="static/images/pencil.png" class="fotito"></a>{% endif %}
+          {% if has_permission(session, 'tracing_new') %}<a href="{{ url_for('tracing_new', id=report.id) }}"><img src="static/images/add3.png" class="fotito"></a>{% endif %}
+          {% if has_permission(session, 'tracing_show') %}<a href="{{ url_for('tracing_show', id=report.id) }}"><img src="static/images/portapapeles.png" class="fotito"></a>{% endif %}
+          {% if has_permission(session, 'report_delete') %}<a href=" {{ url_for('reports_delete', id=report.id) }}"
+            onclick="return confirm('Desea eliminar la denuncia : {{ report.title }}? Esta acción no podrá deshacerse');"
+            title="Borrar denuncia"><img src="static/images/delete.png" class="fotito"></a>{% endif %}
         </td>
 
       </tr>

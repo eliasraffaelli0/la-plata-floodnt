@@ -21,3 +21,4 @@ class Report(db.Model):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     user_id = Column(Integer, ForeignKey("usuarios.id"))
     assigned_to = relationship("User", back_populates="reports")
+    tracings = relationship("Tracing", back_populates="report")

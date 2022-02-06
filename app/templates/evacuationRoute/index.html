@@ -40,10 +40,10 @@
           {% endif %}
         </td>
         <td class="table-info">
-          <a href="{{ url_for('evacuationRoute_edit', id=route.id) }}"><img src="static/images/pencil.png"
-              class="fotito"><a href=" {{ url_for('evacuationRoute_delete', id=route.id) }}"
+          {% if has_permission(session, 'route_edit') %}<a href="{{ url_for('evacuationRoute_edit', id=route.id) }}"><img src="static/images/pencil.png" class="fotito"></a>{% endif %}
+          {% if has_permission(session, 'route_delete') %}<a href=" {{ url_for('evacuationRoute_delete', id=route.id) }}"
               onclick="return confirm('Desea eliminar el recorrido: {{ route.name }}? Esta acción no podrá deshacerse');"><img
-                src="static/images/delete.png" class="fotito"></a>
+                src="static/images/delete.png" class="fotito"></a>{% endif %}
         </td>
       </tr>
       {% endfor %}

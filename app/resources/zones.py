@@ -15,6 +15,9 @@ import json
 def index():
     if not authenticated(session):
         abort(401)
+    if not permisoChecker(session, "zone_index"):
+        abort(401)
+
     params = request.args
     zones = Zone.query
     if params.get("name", False):
@@ -35,7 +38,7 @@ def index():
 def new():
     if not authenticated(session):
         abort(401)
-    if not permisoChecker(session, "user_index"):
+    if not permisoChecker(session, "zone_new"):
         abort(401)
     errors = {}
     return render_template("floodZone/new.html", errors=errors)
@@ -66,6 +69,32 @@ def create():
     db.session.add(new_zone)
     db.session.commit()
     return redirect(url_for("zones_index"))
+
+
+def showInfo(id):
+
+    if not authenticated(session):
+        abort(401)
+    if not permisoChecker(session, "zone_show"):
+        abort(401)
+
+    zone = Zone.query.filter(Zone.id == id).first()
+    coords = list()
+    """Creo una lista de diccionarios que tienen los pares de coordenadas de cada punto del recorrido
+    que se pasa por parámetro a la vista """
+    for point in zone.coordinates:
+        coordinatePair = dict()
+        coordinatePair["lat"] = point.latitude
+        coordinatePair["lng"] = point.longitude
+        coords.append(coordinatePair)
+    errors = {}
+    return render_template(
+        "floodZone/show.html",
+        id=zone.id,
+        errors=errors,
+        fieldsInfo=zone,
+        zoneCoordinates=coords,
+    )
 
 
 def upload_file():
@@ -126,12 +155,13 @@ def upload_file():
             db.session.add(new_zona)
         db.session.commit()
     # es una chanchada pero tiempos desesperados requieren medidas desesperadas
-
-    return render_template("flood_zones/index.html", errors=errors)
+    return redirect(url_for("zones_index"))
 
 
 def edit(id):
     if not authenticated(session):
+        abort(401)
+    if not permisoChecker(session, "zone_edit"):
         abort(401)
 
     zone = Zone.query.filter(Zone.id == id).first()
@@ -167,9 +197,7 @@ def editInfo(id):
     new_zone.color = request.form["color"]
     new_zone.state = request.form["state"]
     errors = ZoneValidator(new_zone, zone).validate_update()
-    # import pdb
 
-    # pdb.set_trace()
     if errors:
         return render_template(
             "floodZone/edit.html",
@@ -194,6 +222,8 @@ def editInfo(id):
 
 def delete(id):
     if not authenticated(session):
+        abort(401)
+    if not permisoChecker(session, "zone_delete"):
         abort(401)
 
     """Elimino primero todas las coordenadas y después el recorrido"""

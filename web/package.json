@@ -14,6 +14,7 @@
     "leaflet": "^1.7.1",
     "vue": "^3.0.0",
     "vue-geolocation-api": "^0.1.21",
+    "vue-google-signin-button-directive": "^1.0.3",
     "vue-router": "^4.0.0-0"
   },
   "devDependencies": {

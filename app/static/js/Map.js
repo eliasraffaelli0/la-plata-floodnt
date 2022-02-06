@@ -61,6 +61,12 @@ export class Map {
 
     }
 
+    
+    removeControls(){
+        this.createControls.remove();
+        this.editControls.remove();
+    }
+
     // Si no se elimina el punto, no se eliminan los controles ya que si no se hace esta validación
     // pueden eliminarse los controles y para borrar el punto habría que refrescar la pagina
     #deleteHandler(map, editControls, createControls) {
@@ -71,6 +77,7 @@ export class Map {
 
         }
     }
+
 
     hasValidMarker() {
         return this.drawnlayers.length === 1;

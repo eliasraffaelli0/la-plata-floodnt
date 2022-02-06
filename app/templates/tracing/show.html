@@ -1,0 +1,22 @@
+{% extends "layout.html" %} {% block title %}Denuncias{% endblock %} {% block
+head %} {{ super() }} {% endblock %} {% block content %}
+<div class="container text-center">
+  <div class="container mb-2">
+    <h1>Seguimientos</h1>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped table-border table-sm table-hover">
+      <tr class="table-light">
+        <th>Descripción</th>
+        <th>Usuario asignado</th>
+      </tr>
+      {% for tracing in report.tracings %}
+      <tr class="table-info">
+        <td class="table-info">{{ tracing.description }}</td>
+        <td class="table-info">{{ tracing.author.username }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endblock %}

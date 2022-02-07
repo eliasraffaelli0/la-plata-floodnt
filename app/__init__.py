@@ -23,6 +23,7 @@ from app.resources.api.point import point_api
 from app.resources.api.evacuationRoute import evacuationRoute_api
 from app.resources.api.zone import zone_api
 from app.resources.api.report import report_api
+from app.resources.api.config import confi
 from app.resources import googleLogin
 
 
@@ -237,6 +238,7 @@ def create_app(environment="development"):
     api.register_blueprint(evacuationRoute_api)
     api.register_blueprint(zone_api)
     api.register_blueprint(report_api)
+    api.register_blueprint(config_api)
 
     app.register_blueprint(api)
 

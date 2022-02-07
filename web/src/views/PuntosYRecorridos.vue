@@ -139,8 +139,8 @@ export default {
     },
     async fetchPoints(page) {
       const response = await axios.get(
-        //`https://admin-grupo5.proyecto2021.linti.unlp.edu.ar/api/puntos/?page=${page}`
-        `http://127.0.0.1:5000/api/puntos/?page=${page}`
+        `https://admin-grupo5.proyecto2021.linti.unlp.edu.ar/api/puntos/?page=${page}`
+        // `http://127.0.0.1:5000/api/puntos/?page=${page}`
       );
       this.points = this.points.concat(response.data.Points);
       return response.data.pages;

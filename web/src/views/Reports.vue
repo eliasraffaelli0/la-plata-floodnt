@@ -136,14 +136,13 @@ export default {
       axios
         .post("http://127.0.0.1:5000/api/reports/", this.form)
         .then((res) => {
-          // debugger;
-          return confirm(`Denuncia creada ${res.status}`);
+          if (res.status === 200) {
+            this.$router.push({ path: "/" });
+          }
+          return confirm(`Denuncia creada correctamente`);
         })
         .catch((error) => {
           console.log(error.response.status);
-        })
-        .finally(() => {
-          console.log("finally buenardium");
         });
     },
   },

@@ -18,6 +18,7 @@ def new(id):
     errors = {}
     users = User.query
     report = Report.query.filter(Report.id == id).first()
+
     return render_template(
         "tracing/new.html", errors=errors, users=users, report=report
     )
@@ -46,6 +47,7 @@ def create(id):
     new_tracing.author = user
     new_tracing.report = report
     report.state = state
+    report.assigned_to = user
     db.session.add(new_tracing)
     db.session.commit()
     return redirect(url_for("reports_index"))

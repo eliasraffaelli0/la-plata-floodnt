@@ -72,7 +72,10 @@ def create():
     new_report = Report(**params)
     errors = ReportValidator(new_report).validate_create()
     if errors:
-        return render_template("report/new.html", errors=errors, fieldsInfo=new_report)
+        users = User.query
+        return render_template(
+            "report/new.html", errors=errors, fieldsInfo=new_report, users=users
+        )
     user = User.query.filter(User.id == new_report.user_id).first()
     new_report.assigned_to = user
     db.session.add(new_report)
@@ -107,12 +110,15 @@ def editInfo(id):
     errors = ReportValidator(new_report, report).validate_update()
 
     if errors:
+        users = User.query
         return render_template(
             "report/edit.html",
             errors=errors,
             id=report.id,
             fieldsInfo=new_report,
+            users=users,
         )
+    user = User.query.filter(User.id == new_report.user_id).first()
     report.title = new_report.title
     report.category = new_report.category
     report.description = new_report.description
@@ -123,6 +129,7 @@ def editInfo(id):
     report.complainant_name = new_report.complainant_name
     report.complainant_last_name = new_report.complainant_last_name
     report.complainant_email = new_report.complainant_email
+    report.assigned_to = user
 
     db.session.commit()
     return redirect(url_for("reports_index"))
@@ -136,4 +143,4 @@ def delete(id):
     report = Report.query.filter(Report.id == id).first()
     db.session.delete(report)
     db.session.commit()
-    return redirect(url_for("report_index"))
+    return redirect(url_for("reports_index"))

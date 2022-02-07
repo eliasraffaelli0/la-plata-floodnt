@@ -26,7 +26,7 @@ def index():
 def create():
     new_report = Report(**request.get_json(force=True))
     errors = ReportValidator(new_report).validate_create()
-    new_report.state = "unconfirmed"
+    new_report.state = "Sin confirmar"
     if errors:
         response = errors
     else:

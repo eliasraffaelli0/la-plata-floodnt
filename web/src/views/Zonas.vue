@@ -73,8 +73,8 @@ export default {
 
     async fetchZones(page) {
       const response = await axios.get(
-        //`https://admin-grupo5.proyecto2021.linti.unlp.edu.ar/api/puntos/?page=${page}`
-        `http://127.0.0.1:5000/api/zonas/?page=${page}`
+        `https://admin-grupo5.proyecto2021.linti.unlp.edu.ar/api/zonas/?page=${page}`
+        // `http://127.0.0.1:5000/api/zonas/?page=${page}`
       );
       response.data.zonas.forEach((zona) => {
         let coordenadas = zona.coordinates.map((coor) => [

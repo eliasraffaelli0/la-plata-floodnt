@@ -132,9 +132,13 @@ export default {
         console.log(e.latlng);
       }
     },
+
     submitForm() {
       axios
-        .post("http://127.0.0.1:5000/api/reports/", this.form)
+        .post(
+          "https://admin-grupo5.proyecto2021.linti.unlp.edu.ar/api/reports/",
+          this.form
+        )
         .then((res) => {
           if (res.status === 200) {
             this.$router.push({ path: "/" });

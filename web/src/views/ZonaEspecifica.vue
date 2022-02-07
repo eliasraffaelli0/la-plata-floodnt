@@ -70,8 +70,8 @@ export default {
     // en nuestro caso es el id, que se utiliza para obtener la zona desde la API
     async fetchZone() {
       const response = await axios.get(
-        //`https://admin-grupo5.proyecto2021.linti.unlp.edu.ar/api/puntos/?id=${id}`
-        `http://127.0.0.1:5000/api/zonas/id/?id=${this.$route.params.id}`
+        `https://admin-grupo5.proyecto2021.linti.unlp.edu.ar/api/zonas/id/?id=${this.$route.params.id}`
+        // `http://127.0.0.1:5000/api/zonas/id/?id=${this.$route.params.id}`
       );
       let coordenadasParseadas = response.data.coordinates.map((coor) => [
         parseFloat(coor.latitude),

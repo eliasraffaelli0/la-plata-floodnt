@@ -1,6 +1,3 @@
-# Grupo 5
-# Lucaroni Yanasú 16377/7
-# Elias Raffaelli 15802/8
 
 ## Sobre este proyecto
 Projecto de software final de la carrera APU. Una app para poder ver zonas inundadas de la plata, con la posibilidad de cargar CSV con los datos de las zonas para los usuarios que tengan los privilegios.

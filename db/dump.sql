@@ -46,7 +46,7 @@ CREATE TABLE `configuracion` (
 
 LOCK TABLES `configuracion` WRITE;
 /*!40000 ALTER TABLE `configuracion` DISABLE KEYS */;
-INSERT INTO `configuracion` VALUES (1,6,'blue','blue','asc');
+INSERT INTO `configuracion` VALUES (1,6,'blue','blue','desc');
 /*!40000 ALTER TABLE `configuracion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -231,7 +231,7 @@ CREATE TABLE `rol_tiene_permiso` (
 
 LOCK TABLES `rol_tiene_permiso` WRITE;
 /*!40000 ALTER TABLE `rol_tiene_permiso` DISABLE KEYS */;
-INSERT INTO `rol_tiene_permiso` VALUES (1,1),(2,1),(1,2),(2,2),(1,4),(2,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10),(1,11),(1,12),(1,13),(1,14),(1,15),(1,16),(1,17),(1,18),(1,19),(1,20),(1,21),(1,22),(1,23),(1,24),(1,25),(1,26),(1,27);
+INSERT INTO `rol_tiene_permiso` VALUES (1,1),(2,1),(1,2),(2,2),(1,4),(2,4),(1,5),(1,6),(1,7),(1,8),(2,8),(1,9),(2,9),(1,10),(2,10),(1,11),(2,11),(1,12),(2,12),(1,13),(2,13),(1,14),(2,14),(1,15),(2,15),(1,16),(2,16),(1,17),(2,17),(1,18),(2,18),(1,19),(2,19),(1,20),(2,20),(1,21),(2,21),(1,22),(2,22),(1,23),(2,23),(1,24),(2,24),(1,25),(2,25),(1,26),(2,26),(1,27),(2,27);
 /*!40000 ALTER TABLE `rol_tiene_permiso` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -307,7 +307,7 @@ CREATE TABLE `usuario_tiene_rol` (
   KEY `rol_id` (`rol_id`),
   CONSTRAINT `usuario_tiene_rol_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`),
   CONSTRAINT `usuario_tiene_rol_ibfk_2` FOREIGN KEY (`rol_id`) REFERENCES `roles` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -316,7 +316,7 @@ CREATE TABLE `usuario_tiene_rol` (
 
 LOCK TABLES `usuario_tiene_rol` WRITE;
 /*!40000 ALTER TABLE `usuario_tiene_rol` DISABLE KEYS */;
-INSERT INTO `usuario_tiene_rol` VALUES (1,2,1),(3,31,2),(4,31,1),(5,33,2);
+INSERT INTO `usuario_tiene_rol` VALUES (1,2,1),(3,31,2),(4,31,1),(7,34,2),(8,34,1),(11,35,2);
 /*!40000 ALTER TABLE `usuario_tiene_rol` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -341,7 +341,7 @@ CREATE TABLE `usuarios` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -350,7 +350,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (2,'ylucaroni@gmail','ylucaroni@gmail','$2b$12$O3NIXjyWkWGnhuBmxyEG6uE71EggAjzTxgTBxD9iUeFDBbzaDDiuu','$2b$12$O3NIXjyWkWGnhuBmxyEG6u',1,NULL,'2021-10-15 18:03:34','Yanasú','Lucaroni'),(22,'elias@gmail.com','eliasraffaelli','$2b$12$xBWft2GwRCwznnNumAhn.uDtdOw6IkFCJNm.YKURgKEuz50RxyQOi','$2b$12$xBWft2GwRCwznnNumAhn.u',1,NULL,'2021-10-21 09:05:45','Elias','Raffaelli'),(23,'mail1@valido.com','user1','$2b$12$YAIlXwpLuy9vxdvuh0bbKuuS78iIsCX5CcjpWaJjG35EohN6PY/tu','$2b$12$YAIlXwpLuy9vxdvuh0bbKu',0,NULL,'2021-10-21 09:07:40','user ','uno'),(24,'mail2@valido.com','kk','$2b$12$O7zAC0xFplRJ3Ok0UBeJ4.SwRTiKJe4BOwUQXj41c2KZ1T7PwCJPu','$2b$12$O7zAC0xFplRJ3Ok0UBeJ4.',1,'2023-06-21 19:26:17','2021-10-21 09:08:02','user ','dos'),(25,'mail3@valido.com','user3','$2b$12$q2zJSLSbEEpIjNWQU.KA7O7KXlHQtb4MKKqJiKmkKfidRoF/yW/cm','$2b$12$q2zJSLSbEEpIjNWQU.KA7O',0,NULL,'2021-10-21 09:08:21','user','tres'),(26,'mail4@valido.com','user4','$2b$12$BXdy.z.65ZJjzBseNUfUJupTOjCK/DtcGE0pBBVi9xaKoq7nzW8za','$2b$12$BXdy.z.65ZJjzBseNUfUJu',0,NULL,'2021-10-21 09:08:53','user','cuatro'),(30,'elias2@gmail.com','eliasraffaelli2','$2b$12$66IZUay.Vs.eJ3lfb1Ddj.xlFOvi5PTcjL2mpQkPJdnoJgfUIpcjO','$2b$12$66IZUay.Vs.eJ3lfb1Ddj.',0,NULL,'2021-10-22 03:19:37','asd','asd'),(31,'Fkaksk@w.com','asd','$2b$12$C1GTTuHRqRSq0xMColrc1uCvlJHQpOEGd9NjAR.mnn.cNHTU/0Upm','$2b$12$C1GTTuHRqRSq0xMColrc1u',NULL,'2023-06-21 19:54:22','2023-06-21 19:53:40','jero','fafa'),(32,'asd@asd.com','fff','$2b$12$0he6UKI8o3OdQbrmEqY3vuEu8OWmr7DwJfF4J5dMyFlHIAnvBRwJO','$2b$12$0he6UKI8o3OdQbrmEqY3vu',1,NULL,'2023-06-21 19:54:50','hjola','fha+'),(33,'rrrrr@gla.com','eeeeee','$2b$12$8aCc.d9giBzMJpZWy1GKZ.v8ZMeZNI.AMTmaaeqQj0du30HJbUgPW','$2b$12$8aCc.d9giBzMJpZWy1GKZ.',0,NULL,'2023-06-21 19:56:30','eeeeee','qqqqqqqq');
+INSERT INTO `usuarios` VALUES (2,'ylucaroni@gmail','ylucaroni@gmail','$2b$12$O3NIXjyWkWGnhuBmxyEG6uE71EggAjzTxgTBxD9iUeFDBbzaDDiuu','$2b$12$O3NIXjyWkWGnhuBmxyEG6u',1,NULL,'2021-10-15 18:03:34','Yanasú','Lucaroni'),(22,'elias@gmail.com','eliasraffaelli','$2b$12$xBWft2GwRCwznnNumAhn.uDtdOw6IkFCJNm.YKURgKEuz50RxyQOi','$2b$12$xBWft2GwRCwznnNumAhn.u',1,NULL,'2021-10-21 09:05:45','Elias','Raffaelli'),(23,'mail1@valido.com','user1','$2b$12$YAIlXwpLuy9vxdvuh0bbKuuS78iIsCX5CcjpWaJjG35EohN6PY/tu','$2b$12$YAIlXwpLuy9vxdvuh0bbKu',0,NULL,'2021-10-21 09:07:40','user ','uno'),(24,'mail2@valido.com','kk','$2b$12$O7zAC0xFplRJ3Ok0UBeJ4.SwRTiKJe4BOwUQXj41c2KZ1T7PwCJPu','$2b$12$O7zAC0xFplRJ3Ok0UBeJ4.',1,'2023-06-21 19:26:17','2021-10-21 09:08:02','user ','dos'),(25,'mail3@valido.com','user3','$2b$12$q2zJSLSbEEpIjNWQU.KA7O7KXlHQtb4MKKqJiKmkKfidRoF/yW/cm','$2b$12$q2zJSLSbEEpIjNWQU.KA7O',0,NULL,'2021-10-21 09:08:21','user','tres'),(26,'mail4@valido.com','user4','$2b$12$BXdy.z.65ZJjzBseNUfUJupTOjCK/DtcGE0pBBVi9xaKoq7nzW8za','$2b$12$BXdy.z.65ZJjzBseNUfUJu',0,NULL,'2021-10-21 09:08:53','user','cuatro'),(30,'elias2@gmail.com','eliasraffaelli2','$2b$12$66IZUay.Vs.eJ3lfb1Ddj.xlFOvi5PTcjL2mpQkPJdnoJgfUIpcjO','$2b$12$66IZUay.Vs.eJ3lfb1Ddj.',0,NULL,'2021-10-22 03:19:37','asd','asd'),(31,'Fkaksk@w.com','asd','$2b$12$C1GTTuHRqRSq0xMColrc1uCvlJHQpOEGd9NjAR.mnn.cNHTU/0Upm','$2b$12$C1GTTuHRqRSq0xMColrc1u',NULL,'2023-06-21 19:54:22','2023-06-21 19:53:40','jero','fafa'),(32,'asd@asd.com','fff','$2b$12$0he6UKI8o3OdQbrmEqY3vuEu8OWmr7DwJfF4J5dMyFlHIAnvBRwJO','$2b$12$0he6UKI8o3OdQbrmEqY3vu',1,NULL,'2023-06-21 19:54:50','hjola','fha+'),(33,'rrrrr@gla.com','eeeeee','$2b$12$8aCc.d9giBzMJpZWy1GKZ.v8ZMeZNI.AMTmaaeqQj0du30HJbUgPW','$2b$12$8aCc.d9giBzMJpZWy1GKZ.',0,NULL,'2023-06-21 19:56:30','eeeeee','qqqqqqqq'),(34,'admin@gmail.com','admin','$2b$12$Rz7LCTqi6r7TijCKnKuPO.kArjtReLuvT64JYJRG2vOY1T/VRUytu','$2b$12$Rz7LCTqi6r7TijCKnKuPO.',1,NULL,'2023-06-30 19:45:22','administrador','base'),(35,'mod@gmail.com','mod','$2b$12$USPHxqbsv4UDBfS.S8R3hOuw/yY83rrVfrCPTTx1J0bbcbDSfleHq','$2b$12$USPHxqbsv4UDBfS.S8R3hO',1,NULL,'2023-06-30 19:52:34','moderador','base'),(37,'elisoyyo3456@gmail.com','Elías Raffaelli',NULL,NULL,0,NULL,'2023-06-30 20:15:53','Elías','Raffaelli');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -422,4 +422,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-30 19:33:06
+-- Dump completed on 2023-06-30 20:19:04

@@ -82,7 +82,6 @@
                     {% endif %}
                     </p>
                     <p>
-                        {% if not rolInfo|selectattr("name", "equalto", "Administrador")| list %}
                             <label>Cambiar estado de usuario</label></br>
                             {% if fieldsInfo.activo %}
                                 <select class="form-select-sm" name='activo'>
@@ -95,7 +94,6 @@
                                     <option value='1'>Activado</option>
                                 </select>
                             {% endif %}
-                        {% endif %}
                     </p>
                     <p>
                         <label>Nombre</label></br>

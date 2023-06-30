@@ -5,7 +5,9 @@
 {% endblock %}
 {% block content %}
 <div class="container mb-2 text-center rounded-3">
-<h1 class="campo">Inicie sesión para continuar</h1>
+{% if not is_authenticated(session) %}
+  <h1 class="campo">Inicie sesión para continuar</h1>
+{% endif %}
   <img class="foto-inicio" src="../static/images/catedral.jpg" alt="">
 </div>
 {% endblock %}
